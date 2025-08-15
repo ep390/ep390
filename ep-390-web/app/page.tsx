@@ -107,10 +107,10 @@ export default function Home() {
           <section className="pt-8 border-t border-gray-200">
             <div className="flex gap-8">
               <Link
-                href="/tutorials"
+                href="/syllabus"
                 className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
               >
-                Tutorials →
+                Full Syllabus →
               </Link>
               <Link
                 href="/projects"
