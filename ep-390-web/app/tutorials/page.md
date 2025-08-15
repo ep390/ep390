@@ -9,7 +9,7 @@ author:
 
 # Basic Setup Tutorial
 
-This tutorial is located at `app/tutorials/basic-setup.md` and demonstrates how markdown files can be organized anywhere in your app directory structure.
+This tutorial is located at `app/tutorials/page.md` and demonstrates how markdown files can be organized anywhere in your app directory structure.
 
 ## What You'll Learn
 

@@ -9,7 +9,7 @@ author:
 
 # Final Project Guidelines
 
-This document is located at `app/projects/final-project.md` and shows how project-related content can be organized in its own directory.
+This document is located at `app/projects/page.md` and shows how project-related content can be organized in its own directory.
 
 ## Project Requirements
 
