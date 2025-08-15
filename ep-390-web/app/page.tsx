@@ -1,111 +1,175 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="mb-2 tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-          <li className="tracking-[-.01em]">
-            Check out the{" "}
-            <Link href="/markdown" className="text-blue-600 hover:text-blue-800 underline">
-              markdown content
-            </Link>{" "}
-            with <span className="text-pink-600">markdown</span> file processing!
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        {/* Header */}
+        <header className="text-center mb-16">
+          <div className="mb-4">
+            <span className="inline-block bg-blue-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+              EP-390
+            </span>
+          </div>
+          <h1 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
+            Generative AI for Music,
+            <br />
+            Code, and Image
+          </h1>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-700">
+            <div className="flex items-center gap-2">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              <span className="font-medium">Charles Holbrow</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>Tuesday 6-8pm</span>
+            </div>
+          </div>
+        </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        {/* Main Content */}
+        <main className="space-y-16">
+          {/* Course Content */}
+          <section className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                What This Class Is
+              </h2>
+              <div className="text-gray-700 space-y-4">
+                <p>
+                  <strong className="text-purple-700">AI Hype</strong> is
+                  everywhere! Major tech companies are betting no AI and
+                  offering annual salaries in the hundreds of millions to AI
+                  researchers.
+                </p>
+
+                <p>
+                  <strong className="text-amber-700">AI Scorn</strong> is
+                  everywhere too. Detractors point to environmental costs,
+                  ethical implications, and technical limitations of generative
+                  AI.
+                </p>
+
+                <p>
+                  So which is it? Over-hyped purveyor of{" "}
+                  <strong className="text-amber-700">AI Slop</strong>? Or
+                  impending{" "}
+                  <strong className="text-purple-700">
+                    economic revolution
+                  </strong>{" "}
+                  posing a real threat to artists, musicians, and anyone who is
+                  not positioned to benefit with the major tech companies?{" "}
+                </p>
+                <p>
+                  <strong className="">Can it be both?</strong>
+                </p>
+
+                <p>
+                  This class aims to help you see through the hype and make your
+                  own informed opinions about the utility, trajectory, and
+                  ethics of modern generative AI.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                In this class we will:
+              </h2>
+              <div className="text-gray-700 space-y-2">
+                <p>
+                  • Get hands-on practice with modern tools for generating media
+                </p>
+                <p>
+                  • Build understanding by studying how the models work under
+                  the hood
+                </p>
+                <p>• Explore research and criticism of Generative AI</p>
+                <p>
+                  • Build a portfolio of content and reflections that expose AI
+                  strengths and weaknesses
+                </p>
+                <p>
+                  • Develop an informed critical take on the ethics and
+                  economics of generative AI
+                </p>
+                <p>
+                  • Learn to identify pitfalls in Generative AI
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Prerequisites
+              </h2>
+              <div className="text-gray-700 space-y-3">
+                <p>
+                  We will be writing code, using the terminal, and submitting
+                  assignments on GitHub.
+                </p>
+                <p>The class requires a B or better in LMSC-261 to enroll.</p>
+                <p>
+                  We will be using both Python and JavaScript. Comfort with at
+                  least one of these is required.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Final Project */}
+          <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg p-8 text-white">
+            <h2 className="text-2xl font-bold mb-4">Final Project</h2>
+            <p className="text-blue-100">
+              Create a music and multimedia work using AI tools. Show what
+              you&apos;ve learned.
+            </p>
+          </section>
+
+          {/* Navigation */}
+          <section className="text-center">
+            <div className="inline-flex gap-4">
+              <Link
+                href="/tutorials"
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                View Tutorials
+              </Link>
+              <Link
+                href="/projects"
+                className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              >
+                Student Projects
+              </Link>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
