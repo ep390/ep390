@@ -84,8 +84,6 @@ export default function Home() {
                   </strong>{" "}
                   posing a real threat to artists, musicians, and anyone who is
                   not positioned to benefit with the major tech companies?{" "}
-                </p>
-                <p>
                   <strong className="">Can it be both?</strong>
                 </p>
 
@@ -101,27 +99,25 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 In this class we will:
               </h2>
-              <div className="text-gray-700 space-y-2">
-                <p>
-                  • Get hands-on practice with modern tools for generating media
-                </p>
-                <p>
-                  • Build understanding by studying how the models work under
-                  the hood
-                </p>
-                <p>• Explore research and criticism of Generative AI</p>
-                <p>
-                  • Build a portfolio of content and reflections that expose AI
+              <ul className="text-gray-700 space-y-2 list-disc list-inside">
+                <li>
+                  Get hands-on practice with modern tools for generating media
+                </li>
+                <li>
+                  Build understanding by studying how the models work under the
+                  hood
+                </li>
+                <li>Explore research and criticism of Generative AI</li>
+                <li>
+                  Build a portfolio of content and reflections that expose AI
                   strengths and weaknesses
-                </p>
-                <p>
-                  • Develop an informed critical take on the ethics and
-                  economics of generative AI
-                </p>
-                <p>
-                  • Learn to identify pitfalls in Generative AI
-                </p>
-              </div>
+                </li>
+                <li>
+                  Develop an informed critical take on the ethics and economics
+                  of generative AI
+                </li>
+                <li>Learn to identify pitfalls in Generative AI</li>
+              </ul>
             </div>
 
             <div>
@@ -140,15 +136,6 @@ export default function Home() {
                 </p>
               </div>
             </div>
-          </section>
-
-          {/* Final Project */}
-          <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg p-8 text-white">
-            <h2 className="text-2xl font-bold mb-4">Final Project</h2>
-            <p className="text-blue-100">
-              Create a music and multimedia work using AI tools. Show what
-              you&apos;ve learned.
-            </p>
           </section>
 
           {/* Navigation */}
