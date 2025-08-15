@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllPosts } from '../../lib/api';
+import { getAllPosts } from '../[...post]/posts';
 
 export default function PostsIndex() {
   const posts = getAllPosts();
