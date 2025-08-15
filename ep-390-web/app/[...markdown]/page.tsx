@@ -1,11 +1,12 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllMarkdownPaths, getPostByPath, markdownToHtml } from "./posts";
+import { getAllMarkdownPaths, getPostByPath, markdownToHtml } from "./utils";
 import Link from "next/link";
+import styles from "@/styles/markdown.module.css";
 
 export default async function Post(props: Params) {
   const params = await props.params;
-  const post = getPostByPath(params.post);
+  const post = getPostByPath(params.markdown);
 
   if (!post) {
     return notFound();
@@ -16,7 +17,7 @@ export default async function Post(props: Params) {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <Link
-        href="/posts"
+        href="/markdown"
         className="inline-block mb-6 text-blue-600 hover:text-blue-800"
       >
         ← Back to Blog
@@ -26,7 +27,7 @@ export default async function Post(props: Params) {
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex items-center text-gray-600 text-sm">
-            <span>By {post.author.name}</span>
+            <span>{post.author.name}</span>
             <span className="mx-2">•</span>
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString("en-US", {
@@ -37,12 +38,12 @@ export default async function Post(props: Params) {
             </time>
           </div>
           <div className="text-xs text-gray-400 mt-2">
-            Path: /{params.post.join("/")}
+            Path: /{params.markdown.join("/")}
           </div>
         </header>
 
         <div
-          className="prose prose-lg max-w-none"
+          className={`${styles.markdownContent} prose prose-lg max-w-none`}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </article>
@@ -61,13 +62,13 @@ export default async function Post(props: Params) {
 
 type Params = {
   params: Promise<{
-    post: string[];
+    markdown: string[];
   }>;
 };
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
-  const post = getPostByPath(params.post);
+  const post = getPostByPath(params.markdown);
 
   if (!post) {
     return notFound();
@@ -85,6 +86,6 @@ export async function generateStaticParams() {
   const paths = getAllMarkdownPaths();
 
   return paths.map((path) => ({
-    post: path.split("/"),
+    markdown: path.split("/"),
   }));
 }

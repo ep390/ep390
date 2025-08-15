@@ -39,7 +39,7 @@ export default function Home() {
           </li>
           <li className="tracking-[-.01em]">
             Check out the{" "}
-            <Link href="/posts" className="text-blue-600 hover:text-blue-800 underline">
+            <Link href="/markdown" className="text-blue-600 hover:text-blue-800 underline">
               blog section
             </Link>{" "}
             with markdown file processing!

@@ -1,6 +1,6 @@
 ---
 title: "Final Project Guidelines"
-excerpt: "Complete guide for the EP-390 final project requirements and submission."
+excerpt: "Hi from your course instructor."
 date: "2025-08-14"
 author:
   name: "Charles"
