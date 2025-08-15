@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllPosts } from "../[...markdown]/utils";
+import { getAllPosts } from "./utils";
 
 export default function PostsIndex() {
   const posts = getAllPosts();

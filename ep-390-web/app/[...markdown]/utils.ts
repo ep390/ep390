@@ -1,6 +1,6 @@
 import fs from "fs";
 import matter from "gray-matter";
-import { Post } from "../../interfaces/post";
+import { Post } from "./interfaces";
 import { join } from "path";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";

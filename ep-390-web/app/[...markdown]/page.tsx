@@ -3,14 +3,14 @@ import { notFound } from "next/navigation";
 import { getAllMarkdownPaths, getPostByPath, markdownToHtml } from "./utils";
 import Link from "next/link";
 import styles from "@/styles/markdown.module.css";
+import Markdown from "./markdown";
 
 export default async function Post(props: Params) {
   const params = await props.params;
-  const post = getPostByPath(params.markdown);
+  if (params.markdown[0] === "markdown") return <Markdown />;
 
-  if (!post) {
-    return notFound();
-  }
+  const post = getPostByPath(params.markdown);
+  if (!post) return notFound();
 
   const content = await markdownToHtml(post.content || "");
 
@@ -31,9 +31,6 @@ export default async function Post(props: Params) {
                 })}
               </time>
             )}
-          </div>
-          <div className="text-xs text-gray-400 mt-2">
-            Path: /{params.markdown.join("/")}
           </div>
         </header>
 
@@ -63,6 +60,16 @@ type Params = {
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
+
+  // Handle special markdown listing page
+  if (params.markdown[0] === "markdown") {
+    return {
+      title: "All Content | EP-390",
+      description:
+        "Browse all content from markdown files throughout the application.",
+    };
+  }
+
   const post = getPostByPath(params.markdown);
 
   if (!post) {
@@ -79,8 +86,8 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 
 export async function generateStaticParams() {
   const paths = getAllMarkdownPaths();
-
-  return paths.map((path) => ({
+  const allParams = paths.map((path) => ({
     markdown: path.split("/"),
   }));
+  return [{ markdown: ["markdown"] }, ...allParams];
 }
