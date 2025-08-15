@@ -2,156 +2,76 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-4xl mx-auto px-8 py-16">
         {/* Header */}
-        <header className="text-center mb-16">
-          <div className="mb-4">
-            <span className="inline-block bg-blue-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+        <header className="mb-14">
+          <div className="flex items-baseline gap-4 mb-8">
+            <h1 className="text-5xl font-bold text-black tracking-tight">
               EP-390
-            </span>
+            </h1>
+            <div className="text-gray-500 text-lg">Charles&nbsp;Holbrow&nbsp;• Tuesdays&nbsp;6-8pm</div>
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
-            Generative AI for Music,
-            <br />
-            Code, and Image
-          </h1>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-gray-700">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-              <span className="font-medium">Charles Holbrow</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>Tuesday 6-8pm</span>
-            </div>
-          </div>
+          <h2 className="text-4xl font-medium text-gray-900 mb-6 max-w-3xl leading-tight">
+            Generative AI for Music, Code, and Image
+          </h2>
         </header>
 
         {/* Main Content */}
         <main className="space-y-16">
-          {/* Course Content */}
-          <section className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                What This Class Is
-              </h2>
-              <div className="text-gray-700 space-y-4">
-                <p>
-                  <strong className="text-purple-700">AI Hype</strong> is
-                  everywhere! Major tech companies are betting no AI and
-                  offering annual salaries in the hundreds of millions to AI
-                  researchers.
-                </p>
-
-                <p>
-                  <strong className="text-amber-700">AI Scorn</strong> is
-                  everywhere too. Detractors point to environmental costs,
-                  ethical implications, and technical limitations of generative
-                  AI.
-                </p>
-
-                <p>
-                  So which is it? Over-hyped purveyor of{" "}
-                  <strong className="text-amber-700">AI Slop</strong>? Or
-                  impending{" "}
-                  <strong className="text-purple-700">
-                    economic revolution
-                  </strong>{" "}
-                  posing a real threat to artists, musicians, and anyone who is
-                  not positioned to benefit with the major tech companies?{" "}
-                  <strong className="">Can it be both?</strong>
-                </p>
-
-                <p>
-                  This class aims to help you see through the hype and make your
-                  own informed opinions about the utility, trajectory, and
-                  ethics of modern generative AI.
-                </p>
-              </div>
+          <section>
+            <div className="mb-12">
+              <p className="text-xl text-gray-800 leading-relaxed mb-6">
+                <span className="font-semibold text-purple-600">AI Hype</span> is everywhere! Major tech companies are betting on AI and offering annual salaries in the hundreds of millions to AI researchers.
+              </p>
+              <p className="text-xl text-gray-800 leading-relaxed mb-6">
+                <span className="font-semibold text-amber-600">AI Scorn</span> is everywhere too. Detractors point to the environmental costs, ethical implications, and technical limitations of generative AI.
+              </p>
+              <p className="text-xl text-gray-800 leading-relaxed mb-6">
+                So which is it? Over-hyped purveyor of <span className="font-semibold text-amber-600">AI Slop</span>? Or impending <span className="font-semibold text-purple-600">economic revolution</span> posing a real threat to artists, musicians, and anyone who is not positioned to benefit from the major tech companies? <span className="font-semibold text-blue-700">Can it be both?</span>
+              </p>
+              <p className="text-xl text-emerald-800 font-bold leading-relaxed mb-6">
+                Learn to see through the hype and make informed opinions about the utility, trajectory, and ethics of modern generative AI.
+              </p>
+              <div className="h-[2px] bg-purple-400 mt-8 mb-6" style={{ boxShadow: '0 0 8px rgba(168, 85, 247, 0.8)' }} />
             </div>
 
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                In this class we will:
-              </h2>
-              <ul className="text-gray-700 space-y-2 list-disc list-inside">
-                <li>
-                  Get hands-on practice with modern tools for generating media
-                </li>
-                <li>
-                  Build understanding by studying how the models work under the
-                  hood
-                </li>
+            <div className="mb-12">
+              <h3 className="text-2xl font-semibold text-black mb-6">In this class, we will:</h3>
+              <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
+                <li>Get hands-on practice with modern tools for generating media</li>
+                <li>Build understanding by studying how the models work under the hood</li>
                 <li>Explore research and criticism of Generative AI</li>
-                <li>
-                  Build a portfolio of content and reflections that expose AI
-                  strengths and weaknesses
-                </li>
-                <li>
-                  Develop an informed critical take on the ethics and economics
-                  of generative AI
-                </li>
+                <li>Build a portfolio of content and reflections that expose AI strengths and weaknesses</li>
                 <li>Learn to identify pitfalls in Generative AI</li>
+                <li>Develop an informed critical take on the utility and ethics of generative AI</li>
               </ul>
             </div>
 
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Prerequisites
-              </h2>
-              <div className="text-gray-700 space-y-3">
-                <p>
-                  We will be writing code, using the terminal, and submitting
-                  assignments on GitHub.
-                </p>
-                <p>The class requires a B or better in LMSC-261 to enroll.</p>
-                <p>
-                  We will be using both Python and JavaScript. Comfort with at
-                  least one of these is required.
-                </p>
-              </div>
+            <div className="mb-12">
+              <h3 className="text-2xl font-semibold text-black mb-6">Prerequisites</h3>
+              <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
+                <li>We will be writing code, using the terminal, and submitting assignments on GitHub</li>
+                <li>The class requires a B or better in LMSC-261 to enroll</li>
+                <li>We will be using both Python and JavaScript – Comfort with at least one of these is required</li>
+              </ul>
             </div>
           </section>
 
           {/* Navigation */}
-          <section className="text-center">
-            <div className="inline-flex gap-4">
+          <section className="pt-8 border-t border-gray-200">
+            <div className="flex gap-8">
               <Link
                 href="/tutorials"
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
               >
-                View Tutorials
+                Tutorials →
               </Link>
               <Link
                 href="/projects"
-                className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
               >
-                Student Projects
+                Student Projects →
               </Link>
             </div>
           </section>
