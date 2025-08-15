@@ -50,8 +50,9 @@ export default function Home() {
                 </span>
               </p>
               <p className="text-xl text-emerald-800 font-bold leading-relaxed mb-6">
-                Learn to see through the hype and make informed opinions about
-                the utility, trajectory, and ethics of modern generative AI.
+                Learn to see through the hype and make your own informed
+                opinions about the utility, trajectory, and ethics of modern
+                generative AI.
               </p>
               <div
                 className="h-[2px] bg-purple-400 mt-8 mb-6"
