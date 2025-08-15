@@ -16,26 +16,21 @@ export default async function Post(props: Params) {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <Link
-        href="/markdown"
-        className="inline-block mb-6 text-blue-600 hover:text-blue-800"
-      >
-        ← Back to Blog
-      </Link>
-
       <article>
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex items-center text-gray-600 text-sm">
             <span>{post.author.name}</span>
             <span className="mx-2">•</span>
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+            {post.date && (
+              <time dateTime={post.date.toISOString()}>
+                {post.date.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            )}
           </div>
           <div className="text-xs text-gray-400 mt-2">
             Path: /{params.markdown.join("/")}

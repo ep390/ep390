@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { getAllPosts } from '../[...markdown]/utils';
+import Link from "next/link";
+import { getAllPosts } from "../[...markdown]/utils";
 
 export default function PostsIndex() {
   const posts = getAllPosts();
@@ -10,7 +10,7 @@ export default function PostsIndex() {
       <p className="text-gray-600 mb-8">
         Content discovered from markdown files throughout the application
       </p>
-      
+
       {posts.length === 0 ? (
         <p className="text-gray-600">No content found.</p>
       ) : (
@@ -24,15 +24,18 @@ export default function PostsIndex() {
               </h2>
               <div className="text-sm text-gray-500 mb-3">
                 <span>By {post.author.name}</span>
+
                 <span className="mx-2">•</span>
-                <span>{new Date(post.date).toLocaleDateString()}</span>
+                <span>{post.date?.toLocaleDateString() || "Unknown Date"}</span>
                 <span className="mx-2">•</span>
-                <span className="text-xs bg-gray-100 px-2 py-1 rounded">/{post.slug}</span>
+                <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                  /{post.slug}
+                </span>
               </div>
               {post.excerpt && (
                 <p className="text-gray-700 mb-3">{post.excerpt}</p>
               )}
-              <Link 
+              <Link
                 href={`/${post.slug}`}
                 className="inline-block text-blue-600 hover:text-blue-800 font-medium"
               >
@@ -42,9 +45,9 @@ export default function PostsIndex() {
           ))}
         </div>
       )}
-      
+
       <div className="mt-8">
-        <Link 
+        <Link
           href="/"
           className="inline-block text-blue-600 hover:text-blue-800"
         >
@@ -56,6 +59,7 @@ export default function PostsIndex() {
 }
 
 export const metadata = {
-  title: 'All Content | EP-390',
-  description: 'Browse all content from markdown files throughout the application.',
+  title: "All Content | EP-390",
+  description:
+    "Browse all content from markdown files throughout the application.",
 };

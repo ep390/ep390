@@ -84,12 +84,26 @@
   padding: 1em;
   overflow-x: auto;
   margin: 1em 0;
+  border: 1px solid #e1e4e8;
 }
 
 .markdownContent pre code {
   background-color: transparent;
   padding: 0;
   border-radius: 0;
+  font-family: var(--font-geist-mono), 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.875em;
+  line-height: 1.45;
+}
+
+/* Syntax highlighting enhancements */
+.markdownContent pre.hljs {
+  background-color: #f6f8fa !important;
+  border: 1px solid #e1e4e8;
+}
+
+.markdownContent code.hljs {
+  background-color: transparent !important;
 }
 
 /* Blockquotes */
@@ -210,6 +224,12 @@
   
   .markdownContent pre {
     background-color: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .markdownContent pre.hljs {
+    background-color: #2d2d2d !important;
+    border-color: #404040 !important;
   }
   
   .markdownContent blockquote {
