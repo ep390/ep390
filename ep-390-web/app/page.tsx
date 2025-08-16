@@ -96,7 +96,7 @@ export default function Home() {
                 Topics We will Cover
               </h3>
               <p className="text-lg text-gray-600 mb-6">
-                Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to build on further in the mid-term and final projects.
+                Each week will introduce a new topic, and work on an introductory lab exercise. Each lab and assignment is a possible starting point to expnand on in the mid-term and final projects.
               </p>
               <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
                 <li>Hands on: Tools for agentic code generation</li>

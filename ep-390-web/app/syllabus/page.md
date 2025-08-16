@@ -29,7 +29,7 @@ Learn to see through the hype and make your own informed opinions about the util
 
 ## Topic List
 
-Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to build on further in the mid-term and final projects.
+Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to expand on in the mid-term and final projects.
 
 - Hands on: Tools for agentic code generation
 - Hands on: Symbolic Music Generation
