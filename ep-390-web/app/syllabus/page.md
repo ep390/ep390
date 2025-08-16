@@ -1,6 +1,6 @@
 ---
 title: "EP-390 Syllabus"
-excerpt: "Course Syllabbus: Generative AI for Music, Code, and Image"
+excerpt: "Course Syllabus: Generative AI for Music, Code, and Image"
 date: "2025-08-15"
 author:
   name: "Charles"
@@ -29,7 +29,7 @@ Learn to see through the hype and make your own informed opinions about the util
 
 ## Topic List
 
-Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opporunity to build on further in the mid-term and final projects.
+Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to build on further in the mid-term and final projects.
 
 - Hands on: Tools for agentic code generation
 - Hands on: Symbolic Music Generation
@@ -45,14 +45,14 @@ Each week will introduce a new topic, and work on an introductory lab exercise. 
 - Hands on: Video Games
 - **Final project!**
 
-AI is changing fast! The exact make-up of this list may change subtlly to keep up with iportant developments in the field.
+AI is changing fast! The exact make-up of this list may change subtly to keep up with important developments in the field.
 
 ## Course Activities
 
 In this class, you will:
 
 - Get hands-on practice with modern tools for generating media
-- Studying how the models work under the hood
+- Study how the models work under the hood
 - Explore research and criticism of Generative AI
 - Build a portfolio of content and reflections that expose AI strengths and weaknesses
 - Develop an informed critical take on the utility and ethics of generative AI
@@ -65,7 +65,7 @@ Upon completion of this course, students will be able to:
 - **Analyze and explain** the fundamental technical principles underlying transformer and diffusion models
 - **Critically evaluate** generative AI research papers and distinguish between hype and substantive claims
 - **Assess** the environmental, ethical, and economic implications of generative AI deployment
-- **Identify and articulate** - Learn to identify pitfalls in Generative AI
+- **Identify and articulate** pitfalls in Generative AI
 - **Develop** well-reasoned perspectives on AI's role in creative industries
 
 ## Prerequisites
@@ -97,7 +97,7 @@ All students are expected to
 
 Currently, the best generative models are "closed weight," meaning that in order to access them you need to pay to use a model by sending a request to the model providers web-service.
 
-Sometimes proprietary closed-sourced generative models are promoted for free.
+Sometimes proprietary closed-source generative models are promoted for free.
 
 **In this class we will prioritize free and open-weight models when possible and appropriate.**
 
