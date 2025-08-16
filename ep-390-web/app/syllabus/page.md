@@ -29,6 +29,8 @@ Generative models can be very helpful for writing code, especially for beginners
 
 ## Topic List
 
+Students will start with code generation and learn to write better code faster using AI tools. We will use the efficacy of coding tools as a benchmark to evaluate the value and trajectory of generative AI for music and image modalities.
+
 Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to expand on further in the mid-term and final projects.
 
 - Hands on: Tools for agentic code generation

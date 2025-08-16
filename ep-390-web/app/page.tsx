@@ -100,6 +100,9 @@ export default function Home() {
                 Topics We will Cover
               </h3>
               <p className="text-lg text-gray-600 mb-6">
+                Students will start with code generation and learn to write better code faster using AI tools. We will use the efficacy of coding tools as a benchmark to evaluate the value and trajectory of generative AI for music and image modalities.
+              </p>
+              <p className="text-lg text-gray-600 mb-6">
                 Each week will introduce a new topic, and work on an
                 introductory lab exercise. Each lab and assignment is a possible
                 starting point to expand on in the mid-term and final projects.
