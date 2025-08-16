@@ -25,11 +25,11 @@ author:
 
 So which is it? **Over-hyped purveyor of AI Slop?** Or **impending economic revolution** posing a real threat to artists, musicians, and anyone not poised to benefit from the success of major tech companies? **Can it be both?**
 
-Learn to see through the hype and make your own informed opinions about the utility, trajectory, and ethics of modern generative AI.
+Generative models can be very helpful for writing code, especially for beginners who want to learn fast. Can they also be useful for other artistic practices? Will they be useful in the future? Learn to see through the hype and make your own informed opinions about the utility, trajectory, and ethics of modern generative AI.
 
 ## Topic List
 
-Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to expand on in the mid-term and final projects.
+Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to expand on further in the mid-term and final projects.
 
 - Hands on: Tools for agentic code generation
 - Hands on: Symbolic Music Generation
@@ -53,6 +53,10 @@ In this class, you will:
 
 - Get hands-on practice with modern tools for generating media
 - Study how the models work under the hood
+- Contrast the strengths and weaknesses of different modalities:
+  Image, Music, and Code to understand where these technologies
+  are headed and what they are likely to mean for artists in the
+  future.
 - Explore research and criticism of Generative AI
 - Build a portfolio of content and reflections that expose AI strengths and weaknesses
 - Develop an informed critical take on the utility and ethics of generative AI
@@ -95,10 +99,10 @@ All students are expected to
 
 ## Bias towards Open Models
 
-Currently, the best generative models are "closed weight," meaning that in order to access them you need to pay to use a model by sending a request to the model providers web-service.
+Currently, the best generative models are "closed weight," meaning that in order to access them you need to pay to use a model by sending a request to the model provider's web-service.
 
 Sometimes proprietary closed-source generative models are promoted for free.
 
 **In this class we will prioritize free and open-weight models when possible and appropriate.**
 
-We will **avoid** proprietary services like Suno that focus web based UIs.
+We will **avoid** proprietary services like Suno that focus on web-based UIs.

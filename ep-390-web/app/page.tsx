@@ -50,11 +50,12 @@ export default function Home() {
                 </span>
               </p>
               <p className="text-xl leading-relaxed mb-6">
-                Learn to see through the hype and make your own informed
-                opinions about the{" "}
-                <span className="text-emerald-800 font-bold">
-                  utility
-                </span>,{" "}
+                Generative models can be very helpful for writing code,
+                especially for beginners who want to learn fast. Can they also
+                be useful for other artistic practices? Will they be useful in
+                the future? Learn to see through the hype and make your own
+                informed opinions about the{" "}
+                <span className="text-emerald-800 font-bold">utility</span>,{" "}
                 <span className="text-emerald-800 font-bold">trajectory</span>,{" "}
                 and
                 <span className="text-emerald-800 font-bold"> ethics</span> of
@@ -72,11 +73,14 @@ export default function Home() {
               </h3>
               <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
                 <li>
-                  Get hands-on practice with modern tools for generating media
+                  Build understanding by studying how the generative models work
+                  &quot;under the hood&quot;
                 </li>
                 <li>
-                  Build understanding by studying how the models work under the
-                  hood
+                  Contrast the strengths and weaknesses of different modalities:
+                  Image, Music, and Code to understand where these technologies
+                  are headed and what they are likely to mean for artists in the
+                  future.
                 </li>
                 <li>Explore research and criticism of Generative AI</li>
                 <li>
@@ -96,7 +100,9 @@ export default function Home() {
                 Topics We will Cover
               </h3>
               <p className="text-lg text-gray-600 mb-6">
-                Each week will introduce a new topic, and work on an introductory lab exercise. Each lab and assignment is a possible starting point to expnand on in the mid-term and final projects.
+                Each week will introduce a new topic, and work on an
+                introductory lab exercise. Each lab and assignment is a possible
+                starting point to expand on in the mid-term and final projects.
               </p>
               <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
                 <li>Hands on: Tools for agentic code generation</li>
@@ -104,17 +110,24 @@ export default function Home() {
                 <li>Research Review: Can models &quot;reason&quot;?</li>
                 <li>Ethics: TESCREAL</li>
                 <li>Ethics: AI and the Environment</li>
-                <li><strong>Mid-term project!</strong></li>
+                <li>
+                  <strong>Mid-term project!</strong>
+                </li>
                 <li>Theory: Transformers</li>
                 <li>Theory and Practice: Music Generation</li>
                 <li>Theory: Diffusion</li>
                 <li>Theory and practice: Model internals and Comfy-UI</li>
-                <li>Theory and practice: Image Gen – On-device and in the cloud</li>
+                <li>
+                  Theory and practice: Image Gen – On-device and in the cloud
+                </li>
                 <li>Hands on: Video Games</li>
-                <li><strong>Final project!</strong></li>
+                <li>
+                  <strong>Final project!</strong>
+                </li>
               </ul>
               <p className="text-sm text-gray-600 mt-4 italic">
-                AI is changing fast! The exact make-up of this list may change subtly to keep up with important developments in the field.
+                AI is changing fast! The exact make-up of this list may change
+                subtly to keep up with important developments in the field.
               </p>
             </div>
           </section>
