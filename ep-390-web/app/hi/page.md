@@ -30,6 +30,7 @@ class Cat:
 c = Cat()
 c.lick()
 ```
+
 | Column 1 | Column 2 | Column 3 |
 |----------|----------|----------|
 | Row 1    | Data A   | Value 1  |

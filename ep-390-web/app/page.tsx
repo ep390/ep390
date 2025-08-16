@@ -45,18 +45,24 @@ export default function Home() {
                 </span>{" "}
                 posing a real threat to artists, musicians, and anyone not
                 poised to benefit from the success of major tech companies?{" "}
-                <span className="font-semibold text-blue-700">
+                <span className="font-semibold text-blue-800">
                   Can it be both?
                 </span>
               </p>
-              <p className="text-xl text-emerald-800 font-bold leading-relaxed mb-6">
+              <p className="text-xl leading-relaxed mb-6">
                 Learn to see through the hype and make your own informed
-                opinions about the utility, trajectory, and ethics of modern
-                generative AI.
+                opinions about the{" "}
+                <span className="text-emerald-800 font-bold">
+                  utility
+                </span>,{" "}
+                <span className="text-emerald-800 font-bold">trajectory</span>,{" "}
+                and
+                <span className="text-emerald-800 font-bold"> ethics</span> of
+                modern generative AI.
               </p>
               <div
-                className="h-[2px] bg-purple-400 mt-8 mb-6"
-                style={{ boxShadow: "0 0 8px rgba(168, 85, 247, 0.8)" }}
+                className="h-[2px] mt-8 mb-6 bg-gradient-to-r from-amber-400 via-purple-400 to-amber-400"
+                style={{ boxShadow: "0 0 7px rgba(168, 85, 247, 0.6)" }}
               />
             </div>
 
@@ -87,19 +93,29 @@ export default function Home() {
 
             <div className="mb-12">
               <h3 className="text-2xl font-semibold text-black mb-6">
-                Prerequisites
+                Topics We will Cover
               </h3>
+              <p className="text-lg text-gray-600 mb-6">
+                Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opportunity to build on further in the mid-term and final projects.
+              </p>
               <ul className="space-y-3 text-lg text-gray-800 list-disc list-inside">
-                <li>
-                  We will be writing code, using the terminal, and submitting
-                  assignments on GitHub
-                </li>
-                <li>The class requires a B or better in LMSC-261 to enroll</li>
-                <li>
-                  We will be using both Python and JavaScript – Comfort with at
-                  least one of these is required
-                </li>
+                <li>Hands on: Tools for agentic code generation</li>
+                <li>Hands on: Symbolic Music Generation</li>
+                <li>Research Review: Can models &quot;reason&quot;?</li>
+                <li>Ethics: TESCREAL</li>
+                <li>Ethics: AI and the Environment</li>
+                <li><strong>Mid-term project!</strong></li>
+                <li>Theory: Transformers</li>
+                <li>Theory and Practice: Music Generation</li>
+                <li>Theory: Diffusion</li>
+                <li>Theory and practice: Model internals and Comfy-UI</li>
+                <li>Theory and practice: Image Gen – On-device and in the cloud</li>
+                <li>Hands on: Video Games</li>
+                <li><strong>Final project!</strong></li>
               </ul>
+              <p className="text-sm text-gray-600 mt-4 italic">
+                AI is changing fast! The exact make-up of this list may change subtly to keep up with important developments in the field.
+              </p>
             </div>
           </section>
 
@@ -111,12 +127,6 @@ export default function Home() {
                 className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
               >
                 Full Syllabus →
-              </Link>
-              <Link
-                href="/projects"
-                className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
-              >
-                Student Projects →
               </Link>
             </div>
           </section>

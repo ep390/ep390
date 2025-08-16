@@ -13,7 +13,9 @@ author:
 - Time: Tuesdays 6-8pm
 - Instructor: Charles Holbrow
 - Instructor Email: cholbrow@berklee.edu
-
+- Office Hours: TBD
+- Course Chair: [Michele Darling](https://www.berklee.edu/people/michelle-darling)
+- Administrative Coordinator - [Michelle Stockman](mailto:mstockman@berklee.edu)
 
 ## Course Description
 
@@ -25,15 +27,46 @@ So which is it? **Over-hyped purveyor of AI Slop?** Or **impending economic revo
 
 Learn to see through the hype and make your own informed opinions about the utility, trajectory, and ethics of modern generative AI.
 
+## Topic List
 
-## In this class, you will:
+Each week will introduce a new topic, and work on an introductory lab exercise. Each exercise is an opporunity to build on further in the mid-term and final projects.
+
+- Hands on: Tools for agentic code generation
+- Hands on: Symbolic Music Generation
+- Research Review: Can models “reason”?
+- Ethics: TESCREAL
+- Ethics: AI and the Environment
+- **Mid-term project!**
+- Theory: Transformers
+- Theory and Practice: Music Generation
+- Theory: Diffusion
+- Theory and practice: Model internals and Comfy-UI
+- Theory and practice: Image Gen – On-device and in the cloud
+- Hands on: Video Games
+- **Final project!**
+
+AI is changing fast! The exact make-up of this list may change subtlly to keep up with iportant developments in the field.
+
+## Course Activities
+
+In this class, you will:
 
 - Get hands-on practice with modern tools for generating media
-- Build understanding by studying how the models work under the hood
+- Studying how the models work under the hood
 - Explore research and criticism of Generative AI
 - Build a portfolio of content and reflections that expose AI strengths and weaknesses
-- Learn to identify pitfalls in Generative AI
 - Develop an informed critical take on the utility and ethics of generative AI
+
+## Learning Outcomes
+
+Upon completion of this course, students will be able to:
+
+- **Demonstrate proficiency** with contemporary generative AI tools for creating music, code, and images
+- **Analyze and explain** the fundamental technical principles underlying transformer and diffusion models
+- **Critically evaluate** generative AI research papers and distinguish between hype and substantive claims
+- **Assess** the environmental, ethical, and economic implications of generative AI deployment
+- **Identify and articulate** - Learn to identify pitfalls in Generative AI
+- **Develop** well-reasoned perspectives on AI's role in creative industries
 
 ## Prerequisites
 
@@ -41,18 +74,31 @@ Learn to see through the hype and make your own informed opinions about the util
 - The class requires a B or better in LMSC-261 to enroll
 - We will be using both Python and JavaScript – Comfort with at least one of these is required
 
-## Deliverables
+## Preamble
 
-1. **GitHub Repository**: Complete source code
-2. **Live Demo**: Deployed application (if applicable)
-3. **Documentation**: README with setup instructions
-4. **Presentation Slides**: PDF format
+Some contents of the curriculum may change in small ways based on our progress
+throughout the semester and based on new and ongoing developments in the field.
+The course policies, expectations, and grading metrics will not change.
+
+## Expectations
+
+All students are expected to
+
+- Attend fourteen lectures
+- Take a syllabus quiz
+- Work on six laboratory exercises
+- Present 1-2 research works
+- Design and implement mid-term and final projects
+- Participate in the mid-term and final project presentations
 
 ## Grading Criteria
 
-- Code Quality (40%)
-- Functionality (30%)
-- Documentation (20%)
-- Presentation (10%)
+## Bias towards Open Models
 
-This organizational structure allows you to keep related content together while still making it accessible through the unified blog system!
+Currently, the best generative models are "closed weight," meaning that in order to access them you need to pay to use a model by sending a request to the model providers web-service.
+
+Sometimes proprietary closed-sourced generative models are promoted for free.
+
+**In this class we will prioritize free and open-weight models when possible and appropriate.**
+
+We will **avoid** proprietary services like Suno that focus web based UIs.
