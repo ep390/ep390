@@ -91,17 +91,30 @@ The course policies, expectations, and grading metrics will not change.
 All students are expected to
 
 - Attend fourteen lectures
-- Take a syllabus quiz
-- Work on six laboratory exercises
+- Work on weekly assignments
 - Present 1-2 research works
 - Design and implement mid-term and final projects
 - Participate in the mid-term and final project presentations
+- *Experiment with unfamiliar technologies*
+
+The last bullet above is important! Each time you expose yourself to a new
+instrument or technology there is some discomfort as you learn your way around
+it and become proficient. The good news is that the more you do this, the easier
+and more fun it gets – and the *FASTER* you start to learn other related
+instruments and technologies.
+
+We will be using Python, JavaScript, and TypeScript. You do not have to be good
+at them. You do have to be willing to dive in and try. The goal is to learn to
+get through the discomfort so that you can move on to the fun parts quickly.
+
 
 ## Grading Criteria
 
 ## Bias towards Open Models
 
-Currently, the best generative models are "closed weight," meaning that in order to access them you need to pay to use a model by sending a request to the model provider's web-service.
+Currently, the best generative models are "closed weight," meaning that in order
+to access them you need to pay to use a model by sending a request to the model
+provider's web-service.
 
 Sometimes proprietary closed-source generative models are promoted for free.
 
