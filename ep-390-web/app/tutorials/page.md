@@ -1,6 +1,6 @@
 ---
 title: "Basic Setup Tutorial"
-excerpt: "Learn how to set up your development environment for EP-390."
+excerpt: "Submit Homework for EP-390."
 date: "2024-01-25T10:00:00.000Z"
 author:
   name: "Tutorial Author"
@@ -22,7 +22,7 @@ This tutorial is located at `app/tutorials/page.md` and demonstrates how markdow
 Before starting this tutorial, make sure you have:
 
 - Node.js installed (version 18 or higher)
-- A code editor (VS Code recommended)
+- A code editor (VS Code is a good option)
 - Basic knowledge of JavaScript/TypeScript
 
 ## Getting Started
@@ -31,4 +31,5 @@ Before starting this tutorial, make sure you have:
 2. Install dependencies with `npm install`
 3. Start the development server with `npm run dev`
 
-The beauty of this approach is that you can organize your content however makes sense for your project structure!
+This will start a web server on your local machine
+

@@ -23,9 +23,12 @@ export default function PostsIndex() {
                 </Link>
               </h2>
               <div className="text-sm text-gray-500 mb-3">
-                <span>By {post.author.name}</span>
-
-                <span className="mx-2">•</span>
+                {post.author && (
+                  <>
+                    <span>By {post.author.name}</span>
+                    <span className="mx-2">•</span>
+                  </>
+                )}
                 <span>{post.date?.toLocaleDateString() || "Unknown Date"}</span>
                 <span className="mx-2">•</span>
                 <span className="text-xs bg-gray-100 px-2 py-1 rounded">

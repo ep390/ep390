@@ -20,8 +20,12 @@ export default async function Post(props: Params) {
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex items-center text-gray-600 text-sm">
-            <span>{post.author.name}</span>
-            <span className="mx-2">•</span>
+            {post.author && (
+              <>
+                <span>{post.author.name}</span>
+                <span className="mx-2">•</span>
+              </>
+            )}
             {post.date && (
               <time dateTime={post.date.toISOString()}>
                 {post.date.toLocaleDateString("en-US", {
