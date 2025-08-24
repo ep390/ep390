@@ -4,7 +4,6 @@ excerpt: "Course Syllabus: Generative AI for Music, Code, and Image"
 date: "2025-08-15"
 author:
   name: "Charles"
-  picture: "/placeholder-avatar.jpg"
 ---
 
 ## Generative AI for Music, Code, and Image

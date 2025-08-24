@@ -4,6 +4,7 @@ import { getAllMarkdownPaths, getPostByPath, markdownToHtml } from "./utils";
 import Link from "next/link";
 import styles from "@/styles/markdown.module.css";
 import Markdown from "./markdown";
+import ProfileIcon from "@/components/ProfileIcon";
 
 export default async function Post(props: Params) {
   const params = await props.params;
@@ -22,6 +23,10 @@ export default async function Post(props: Params) {
           <div className="flex items-center text-gray-600 text-sm">
             {post.author && (
               <>
+                <ProfileIcon 
+                  profile={post.author} 
+                  className="mr-3" 
+                />
                 <span>{post.author.name}</span>
                 <span className="mx-2">•</span>
               </>

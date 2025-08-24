@@ -4,8 +4,10 @@ excerpt: "Submit Homework for EP-390."
 date: "2024-01-25T10:00:00.000Z"
 author:
   name: "Tutorial Author"
-  picture: "/placeholder-avatar.jpg"
+  picture: "/students/alice/profile.webp"
 ---
+
+# TBD
 
 # Basic Setup Tutorial
 

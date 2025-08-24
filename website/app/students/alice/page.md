@@ -1,17 +1,16 @@
 ---
-title: "Final Project Guidelines"
-excerpt: "Hi from your course instructor."
-date: "2025-08-14"
+title: "Alice's EP-390"
+excerpt: ""
+date: "2025-08-23"
 author:
-  name: "Charles"
-  picture: "/placeholder-avatar.jpg"
+  name: "Alice"
+  picture: "/students/alice/profile.webp"
 ---
 
-This document is located at `app/hi/page.md` and shows how project-related content can be organized in its own directory.
-
+I'm an example!
 
 ```javascript
-//ok then 
+// I know JavaScript
 const h = 'hell';
 function by() {
   console.log('bye bye');
@@ -19,7 +18,7 @@ function by() {
 ```
 
 ```python
-# ok then
+# And I know Python
 def ok():
   print('this is fine')
 
@@ -30,6 +29,8 @@ class Cat:
 c = Cat()
 c.lick()
 ```
+
+And am learning GitHub flavored Markdown.
 
 | Column 1 | Column 2 | Column 3 |
 |----------|----------|----------|
