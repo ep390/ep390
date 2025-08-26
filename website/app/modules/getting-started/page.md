@@ -11,7 +11,7 @@ this file changes on the main branch a GitHub action builds a new version of the
 website, and publishes it to
 [ep390.vercel.app/syllabus](https://ep390.vercel.app/syllabus)
 
-This is a general pattern. We'll use it to create pages for assignments
+This is a general pattern. We'll use it to create pages for assignments.
 
 Notice how this filename maps to a web "route".
 

@@ -3,6 +3,9 @@ title: "Assignment 1: Next.js Web Server Basics"
 excerpt: "Over the course of the semester, we will explore how far we can push AI to create increasingly elaborate content."
 ---
 
+- Due Date: 6PM EST September 9, 2024
+- Cutoff: 6PM EST September 16, 2024
+
 Over the course of the semester, we will explore how far we can push AI to
 create increasingly elaborate content. In class we created a simple `.md` file.
 Next we're going to take the first step towards creating interactive content on
