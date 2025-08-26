@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Creating a Page on the Class Website
 date: "2025-08-25"
 author:
   name: Charles Holbrow
@@ -25,14 +25,13 @@ Make a sub-folder and **`page.md`** file your assignments. For example:
 - Development route: [http://localhost:3000/**students/alice**/](http://localhost:3000/students/alice)
 - Production route: [https://ep390.vercel.app/**students/alice**/](https://ep390.vercel.app/students/alice)
 
-## Activity
-
-Create a page for yourself like the alice example above.
+## Hands On
 
 First, ensure [Node.js](https://nodejs.org/) is installed.
 
-Then, clone the repository and install the development environment by executing
-these commands in the terminal
+Now we will create a page on the class website like Alice's above. Clone the
+repository and install the development environment by executing these commands
+in the terminal. You can use GitHub Desktop to clone if you prefer.
 
 ```bash
 git clone https://github.com/ep390/ep390.git
@@ -51,14 +50,44 @@ Creating a new branch is essential for submitting your homework correctly!
 When starting work in a shared git repository always begin by creating a new git branch, for example
 
 ```bash
-git checkout -b charles-hw1
+git checkout -b alice-page
 ```
 
-You can also use GitHub Desktop if you do not want to user the Terminal.
-Sustitute `charles-hw` with a suitable branch name.
+Substitute `alice-page` with a suitable branch name.
+
+You can use GitHub Desktop if you do not want to use the Terminal.
 
 Create a new directory with your name and add a `page.md`, for example
 [website/app/students/alice/page.md](https://github.com/ep390/ep390/blob/main/website/app/students/alice/page.md?plain=1)
+
+Copy Alice's introductory blog post, and replace her content and thoughts with your own. What do you think AI is useful / overhyped for?
+
+```
+---
+title: "Alice's EP-390"
+excerpt: ""
+date: "2025-08-23"
+author:
+  name: "Alice"
+---
+
+I'm an example student taking EP 390!
+
+I think generative AI is useful for doing your homework for you.
+
+I think generative AI could be over-hyped for its ability to self-improve.
+```
+
+**Important: this will be posted on the public internet so keep it professional!** 
+
+You may use a screen-name instead of your first name, but make sure your
+professor knows who the page belongs to.
+
+Navigate to the local version of your newly created page, which will look something like Alice's:
+
+[http://localhost:3000/students/alice](http://localhost:3000/students/alice)
+
+Ensure it looks good before proceeding.
 
 ### 3. Push and create a PR
 
@@ -66,6 +95,7 @@ Tell the instructor your GitHub username. After they add you to the class
 Repository push your branch, for example:
 
 ```bash
-git push -u origin charles-hw
+git push -u origin alice-page
 ```
 
+Now use GitHub to create a pull request from your branch to the main branch.

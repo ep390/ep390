@@ -1,40 +1,14 @@
 ---
 title: "Alice's EP-390"
-excerpt: ""
+excerpt: "I'm an example student taking EP 390!"
 date: "2025-08-23"
 author:
   name: "Alice"
   picture: "/students/alice/profile.webp"
 ---
 
-I'm an example!
+I'm an example student taking EP 390!
 
-```javascript
-// I know JavaScript
-function by() {
-  console.log('bye bye');
-}
+I think generative AI is useful for doing your homework for you.
 
-by()
-```
-
-```python
-# And I know Python
-def ok():
-  print('this is fine')
-
-class Cat:
-  def speak(self):
-    print('meow')
-
-c = Cat()
-c.lick()
-```
-
-And am learning GitHub flavored Markdown.
-
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data A   | Value 1  |
-| Row 2    | Data B   | Value 2  |
-| Row 3    | Data C   | Value 3  |
+I think generative AI could be over-hyped for its ability to self-improve.
