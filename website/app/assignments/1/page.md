@@ -1,5 +1,5 @@
 ---
-title: "Module 1: Next.js Web Server Basics"
+title: "Assignment 1: Next.js Web Server Basics"
 excerpt: "Over the course of the semester, we will explore how far we can push AI to create increasingly elaborate content."
 ---
 
@@ -18,7 +18,7 @@ JavaScript.
 
 ### 1. Setup the Web Server
 
-Make sure that the class website development server is running on your computer by following the instructions in [Creating a Page on the Class Website](/modules/class-page). 
+Make sure that the class website development server is running on your computer by following the instructions in [Getting Started](/modules/getting-started). 
 
 You can verify this by going to http://localhost:3000/ in your browser. If you see
 the class page, that means the dev server is running.
@@ -71,6 +71,8 @@ http://localhost:3000/students/your-name/hw1 and verify it renders correctly
    - Use the same CSS classes as the first list: `className="list-disc list-inside space-y-1"`
 
 Verify again that http://localhost:3000/students/your-name/hw1 renders correctly
+
+For bragging rights, you can add styling.
 
 ### 3. Commit and Push to GitHub
 

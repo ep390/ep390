@@ -1,5 +1,5 @@
 ---
-title: Creating a Page on the Class Website
+title: Getting Started
 date: "2025-08-25"
 author:
   name: Charles Holbrow
