@@ -90,7 +90,7 @@ The course policies, expectations, and grading metrics will not change.
 All students are expected to
 
 - Attend fourteen lectures
-- Work on weekly assignments
+- Work on weekly assignments which will be visible in the class website
 - Present 1-2 research works
 - Design and implement mid-term and final projects
 - Participate in the mid-term and final project presentations
@@ -106,8 +106,17 @@ We will be using Python, JavaScript, and TypeScript. You do not have to be good
 at them. You do have to be willing to dive in and try. The goal is to learn to
 get through the discomfort so that you can move on to the fun parts quickly.
 
+## Grade Determination
+The grade is determined as follows:
 
-## Grading Criteria
+Description|Grade
+:--|:--
+Research Work | 20%
+Lab exercises | 30%
+Mid-term Project | 25%
+Final Project | 25%
+
+Assignments submitted after the cutoff will not be accepted.
 
 ## Bias towards Open Models
 

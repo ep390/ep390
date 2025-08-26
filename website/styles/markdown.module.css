@@ -64,10 +64,6 @@
   text-decoration: underline;
 }
 
-.markdownContent a:visited {
-  color: #551a8b;
-}
-
 /* Code */
 .markdownContent code {
   background-color: #f6f8fa;

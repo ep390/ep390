@@ -11,10 +11,11 @@ I'm an example!
 
 ```javascript
 // I know JavaScript
-const h = 'hell';
 function by() {
   console.log('bye bye');
 }
+
+by()
 ```
 
 ```python
@@ -23,7 +24,7 @@ def ok():
   print('this is fine')
 
 class Cat:
-  def lick(self):
+  def speak(self):
     print('meow')
 
 c = Cat()
