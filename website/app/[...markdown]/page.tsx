@@ -14,6 +14,14 @@ export default async function Post(props: Params) {
   if (!post) return notFound();
 
   const content = await markdownToHtml(post.content || "");
+  
+  // Calculate parent directory path for "up one level" navigation
+  const parentPath = params.markdown.length >= 2 
+    ? `/${params.markdown.slice(0, -1).join('/')}`
+    : null;
+  const parentName = params.markdown.length >= 2 
+    ? params.markdown[params.markdown.length - 2]
+    : null;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -56,6 +64,14 @@ export default async function Post(props: Params) {
         >
           ← Back to Home
         </Link>
+        {parentPath && parentName && (
+          <Link 
+            href={parentPath} 
+            className="inline-block ml-4 text-blue-600 hover:text-blue-800"
+          >
+            ↑ Back to {parentName}
+          </Link>
+        )}
       </div>
     </div>
   );

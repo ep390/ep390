@@ -1,9 +1,11 @@
 ---
-title: "Lesson 1: Getting Started"
+title: "Module 1: Next.js Web Server Basics"
 excerpt: "Let's create some pages in the class website. Over the course of the semester, we will explore how far we can push AI to create increasingly elaborate content."
 ---
 
-Let's create some pages in the class website. Over the course of the semester, we will explore how far we can push AI to create increasingly elaborate content. To get started we will go over the simplest possible example.
+Let's create some pages in the class website. Over the course of the semester,
+we will explore how far we can push AI to create increasingly elaborate content.
+But first we will try a very simple example.
 
 ## What You'll Learn
 
@@ -15,22 +17,10 @@ Let's create some pages in the class website. Over the course of the semester, w
 
 ### 1. Setup the Web Server
 
-First, ensure [Node.js](https://nodejs.org/) is installed.
+Follow the instructions in [Getting Started](/modules/getting-started) to make
+sure that the development server is running on your computer.
 
-Then, clone the repository and install the development environment by executing
-these commands in the terminal
-
-```bash
-git clone https://github.com/ep390/ep390.git
-cd ep390/website/
-npm install
-npm run dev
-```
-
-This will start a "development" web server on your local machine that runs the
-class website, probably at [http://localhost:3000](http://localhost:3000/)
-
-### 2. Update Your Page
+### 2. Create a tsx 
 
 Creating a new branch is essential for submitting your homework correctly!
 
@@ -40,18 +30,13 @@ When starting work in a shared git repository always begin by creating a new git
 git checkout -b charles-hw1
 ```
 
-You can also use GitHub Desktop if you do not want to user the Terminal.
-Sustitute `charles-hw` with a suitable branch name.
+You can also use GitHub Desktop if you do not want to use the Terminal.
+Sustitute `charles-hw1` with a suitable branch name.
 
-
-
-
-
-2. Create a new directory with your name put in `page.md`, for example
+2. Create a new directory with your name and add a `page.md`, for example
    - [website/app/students/alice/page.md](https://github.com/ep390/ep390/blob/main/website/app/students/alice/page.md?plain=1)
 
-
-### 3. Push To GitHub
+### 3. Commit and Push to GitHub
 
 TBD
 
@@ -61,8 +46,11 @@ TBD
 
 ## Grading Rubric
 
-- Front Matter:
-- Your pull request changed only files in the correct  directory (you may also modify the your subdirectory in the public folder, for example `website/public/students/alice/`)
-- Your file names are correct (for example `website/app/students/alice/page.md`)
-- You created a single branch dedicated only to the assignment
-- Your content is legible and 
+- **10** Your pull request changed only files in the correct  directory (you may also modify the your subdirectory in the public folder, for example `website/public/students/alice/`)
+- **10** Your file names are correct (for example `website/app/students/alice/page.md`)
+- **10** You created a single branch dedicated only to the assignment
+- **10** Your content is legible and 
+- **10** Your content has no broken links
+- **10** Your content has a YAML formatted front matter with a title
+- **10** Your content has a YAML formatted front matter with a date string for example `"2025-09-2"`
+- **10** Your page renders correctly on the web
