@@ -11,15 +11,13 @@ this file changes on the main branch a GitHub action builds a new version of the
 website, and publishes it to
 [ep390.vercel.app/syllabus](https://ep390.vercel.app/syllabus)
 
-This is a general pattern. We'll use it to create pages for assignments.
-
 Notice how this filename maps to a web "route".
 
 - Git repo filename: [website/app/**syllabus**/page.md](https://github.com/ep390/ep390/blob/main/website/app/syllabus/page.md?plain=1)
 - Development route: [http://localhost:3000/**syllabus**/](http://localhost:3000/syllabus)
 - Production route: [https://ep390.vercel.app/**syllabus**/](https://ep390.vercel.app/syllabus/)
 
-Make a sub-folder and **`page.md`** file your assignments. For example:
+This is a general pattern. We'll use it to create pages for assignments. You will put your assignments in a nested directory, for example:
 
 - Git repo filename: [website/app/**students/alice**/page.md](https://github.com/ep390/ep390/blob/main/website/app/students/alice/page.md?plain=1)
 - Development route: [http://localhost:3000/**students/alice**/](http://localhost:3000/students/alice)
@@ -65,7 +63,6 @@ Copy Alice's introductory blog post, and replace her content and thoughts with y
 ```
 ---
 title: "Alice's EP-390"
-excerpt: ""
 date: "2025-08-23"
 author:
   name: "Alice"
@@ -78,7 +75,7 @@ I think generative AI is useful for doing your homework for you.
 I think generative AI could be over-hyped for its ability to self-improve.
 ```
 
-**Important: this will be posted on the public internet so keep it professional!** 
+**Important: this will be posted on the public internet so keep it professional!**
 
 You may use a screen-name instead of your first name, but make sure your
 professor knows who the page belongs to.

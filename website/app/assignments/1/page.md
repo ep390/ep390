@@ -75,7 +75,7 @@ http://localhost:3000/students/your-name/hw1 and verify it renders correctly
 
 Verify again that http://localhost:3000/students/your-name/hw1 renders correctly
 
-For bragging rights, you can add styling. 
+For bragging rights, you can add styling.
 
 ### 3. Commit and Push to GitHub
 
