@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllMarkdownPaths, getPostByPath, markdownToHtml } from "./utils";
 import Link from "next/link";
-import styles from "@/styles/markdown.module.css";
+import styles from "./markdown.module.css";
 import Markdown from "./markdown";
 import ProfileIcon from "@/components/ProfileIcon";
 
