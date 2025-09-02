@@ -147,6 +147,18 @@ export default function Home() {
               >
                 Full Syllabus →
               </Link>
+              <Link
+                href="/modules"
+                className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
+              >
+                Modules →
+              </Link>
+              <Link
+                href="/assignments"
+                className="text-black font-semibold text-lg hover:text-purple-600 transition-colors"
+              >
+                Assignments →
+              </Link>
             </div>
           </section>
         </main>
