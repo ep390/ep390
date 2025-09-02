@@ -6,8 +6,8 @@ export default function StudentPage() {
       <h2 className="text-2xl font-semibold mt-6 mb-3">Musical Inspirations: Genres and Artists</h2>
       <ul className="list-disc list-inside space-y-1">
         <li>Ambient</li>
-        <li>Aphex Twin</li>
-        <li>Jazz</li>
+        <li>JAZZ</li>
+        <li>UVI-SHADE</li>
       </ul>
     </div>
   );
