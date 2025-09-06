@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useMidi, useSelectedMidiOutput } from '../../../components/midi.jsx'
 
 function ClickableButton() {
   const [count, setCount] = useState(0)

@@ -1,12 +1,14 @@
 'use client'
 
-import { useMidi, useSelectedMidiOutput } from '../../../components/midi.jsx'
+import { useSelectedMidiOutput, useMidiAccess, useMidiPermissionStatus } from '../../../components/midi'
 
 export default function MidiPage() {
-  const { status, inputs, outputs, error, enable } = useMidi()
+  const status = useMidiPermissionStatus()
+  const { inputs, outputs, error, enable } = useMidiAccess()
   const { selectedOutput, selectedOutputId, selectOutput } = useSelectedMidiOutput(outputs)
   return (
-    <>      <h1 className="text-4xl font-bold mb-4">MIDI Test Section</h1>
+    <>
+      <h1 className="text-4xl font-bold mb-4">MIDI Test Section</h1>
       <p className="mb-2">This section is for testing the MIDI functionality.</p>
       <div className="p-4 border rounded-lg mb-6">
         <div className="flex items-center gap-4 mb-2">
