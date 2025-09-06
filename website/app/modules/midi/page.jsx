@@ -16,17 +16,17 @@ export default function MidiPage() {
   const { error } = useMidiContext();
   const { selectedOutput } = useMidiOutputSelection();
 
-  const sendNoteOn = () => {
+  function sendNoteOn() {
     if (!selectedOutput) return;
     selectedOutput.send([NOTE_ON, 48, 127]);
   }
 
-  const sendNoteOff = () => {
+  function sendNoteOff() {
     if (!selectedOutput) return;
     selectedOutput.send([NOTE_OFF, 48, 0]);
   }
 
-  const playNote = () => {
+  function playNote() {
     sendNoteOn();
     setTimeout(() => sendNoteOff(), 1000);
   }
