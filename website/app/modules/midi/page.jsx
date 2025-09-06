@@ -1,6 +1,7 @@
 'use client'
 
 import styles from '@/app/[...markdown]/markdown.module.css'
+import ModuleFooter from '@/components/ModuleFooter'
 
 import {
   useMidiContext,
@@ -49,6 +50,7 @@ export default function MidiPage() {
           </button>
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
+        <ModuleFooter />
       </div>
     </div>
   )
