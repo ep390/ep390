@@ -3,12 +3,12 @@ title: "Assignment 1: Next.js Web Server Basics"
 excerpt: "Over the course of the semester, we will explore how far we can push AI to create increasingly elaborate content."
 ---
 
-- Due Date: 6PM EST September 9, 2024
-- Cutoff: 6PM EST September 16, 2024
+- Due Date: 6 PM EST September 9, 2024
+- Cutoff: 6 PM EST September 16, 2024
 
 Over the course of the semester, we will explore how far we can push AI to
-create increasingly elaborate content. In class we created a simple `.md` file.
-Next we're going to take the first step towards creating interactive content on
+create increasingly elaborate content. In class, we created a simple `.md` file.
+Next, we're going to take the first step toward creating interactive content on
 the web.
 
 Generative AIs were trained on data extracted from the web. As a result, they
@@ -19,7 +19,7 @@ JavaScript.
 
 ## Assignment
 
-### 1. Setup the Web Server
+### 1. Set Up the Web Server
 
 Make sure that the class website development server is running on your computer by following the instructions in [Getting Started](/modules/getting-started). 
 
@@ -30,17 +30,17 @@ the class page, that means the dev server is running.
 
 Creating a new branch is essential for submitting your homework correctly!
 
-When starting work in a shared git repository, always begin by creating a new git branch, for example:
+When starting work in a shared Git repository, always begin by creating a new Git branch, for example:
 
 ```bash
 git checkout -b alice-hw1
 ```
 
 You can also use GitHub Desktop if you do not want to use the Terminal.
-Substitute `alice-hw1` with a suitable branch name.
+Replace `alice-hw1` with a suitable branch name.
 
-1. Create a new directory in your student folder named `website/app/students/alice/hw1/` (replace `alice` with your name)
-1. Add a `page.jsx` file in that directory, for example: `website/app/students/alice/hw1/page.jsx`
+1. Create a new directory in your student folder named `website/app/students/alice/hw1/` (replace `alice` with your name).
+1. Add a `page.jsx` file in that directory, for example: `website/app/students/alice/hw1/page.jsx`.
 
 Copy the following JSX code:
 
@@ -61,9 +61,9 @@ export default function StudentPage() {
 }
 ```
 
-Open up your page on your local machine
+Open your page on your local machine:
 http://localhost:3000/students/your-name/hw1 and verify it renders correctly
-(but replace `your-name` in the url)
+(replace `your-name` with your actual username in the URL)
 
 **Your Task:** Modify the JSX code above to personalize it:
 1. Change "Alice's EP 390 Page" to use your own name
@@ -73,7 +73,7 @@ http://localhost:3000/students/your-name/hw1 and verify it renders correctly
    - A new `<ul>` list with a few favorite VST synthesizers, drum machines, or other instruments
    - Use the same CSS classes as the first list: `className="list-disc list-inside space-y-1"`
 
-Verify again that http://localhost:3000/students/your-name/hw1 renders correctly
+Verify again that http://localhost:3000/students/your-name/hw1 renders correctly.
 
 For bragging rights, you can add styling.
 
