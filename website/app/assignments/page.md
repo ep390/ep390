@@ -6,6 +6,7 @@ excerpt: "Assignments for Generative AI for Music, Image, and Code"
 ## EP390 Assignments
 
 [Assignment 1: Next.js Web Server Basics](/assignments/1/)
+[Assignment 2: Tools for Agentic Coding](/assignments/2/)
 
 ## Submission Process
 
