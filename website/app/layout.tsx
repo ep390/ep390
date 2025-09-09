@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
+import {
+  MidiProvider,
+  MidiOutputSelectionProvider,
+  MidiInputSelectionProvider,
+} from "@/components/midi";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,7 +21,8 @@ const jetBrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Generative AI for Music, Code, and Image | EP-390",
-  description: "A course exploring the core components of generative AI systems, focusing on their strengths and weaknesses in creative applications. Students will learn to create images, code, and music with AI tools.",
+  description:
+    "A course exploring the core components of generative AI systems, focusing on their strengths and weaknesses in creative applications. Students will learn to create images, code, and music with AI tools.",
 };
 
 export default function RootLayout({
@@ -29,7 +35,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        {children}
+        <MidiProvider>
+          <MidiOutputSelectionProvider>
+            <MidiInputSelectionProvider>{children}</MidiInputSelectionProvider>
+          </MidiOutputSelectionProvider>
+        </MidiProvider>
       </body>
     </html>
   );

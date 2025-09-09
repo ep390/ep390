@@ -1,6 +1,8 @@
 ---
 title: "EP390 Modules"
-date: "2025-08-22"
 ---
 
 1. [Getting Started](/modules/getting-started/)
+1. [JavaScript Basics](/modules/js-basics/)
+1. [React Basics](/modules/react-basics/)
+1. [MIDI](/modules/midi/)
