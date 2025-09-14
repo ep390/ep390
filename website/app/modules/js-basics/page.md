@@ -6,9 +6,9 @@ Get a feel for the JS langauge...
 
 To run JavaScript you need an interpreter like a web browser, [node](https://nodejs.org/), [deno](https://deno.com/), or [bun](https://bun.sh/).
 
-We will use `node`. Make sure it is installed.
+We will use `node`. You can download it from [nodejs.org](http://nodejs.org).
 
-**Do not try to memorize the syntax.** _Your memory will strengthen as you work with the langauge._
+**Do not try to memorize the syntax all at once.** _Your memory will strengthen as you work with the langauge._
 
 ## Creating and Assigning Variables
 
@@ -104,7 +104,10 @@ Objects group related values. They use key-value pairs.
 Try entering this code:
 
 ```javascript
-const user = { name: "Alice", score: 0 };
+const user = {
+  name: "Alice",
+  score: 0,
+};
 console.log(user.name); // "Alice"
 console.log(user.score); // 0
 ```
@@ -114,7 +117,8 @@ Change values with dot notation:
 ```javascript
 user.score = 10;
 user.name = "Bob";
-console.log(user); // { name: "Bob", score: 10 }
+console.log(user);     // { name: "Bob", score: 10 }
+console.log(user.name) // "Bob"
 ```
 
 Add a new key:
@@ -134,6 +138,12 @@ console.log(user[key]); // "Bob"
 Objects can be nested:
 
 ```javascript
-const game = { title: "Tennis", player: { name: "Bob", score: 10 } };
+const game = {
+  title: "Tennis",
+  player: {
+    name: "Bob",
+    score: 10,
+  },
+};
 console.log(game.player.name); // "Bob"
 ```
