@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
   useMemo,
   useContext,
   createContext,
@@ -326,3 +327,263 @@ export function MidiOutputSelector() {
     </select>
   );
 }
+
+export function MidiInputSelector() {
+  const { outputs, enable } = useMidiContext();
+  const status = useMidiPermissionStatus();
+  const { selectedInputId, selectInput } = useMidiInputSelection();
+
+  const maybeEnableOnGesture = useCallback(() => {
+    // Trigger enable on user gesture if we have no outputs and permission is not explicitly denied.
+    if ((!outputs || outputs.length === 0) && status !== "denied") {
+      enable();
+    }
+  }, [outputs, status, enable]);
+
+  if (status === "denied") {
+    return (
+      <select
+        disabled
+        className="p-2 border rounded-lg bg-gray-100 text-gray-500"
+      >
+        <option>MIDI access denied</option>
+      </select>
+    );
+  }
+
+  return (
+    <select
+      value={selectedInputId || ""}
+      onChange={(e) => selectInput(e.target.value)}
+      className="p-2 border rounded-lg"
+      onMouseDown={maybeEnableOnGesture}
+      onClick={maybeEnableOnGesture}
+      onTouchStart={maybeEnableOnGesture}
+      onFocus={maybeEnableOnGesture}
+    >
+      <option value="">Select MIDI Input</option>
+      {outputs.map((input) => (
+        <option key={input.id} value={input.id}>
+          {input.name}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+export type MidiChannelNumber = number; // 0-15
+
+export interface MidiHandlerOptions {
+  // Channel Voice Messages
+  noteOn?: (note: number, velocity: number, channel: MidiChannelNumber) => void;
+  noteOff?: (note: number, velocity: number, channel: MidiChannelNumber) => void;
+  cc?: (controllerNumber: number, value: number, channel: MidiChannelNumber) => void;
+  pitchBend?: (value14bit: number, channel: MidiChannelNumber) => void; // 0-16383, 8192 center
+  channelPressure?: (value: number, channel: MidiChannelNumber) => void;
+
+  // System Common / Real-Time
+  clock?: () => void; // 0xF8
+  start?: () => void; // 0xFA
+  stop?: () => void; // 0xFC
+  continue?: () => void; // 0xFB
+  songPosition?: (beatsLsbMsb14bit: number) => void; // 0xF2 (14-bit)
+
+  // Diagnostics (optional)
+  mysteryStatusByte?: (statusByte: number) => void;
+  mysteryDataByte?: (dataByte: number) => void;
+}
+
+export interface UseMidiHandlersOptions {
+  // Treat note-on with velocity 0 as note-off. Default true.
+  treatZeroVelocityAsNoteOff?: boolean;
+}
+
+// ------------------------------------------------------------
+// Helpers
+// ------------------------------------------------------------
+
+function to14Bit(lsb: number, msb: number): number {
+  return (lsb & 0x7f) + ((msb & 0x7f) << 7);
+}
+
+function getStatusHighNibble(statusByte: number): number {
+  return statusByte & 0xf0;
+}
+
+function getChannel(statusByte: number): number {
+  return statusByte & 0x0f;
+}
+
+// ------------------------------------------------------------
+// Core parsing: decode a single Web MIDI message and invoke handlers
+// ------------------------------------------------------------
+
+export function parseMidiMessage(data: Uint8Array, handlers: MidiHandlerOptions, opts?: UseMidiHandlersOptions) {
+  if (!data || data.length === 0) return;
+  const h = handlers || {};
+  const status = data[0];
+
+  // System Real-Time (single-byte) and some System Common
+  if (status >= 0xf8) {
+    switch (status) {
+      case 0xf8:
+        if (h.clock) h.clock();
+        return;
+      case 0xfa:
+        if (h.start) h.start();
+        return;
+      case 0xfb:
+        if (h.continue) h.continue();
+        return;
+      case 0xfc:
+        if (h.stop) h.stop();
+        return;
+      default:
+        if (h.mysteryStatusByte) h.mysteryStatusByte(status);
+        return;
+    }
+  }
+
+  // System Common: Song Position Pointer (0xF2) → 2 data bytes (LSB, MSB)
+  if (status === 0xf2) {
+    if (data.length >= 3) {
+      const value14 = to14Bit(data[1], data[2]);
+      if (h.songPosition) h.songPosition(value14);
+    }
+    return;
+  }
+
+  const high = getStatusHighNibble(status);
+  const channel = getChannel(status);
+
+  switch (high) {
+    case 0x80: {
+      // Note Off: key, velocity
+      if (data.length >= 3) {
+        const note = data[1] & 0x7f;
+        const velocity = data[2] & 0x7f;
+        if (h.noteOff) h.noteOff(note, velocity, channel);
+      }
+      return;
+    }
+    case 0x90: {
+      // Note On: key, velocity (velocity 0 often used as Note Off)
+      if (data.length >= 3) {
+        const note = data[1] & 0x7f;
+        const velocity = data[2] & 0x7f;
+        const treatZeroAsOff = opts?.treatZeroVelocityAsNoteOff !== false;
+        if (velocity === 0 && treatZeroAsOff) {
+          if (h.noteOff) h.noteOff(note, 0, channel);
+        } else {
+          if (h.noteOn) h.noteOn(note, velocity, channel);
+        }
+      }
+      return;
+    }
+    case 0xb0: {
+      // Control Change: controller, value
+      if (data.length >= 3) {
+        if (h.cc) h.cc(data[1] & 0x7f, data[2] & 0x7f, channel);
+      }
+      return;
+    }
+    case 0xe0: {
+      // Pitch Bend: LSB, MSB → 14-bit value (0-16383), center 8192
+      if (data.length >= 3) {
+        const value14 = to14Bit(data[1], data[2]);
+        if (h.pitchBend) h.pitchBend(value14, channel);
+      }
+      return;
+    }
+    case 0xd0: {
+      // Channel Pressure (Aftertouch): value
+      if (data.length >= 2) {
+        if (h.channelPressure) h.channelPressure(data[1] & 0x7f, channel);
+      }
+      return;
+    }
+    default: {
+      // If we have an unknown status byte or incomplete data
+      if (h.mysteryStatusByte) h.mysteryStatusByte(status);
+      return;
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// React hook: attach parsing handlers to a MIDIInput
+// ------------------------------------------------------------
+
+export function useMidiHandlers(
+  handlers: MidiHandlerOptions,
+  options?: UseMidiHandlersOptions
+) {
+  const { selectedInput: input } = useMidiInputSelection();
+  const handlersRef = useRef<MidiHandlerOptions>(handlers);
+  const optionsRef = useRef<UseMidiHandlersOptions | undefined>(options);
+
+  // Keep the latest handlers/options without re-binding the event listener
+  useEffect(() => {
+    handlersRef.current = handlers || {};
+  }, [handlers]);
+
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
+
+  useEffect(() => {
+    if (!input) return;
+
+    const onMidiMessage = (event: MIDIMessageEvent) => {
+      if (!event?.data) return;
+      parseMidiMessage(event.data, handlersRef.current, optionsRef.current);
+    };
+
+    input.addEventListener("midimessage", onMidiMessage as unknown as EventListener);
+
+    return () => {
+      try {
+        input.removeEventListener("midimessage", onMidiMessage as unknown as EventListener);
+      } catch {}
+    };
+  }, [input]);
+}
+
+// ------------------------------------------------------------
+// Message builders (handy when sending to outputs)
+// ------------------------------------------------------------
+
+export const MidiMessage = {
+  noteOn(note: number, velocity: number, channel: MidiChannelNumber = 0) {
+    return [0x90 + (channel & 0x0f), note & 0x7f, velocity & 0x7f];
+  },
+  noteOff(note: number, velocity: number, channel: MidiChannelNumber = 0) {
+    return [0x80 + (channel & 0x0f), note & 0x7f, velocity & 0x7f];
+  },
+  cc(controller: number, value: number, channel: MidiChannelNumber = 0) {
+    return [0xb0 + (channel & 0x0f), controller & 0x7f, value & 0x7f];
+  },
+  channelPressure(value: number, channel: MidiChannelNumber = 0) {
+    return [0xd0 + (channel & 0x0f), value & 0x7f];
+  },
+  pitchBend(value14bit: number, channel: MidiChannelNumber = 0) {
+    const v = Math.max(0, Math.min(16383, value14bit | 0));
+    return [0xe0 + (channel & 0x0f), v & 0x7f, (v >> 7) & 0x7f];
+  },
+  clock() {
+    return [0xf8];
+  },
+  start() {
+    return [0xfa];
+  },
+  stop() {
+    return [0xfc];
+  },
+  continue() {
+    return [0xfb];
+  },
+  songPosition(value14bit: number) {
+    const v = Math.max(0, Math.min(16383, value14bit | 0));
+    return [0xf2, v & 0x7f, (v >> 7) & 0x7f];
+  },
+};
