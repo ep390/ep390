@@ -18,10 +18,10 @@ const classes = {
   ctor: "text-blue-600",
 };
 
-export default function RenderValue({ value, indentSize = 2 }: { value: unknown; indentSize?: number }) {
+export default function RenderValue({ object, indentSize = 2 }: { object: unknown; indentSize?: number }) {
   return (
     <pre className="p-4 rounded-lg overflow-x-auto font-mono text-sm">
-      {renderValueJSX(value, { indentSize })}
+      {renderValueJSX(object, { indentSize })}
     </pre>
   );
 }

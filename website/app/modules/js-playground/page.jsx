@@ -7,28 +7,45 @@ import PrettyJsObject from '@/components/PrettyJsObject'
 export default function JSPlaygroundPage() {
   const notes = [60, 63, 67];
 
-  const exampleObject = {
-    name: "Alice",
-    chord: notes,
-    firstNote: notes[0],
+  const chord = {
+    root: "C",
+    quality: "minor",
+    notes: notes,
   };
 
-  const output = exampleObject;
+  const output = chord;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className={styles.markdownContent}>
         <h1>JavaScript Playground</h1>
-        <p>
-          Find the code for this page in your text editor. Try changing the
-          <code>output</code> object and review the output.
-        </p>
+        <p>Open the source code for this page in your code editor.</p>
+        <p>Try updating the JavaScript that generates the output object below.</p>
         <h2>Output</h2>
-        <PrettyJsObject value={output} />
+        <PrettyJsObject object={output} />
+        <h1>Hands On</h1>
+        <ol>
+          <li>Complete the <code>chordQuality</code> function to determine the quality of the chord.</li>
+          <li>Do you understand the generated code? Use Gemini to explain it to you.</li>
+        </ol>
         <ModuleFooter />
       </div>
     </div>
   )
+}
+
+/**
+ * Convert a MIDI note number (61) to a pitch class name ("C#")
+ * @param {number} midiNoteNumber 
+ * @param {boolean} useFlat 
+ * @returns {string} the name of the pitch class
+ */
+function pitchClassName(midiNoteNumber, useFlat = false) {
+  const pitchClasses = useFlat
+    ? ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+    : ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  const noteIndex = midiNoteNumber % 12;
+  return pitchClasses[noteIndex];
 }
 
 /**
@@ -37,10 +54,17 @@ export default function JSPlaygroundPage() {
  * @returns {string} the name of the note
  */
 function noteName(midiNoteNumber, useFlat = false) {
-  const noteNames = useFlat 
-    ? ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"] 
-    : ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  const pitchClass = pitchClassName(midiNoteNumber, useFlat);
   const octave = Math.floor(midiNoteNumber / 12) - 1;
-  const noteIndex = midiNoteNumber % 12;
-  return noteNames[noteIndex] + octave;
+  return pitchClass + octave;
+}
+
+/**
+ * Determine the quality of a chord from an array of MIDI note numbers
+ * @param {number[]} notes 
+ * @returns {string} the quality of the chord
+ */
+function chordQuality(notes) {
+  // TODO: Implement this
+  return "unknown";
 }
