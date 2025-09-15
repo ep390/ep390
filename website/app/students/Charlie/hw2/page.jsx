@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useCallback, useEffect, useMemo, useRef, useState, useContext, createContext } from 'react'
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
 import styles from '@/app/[...markdown]/markdown.module.css'
@@ -328,7 +330,7 @@ export default function MidiPage() {
             <FXControls />
 
              <ADSRControls />
-
+             
             <FFTVisualizer height={180} />
 
             <KeyboardRow notes={[48, 50, 52, 55, 57, 60, 62, 64, 67, 69]} labels={["C3","D3","E3","G3","A3","C4","D4","E4","G4","A4"]} />
