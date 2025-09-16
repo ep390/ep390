@@ -21,11 +21,11 @@ export default function MidiInputPage() {
 
         <div className="flex items-center gap-4 mb-3">
           <MidiInputSelector />
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
         <div>
           <MIDIReceiveLog />
         </div>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
         <ModuleFooter />
       </div>
     </div>
@@ -33,7 +33,6 @@ export default function MidiInputPage() {
 }
 
 function MIDIReceiveLog() {
-  
   const [received, setReceived] = useState<string[]>([]);
   const [clockCount, setClockCount] = useState(0);
 
