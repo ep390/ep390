@@ -51,12 +51,14 @@ export default function MIDIReceiveLog() {
     <div>
       <h2>Received Messages</h2>
       <div className="mb-3">Clock (24x per quarter note): {clockCount}</div>
-      <div className="mb-3 border border-gray-300 rounded-md p-2 h-[300px] overflow-y-auto text-gray-600 relative">
-        {received.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))}
+      <div className="relative">
+        <div className="mb-3 border border-gray-300 rounded-md p-2 h-[300px] overflow-y-auto text-gray-600">
+          {received.map((msg, index) => (
+            <div key={index}>{msg}</div>
+          ))}
+        </div>
         <button
-          className="absolute bottom-2 right-2 rounded-md bg-zinc-200 px-3 py-1 text-sm font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-300 active:bg-zinc-400"
+          className="absolute bottom-3 right-3 rounded-md bg-zinc-200 px-3 py-1 text-sm font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-300 active:bg-zinc-400"
           onClick={() => setReceived([])}
         >
           Clear

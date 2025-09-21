@@ -13,7 +13,7 @@ export default function MidiInputPage() {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className={styles.markdownContent}>
         <h1>MIDI Input</h1>
-        <p>Hers is an example of using MIDI Input</p>
+        <p>Here is an example of using MIDI Input</p>
 
         <div className="flex items-center gap-4 mb-3">
           <MidiInputSelector />
