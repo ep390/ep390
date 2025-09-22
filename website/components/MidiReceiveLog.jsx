@@ -5,10 +5,10 @@ import { useState } from "react";
 import { useMidiHandlers } from "@/components/midi";
 
 export default function MIDIReceiveLog() {
-  const [received, setReceived] = useState<string[]>([]);
+  const [received, setReceived] = useState([]);
   const [clockCount, setClockCount] = useState(0);
 
-  function prepend(message: string) {
+  function prepend(message) {
     setReceived((prev) => [message, ...prev]);
   }
 
