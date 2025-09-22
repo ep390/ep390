@@ -37,7 +37,7 @@ export default function MIDIReceiveLog() {
       prepend(`Continue`);
     },
     songPosition: (value) => {
-      prepend(`Song Position (8th notes): ${value}`);
+      prepend(`Song Position (16th notes): ${value}`);
     },
     cc(controllerNumber, value, channel) {
       console.log(`CC: ${controllerNumber}, ${value}, ${channel}`);
