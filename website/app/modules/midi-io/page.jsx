@@ -2,7 +2,7 @@
 
 import styles from "@/app/[...markdown]/markdown.module.css";
 import ModuleFooter from "@/components/ModuleFooter";
-import MIDIReceiveLog from "@/components/MidiReceiveLog";
+import MidiReceiveLog from "@/components/MidiReceiveLog";
 
 import {
   MidiInputSelector,
@@ -13,7 +13,7 @@ import {
   useMidiHandlers,
 } from "@/components/midi";
 
-export default function MidiInputPage() {
+export default function MidiIoPage() {
   const { error } = useMidiContext();
   const { selectedOutput } = useMidiOutputSelection();
 
@@ -21,6 +21,8 @@ export default function MidiInputPage() {
     noteOn: async (note, velocity, channel) => {
       if (!selectedOutput) return;
       selectedOutput.send(MidiMessage.noteOn(note, velocity, channel));
+      await pause(100)
+      selectedOutput.send()
     },
     noteOff: async (note, velocity, channel) => {
       if (!selectedOutput) return;
@@ -49,7 +51,7 @@ export default function MidiInputPage() {
           {error && <div className="text-red-500 mt-2">{error}</div>}
         </div>
         <div>
-          <MIDIReceiveLog />
+          <MidiReceiveLog />
         </div>
         <ModuleFooter />
       </div>
@@ -57,7 +59,7 @@ export default function MidiInputPage() {
   );
 }
 
-function pause(ms: number) {
+function pause(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });

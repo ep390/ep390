@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useMidiHandlers } from "@/components/midi";
 
-export default function MIDIReceiveLog() {
+export default function MidiReceiveLog() {
   const [received, setReceived] = useState([]);
   const [clockCount, setClockCount] = useState(0);
 
@@ -50,7 +50,7 @@ export default function MIDIReceiveLog() {
   return (
     <div>
       <h2>Received Messages</h2>
-      <div className="mb-3">Clock (24x per quarter note): {clockCount}</div>
+      <div className="mb-3">MIDI Clock (24x per quarter note): {clockCount}</div>
       <div className="relative">
         <div className="mb-3 border border-gray-300 rounded-md p-2 h-[300px] overflow-y-auto text-gray-600">
           {received.map((msg, index) => (

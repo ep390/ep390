@@ -23,7 +23,7 @@ export default function JSPlaygroundPage() {
         <p>Try updating the JavaScript that generates the output object below.</p>
         <h2>Output</h2>
         <PrettyJsObject object={output} />
-        <h1>Hands On</h1>
+        <h2>Hands On</h2>
         <ol>
           <li>Complete the <code>chordQuality</code> function to determine the quality of the chord.</li>
           <li>Do you understand the generated code? Use Gemini to explain it to you.</li>
