@@ -557,7 +557,7 @@ export const MidiMessage = {
   noteOn(note: number, velocity: number, channel: MidiChannelNumber = 0) {
     return [0x90 + (channel & 0x0f), note & 0x7f, velocity & 0x7f];
   },
-  noteOff(note: number, velocity: number, channel: MidiChannelNumber = 0) {
+  noteOff(note: number, velocity: number = 0, channel: MidiChannelNumber = 0) {
     return [0x80 + (channel & 0x0f), note & 0x7f, velocity & 0x7f];
   },
   cc(controller: number, value: number, channel: MidiChannelNumber = 0) {
