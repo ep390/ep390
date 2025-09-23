@@ -5,11 +5,11 @@ import ModuleFooter from '@/components/ModuleFooter'
 import PrettyJsObject from '@/components/PrettyJsObject'
 
 export default function JSPlaygroundPage() {
-  const notes = [60, 64, 67];
+  const notes = [60, 63, 67];
 
   const chord = {
     root: "C",
-    quality: chordQuality(notes),
+    quality: "minor",
     notes: notes,
   };
 
@@ -23,7 +23,7 @@ export default function JSPlaygroundPage() {
         <p>Try updating the JavaScript that generates the output object below.</p>
         <h2>Output</h2>
         <PrettyJsObject object={output} />
-        <h1>Hands On</h1>
+        <h2>Hands On</h2>
         <ol>
           <li>Complete the <code>chordQuality</code> function to determine the quality of the chord.</li>
           <li>Do you understand the generated code? Use Gemini to explain it to you.</li>
@@ -64,22 +64,7 @@ function noteName(midiNoteNumber, useFlat = false) {
  * @param {number[]} notes 
  * @returns {string} the quality of the chord
  */
-
-
 function chordQuality(notes) {
- 
-  const root = notes[0]; 
-  const third = notes[1] - root;
-  const fifth = notes[2] - root;
-  if (third === 4 && fifth === 7) {
-    return "major";
-  } else if (third === 3 && fifth === 7) {
-    return "minor";
-  } else if (third === 3 && fifth === 6) {
-    return "diminished";
-  } else if (third === 4 && fifth === 8) {
-    return "augmented";
-  } else {
-    return "unknown";
-  }
+  // TODO: Implement this
+  return "unknown";
 }
