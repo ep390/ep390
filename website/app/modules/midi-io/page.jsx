@@ -21,8 +21,6 @@ export default function MidiIoPage() {
     noteOn: async (note, velocity, channel) => {
       if (!selectedOutput) return;
       selectedOutput.send(MidiMessage.noteOn(note, velocity, channel));
-      await pause(100)
-      selectedOutput.send()
     },
     noteOff: async (note, velocity, channel) => {
       if (!selectedOutput) return;
