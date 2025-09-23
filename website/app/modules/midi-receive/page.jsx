@@ -5,7 +5,8 @@ import ModuleFooter from "@/components/ModuleFooter";
 import MidiReceiveLog from "@/components/MidiReceiveLog";
 
 import IacImage from "./midi-studio-iac.jpg"
-import LiveImage from "./ableton-midi.jpg"
+import AbletonMidiSetupImage from "./ableton-midi.jpg"
+import AbletonTracksImage from "./ableton.jpg"
 
 import { MidiInputSelector, useMidiContext } from "@/components/midi";
 import Image from "next/image";
@@ -54,7 +55,14 @@ export default function MidiReceivePage() {
         <p>NOTE! You will have to setup Ableton to Midi "sync" in order for it to send Song Position Pointers! Open <strong>Audio MIDI Setup</strong>. In the Window menu, select "Show Midi Studio" and double Click "IAC Driver". Here is how mine is setup:</p>
 
         <Image src={IacImage} alt="Screenshot of macOS Audio MIDI Setup with IAC Driver properties showing one port." />
-        <Image src={LiveImage} alt="Screenshot of Ableton Live Midi" />
+        <Image src={AbletonMidiSetupImage} alt="Screenshot of Ableton Live Midi" />
+
+        <p>In my setup I have</p>
+        <ol>
+          <li>One MIDI track sending TO the "To Browser" IAC Driver</li>
+          <li>One MIDI track receiving FROM the "To DAW" IAC Driver (set to Input Monitoring)</li>
+        </ol>
+        <Image src={AbletonTracksImage} alt="Screenshot of Ableton Live Tracks" />
 
         <ModuleFooter />
       </div>

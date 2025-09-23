@@ -8,6 +8,7 @@ excerpt: "Assignments for Generative AI for Music, Image, and Code"
 1. [Next.js Web Server Basics](/assignments/1/)
 1. [Tools for Agentic Coding](/assignments/2/)
 1. [Chord Instrument with Agentic Workflows](/assignments/3/)
+1. [Combined MIDI IO](/assignments/4/)
 
 ## Submission Process
 
