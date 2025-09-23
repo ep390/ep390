@@ -4,9 +4,9 @@ import styles from "@/app/[...markdown]/markdown.module.css";
 import ModuleFooter from "@/components/ModuleFooter";
 import MidiReceiveLog from "@/components/MidiReceiveLog";
 
-import IacImage from "./midi-studio-iac.jpg"
-import AbletonMidiSetupImage from "./ableton-midi.jpg"
-import AbletonTracksImage from "./ableton.jpg"
+import IacImage from "./midi-studio-iac.png"
+import AbletonMidiSetupImage from "./ableton-midi.png"
+import AbletonTracksImage from "./ableton.png"
 
 import { MidiInputSelector, useMidiContext } from "@/components/midi";
 import Image from "next/image";

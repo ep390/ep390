@@ -57,7 +57,7 @@ and the following lines to the end of the **noteOff** function:
       selectedOutput.send(MidiMessage.noteOff(note + 7, velocity, channel));
 ```
 
-Before trying this out, what do you expect to happen when you send a note through? Setup your DAW so you can play MIDI into the browser. See [Midi Receive Module](/modules/midi-receive) for an example of how to do this.
+Before trying this out, what do you expect to happen when you send a note through? Setup your DAW so you can play MIDI into the browser. See the [Midi Receive Module](/modules/midi-receive) for an example of how to do this.
 
 Your assignment is to create a musical MIDI effect using this code as a starting point.
 
