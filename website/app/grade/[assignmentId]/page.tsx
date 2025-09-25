@@ -6,9 +6,9 @@ import { extractRubricSection } from "../utils";
 export default async function GradeAssignmentPage({
   params
 }: {
-  params: { assignmentId: string };
+  params: Promise<{ assignmentId: string }>;
 }) {
-  const assignmentId = params.assignmentId;
+  const { assignmentId } = await params;
   const mdPath = path.join(process.cwd(), "app", "assignments", assignmentId, "page.md");
 
   let rubricMarkdown = "";
