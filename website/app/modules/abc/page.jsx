@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Abc, AbcMidiPlayer } from '@/components/abc'
+import { AbcMidiLink, AbcPlayer } from '@/components/abc'
 import styles from '@/app/[...markdown]/markdown.module.css'
 import ModuleFooter from '@/components/ModuleFooter'
 
@@ -27,12 +27,12 @@ export default function AbcNotationPage() {
         <p>
           Because machine learning models are good at generating text, ABC notation is often used when generating scores with AI.
         </p>
-        <h2>Hands On</h2>
         <p>
           Try editing the score and see if you can figure out the basics of the notation. Can you figure out what <span className="font-bold">L:1/4</span> does?
         </p>
         <TextEditor value={text} onChange={setText} />
-        <AbcMidiPlayer abc={text} />
+        <AbcPlayer abc={text} />
+        <AbcMidiLink abc={text} label="Download MIDI" />
 
         <ModuleFooter />
       </div>

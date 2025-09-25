@@ -2,8 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import abcjs from "abcjs";
 import "abcjs/abcjs-audio.css";
 
-export function Abc({ abc }: { abc: string }) {
+export function Abc({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVisualParams }) {
   const inputEl = useRef<HTMLDivElement>(null);
+
+  if (abc.length > 250 && !abcOptions) {
+    abcOptions = {
+      staffwidth: 900,
+      wrap: {
+        preferredMeasuresPerLine: 4,
+        minSpacing: 1.1,
+        maxSpacing: 2.7,
+        lastLineLimit: 1,
+      }
+    }
+  }
 
   useEffect(() => {
     if (!inputEl.current) return;
@@ -11,16 +23,29 @@ export function Abc({ abc }: { abc: string }) {
     abcjs.renderAbc(inputEl.current, abc, {
       add_classes: true,
       responsive: "resize",
+      ...abcOptions,
     });
-  }, [abc]);
+  }, [abc, abcOptions]);
 
   return <div ref={inputEl}></div>;
 }
 
-export function AbcMidiPlayer({ abc }: { abc: string }) {
+export function AbcPlayer({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVisualParams }) {
   const paperRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
+
+  if (abc.length > 250 && !abcOptions) {
+    abcOptions = {
+      staffwidth: 900,
+      wrap: {
+        preferredMeasuresPerLine: 4, // try 3–4
+        minSpacing: 1.1,
+        maxSpacing: 2.7,
+        lastLineLimit: 1,
+      }
+    }
+  }
 
   useEffect(() => {
     let controller: abcjs.SynthObjectController | null = null;
@@ -32,6 +57,7 @@ export function AbcMidiPlayer({ abc }: { abc: string }) {
       const visualObjs = abcjs.renderAbc(paperRef.current, abc, {
         add_classes: true,
         responsive: "resize",
+        ...abcOptions,
       });
       const visualObj = visualObjs[0];
 
@@ -56,13 +82,59 @@ export function AbcMidiPlayer({ abc }: { abc: string }) {
         controller?.pause();
       } catch {}
     };
-  }, [abc]);
+  }, [abc, abcOptions]);
 
   return (
     <div>
+      <div className="my-2" ref={controlsRef}></div>
       <div ref={paperRef}></div>
-      <div className="my-2 w-[400px]" ref={controlsRef}></div>
       {error ? <p className="text-red-600 text-sm">{error}</p> : null}
+    </div>
+  );
+}
+
+export function AbcMidiLink({
+  abc,
+  filename = "score.mid",
+  label,
+}: {
+  abc: string;
+  filename?: string;
+  label?: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    setError(null);
+    // Clear previous content so the link reflects current props
+    containerRef.current.innerHTML = "";
+    try {
+      // Per docs: may return an HTML string or a DOM element depending on environment.
+      let result = abcjs.synth.getMidiFile(abc, {
+        midiOutputType: "link",
+        fileName: filename,
+        downloadLabel: label || "Download MIDI",
+      });
+      if (Array.isArray(result)) result = result[0];
+      if (typeof result === "string") {
+        containerRef.current.innerHTML = result;
+      } else if (result && result.nodeType === 1) {
+        const node = result as unknown as HTMLElement;
+        // Ensure label if caller provided one
+        if (label && node.tagName === "A") node.textContent = label;
+        containerRef.current.appendChild(node);
+      }
+    } catch (e: unknown) {
+      setError((e as Error)?.message || "Failed to create MIDI link");
+    }
+  }, [abc, filename, label]);
+
+  return (
+    <div>
+      <div ref={containerRef}></div>
+      {error ? <p className="text-red-600 text-sm mt-2">{error}</p> : null}
     </div>
   );
 }
