@@ -329,16 +329,16 @@ export function MidiOutputSelector() {
 }
 
 export function MidiInputSelector() {
-  const { outputs, enable } = useMidiContext();
+  const { inputs, enable } = useMidiContext();
   const status = useMidiPermissionStatus();
   const { selectedInputId, selectInput } = useMidiInputSelection();
 
   const maybeEnableOnGesture = useCallback(() => {
-    // Trigger enable on user gesture if we have no outputs and permission is not explicitly denied.
-    if ((!outputs || outputs.length === 0) && status !== "denied") {
+    // Trigger enable on user gesture if we have no inputs and permission is not explicitly denied.
+    if ((!inputs || inputs.length === 0) && status !== "denied") {
       enable();
     }
-  }, [outputs, status, enable]);
+  }, [inputs, status, enable]);
 
   if (status === "denied") {
     return (
@@ -362,7 +362,7 @@ export function MidiInputSelector() {
       onFocus={maybeEnableOnGesture}
     >
       <option value="">Select MIDI Input</option>
-      {outputs.map((input) => (
+      {inputs.map((input) => (
         <option key={input.id} value={input.id}>
           {input.name}
         </option>
