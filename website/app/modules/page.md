@@ -9,3 +9,4 @@ title: "EP390 Modules"
 1. [MIDI: Send Messages](/modules/midi-send/)
 1. [MIDI: Receive Messages](/modules/midi-receive/)
 1. [MIDI IO](/modules/midi-io/)
+1. [Abc Notation](/modules/abc/)
