@@ -1,5 +1,5 @@
 ---
-title: "Assignment 5: Composition with NotaGen (ABC + MIDI)"
+title: "Assignment 5: Symbolic Music Generation"
 excerpt: "Generate ABC scores with NotaGen, document experiments, export MIDI, and produce an original composition with audio."
 ---
 
@@ -12,7 +12,7 @@ In this assignment, you will collaborate with an AI model to create music. You w
 
 - Generate ABC notation scores with NotaGen
 - Document at least three generation experiments (inputs, results, observations)
-- Export MIDI from one of the generations
+- Export MIDI from one (or more) of the generations
 - Use the exported MIDI as source material for an original composition in your DAW
 - Add an audio render of your composition to the site and write a short process note
 

@@ -2,8 +2,8 @@ import styles from "@/app/[...markdown]/markdown.module.css";
 import { AbcPlayer, Abc, AbcMidiLink } from "@/components/abc";
 import Toggle from "@/components/Toggle";
 
-// TODO: Fill this in
 const abcScore1 = `X:1
+T:TODO: Replace this with a generated score
 M:4/4
 L:1/4
 K:Cmaj
@@ -41,14 +41,15 @@ export default function JSPlaygroundPage() {
           observations="Fill this in. Did the model do what you expected? Document your observations about its performance."
         />
 
-        <h2><TODO />: Generate two more scores. Copy/Paste your observations above to document your second and third generative experiments.</h2>
+        <h2><TODO />: Generate two (or more) additional scores. Copy/Paste your observations above to document your second and third generative experiments.</h2>
 
         <h2>My Original Composition</h2>
 
         <p>
-          <TODO />: Find a section or part of the generated music that you like.
-          Export the MIDI and use it as source material for an original
-          composition. The exceprt can be as long or short as you want.
+          <TODO />: Find at least one section or part of the generated
+          music that you like. Export the MIDI and use it as source
+          material for an original composition. The exceprt can be as long
+          or short as you want.
         </p>
 
         <p>
