@@ -90,12 +90,13 @@ export function Grader({
     });
   }
 
-  function clearScores() {
+  function clearForm() {
     setScoresById(prev => {
       const next: Record<string, number | null> = { ...prev };
       for (const item of rubricItems) next[item.id] = null;
       return next;
     });
+    setComments("");
   }
 
   async function copySummaryToClipboard() {
@@ -156,7 +157,7 @@ export function Grader({
             </button>
             <button
               className="px-3 py-1.5 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer"
-              onClick={clearScores}
+              onClick={clearForm}
               disabled={rubricItems.length === 0}
             >
               Clear

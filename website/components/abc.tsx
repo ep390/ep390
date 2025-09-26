@@ -1,8 +1,16 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import abcjs from "abcjs";
 import "abcjs/abcjs-audio.css";
 
-export function Abc({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVisualParams }) {
+export function Abc({
+  abc,
+  abcOptions,
+}: {
+  abc: string;
+  abcOptions?: abcjs.AbcVisualParams;
+}) {
   const inputEl = useRef<HTMLDivElement>(null);
 
   if (abc.length > 250 && !abcOptions) {
@@ -13,8 +21,8 @@ export function Abc({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVi
         minSpacing: 1.1,
         maxSpacing: 2.7,
         lastLineLimit: 1,
-      }
-    }
+      },
+    };
   }
 
   useEffect(() => {
@@ -30,7 +38,15 @@ export function Abc({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVi
   return <div ref={inputEl}></div>;
 }
 
-export function AbcPlayer({ abc, abcOptions }: { abc: string, abcOptions?: abcjs.AbcVisualParams }) {
+export function AbcPlayer({
+  abc,
+  abcOptions,
+  hideScore = false,
+}: {
+  abc: string;
+  abcOptions?: abcjs.AbcVisualParams;
+  hideScore?: boolean;
+}) {
   const paperRef = useRef<HTMLDivElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -43,8 +59,8 @@ export function AbcPlayer({ abc, abcOptions }: { abc: string, abcOptions?: abcjs
         minSpacing: 1.1,
         maxSpacing: 2.7,
         lastLineLimit: 1,
-      }
-    }
+      },
+    };
   }
 
   useEffect(() => {
@@ -87,7 +103,9 @@ export function AbcPlayer({ abc, abcOptions }: { abc: string, abcOptions?: abcjs
   return (
     <div>
       <div className="my-2" ref={controlsRef}></div>
-      <div ref={paperRef}></div>
+      <div style={{ display: hideScore ? "none" : "block" }}>
+        <div ref={paperRef}></div>
+      </div>
       {error ? <p className="text-red-600 text-sm">{error}</p> : null}
     </div>
   );
