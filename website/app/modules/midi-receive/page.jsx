@@ -57,7 +57,7 @@ export default function MidiReceivePage() {
         <Image src={IacImage} alt="Screenshot of macOS Audio MIDI Setup with IAC Driver properties showing one port." />
         <Image src={AbletonMidiSetupImage} alt="Screenshot of Ableton Live Midi" />
 
-        <p>In my setup I have</p>
+        <p>In my setup I have:</p>
         <ol>
           <li>One MIDI track sending TO the "To Browser" IAC Driver</li>
           <li>One MIDI track receiving FROM the "To DAW" IAC Driver (set to Input Monitoring)</li>

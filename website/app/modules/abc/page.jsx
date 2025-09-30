@@ -28,11 +28,11 @@ export default function AbcNotationPage() {
           Because machine learning models are good at generating text, ABC notation is often used when generating scores with AI.
         </p>
         <p>
-          Try editing the score and see if you can figure out the basics of the notation. Can you figure out what <span className="font-bold">L:1/4</span> does?
+          Try editing the score and see if you can deduce the basics of the notation. Can you figure out what <span className="font-bold">L:1/4</span> does? Can you figure out how to make a chord?
         </p>
         <TextEditor value={text} onChange={setText} />
         <AbcPlayer abc={text} />
-        <AbcMidiLink abc={text} label="Download MIDI" />
+        <AbcMidiLink abc={text} />
 
         <ModuleFooter />
       </div>
