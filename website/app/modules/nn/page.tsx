@@ -1,7 +1,5 @@
 import type { ReactElement } from "react";
-import { MultilayerPerceptronSvg, type NodeFocusChange } from "./svg";
 import styles from "@/app/[...markdown]/markdown.module.css";
-import PrettyJsObject from "@/components/PrettyJsObject";
 import { calculateActivations } from "./calculate-activations";
 import MlpWithEquation from "./MlpWithEquation";
 

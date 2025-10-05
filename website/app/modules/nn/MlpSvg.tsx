@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback, type ReactElement } from "react";
+import React, { useState, useCallback, type ReactElement } from "react";
 
 type Point = {
   x: number;
@@ -34,7 +34,7 @@ export type MlpOptions = {
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
 
-export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement {
+export default function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement {
   const imageWidth = options.svgWidth ?? 800;
   const imageHeight = options.svgHeight ?? 380;
   const {
@@ -151,7 +151,7 @@ export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement 
   );
 
   const [active, setActive] = useState<ActiveNode>(null);
-  const [isPointerDown, setIsPointerDown] = useState(false);
+  const [isLocked, setIsLocked] = useState(false); // true when focus comes from click/touch
 
   const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
     if (layerIndex === 0) return activations?.[0];
@@ -174,20 +174,13 @@ export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement 
     }, focused);
   }, [onNodeFocusChange, getLayerInputs, getLayerWeightsForNode, getActivation]);
 
-  useEffect(() => {
-    if (!isPointerDown) return;
-    const handleUp = () => {
-      setIsPointerDown(false);
-      if (active) {
-        emitNodeFocusChange(active.layerIndex, active.nodeIndex, false);
-      }
-      setActive(null);
-    };
-    window.addEventListener("pointerup", handleUp, { once: true });
-    return () => {
-      window.removeEventListener("pointerup", handleUp);
-    };
-  }, [isPointerDown, active, emitNodeFocusChange]);
+  // Clear focus helper
+  const clearFocus = useCallback(() => {
+    if (active) {
+      emitNodeFocusChange(active.layerIndex, active.nodeIndex, false);
+    }
+    setActive(null);
+  }, [active, emitNodeFocusChange]);
 
   const isNodeHighlighted = (layerIndex: number, nodeIndex: number): boolean => {
     if (!active) return true;
@@ -245,6 +238,14 @@ export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement 
       aria-label={`${resolvedLayerCount}-layer dense neural network with layer sizes ${counts.join(
         ","
       )}`}
+      onPointerDown={(e) => {
+        const target = e.target as Element | null;
+        // If the target is a node (circle), do not clear focus here
+        if (target && target.closest('circle')) return;
+        // Click/touch outside any node clears focus lock and active state
+        setIsLocked(false);
+        clearFocus();
+      }}
     >
       {/* Edges between layers */}
       <g>
@@ -294,17 +295,27 @@ export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement 
                 strokeWidth={2}
                 style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
                 onMouseEnter={() => {
+                  if (isLocked) return; // hover should not change focus when locked by click/touch
                   setActive({ layerIndex: i, nodeIndex: j });
                   emitNodeFocusChange(i, j, true);
                 }}
                 onMouseLeave={() => {
-                  if (!isPointerDown) {
-                    emitNodeFocusChange(i, j, false);
-                    setActive(null);
-                  }
+                  if (isLocked) return; // keep focus while locked
+                  emitNodeFocusChange(i, j, false);
+                  setActive(null);
                 }}
                 onPointerDown={() => {
-                  setIsPointerDown(true);
+                  // Toggle off if clicking the already click/touch-focused node
+                  if (isLocked && active && active.layerIndex === i && active.nodeIndex === j) {
+                    setIsLocked(false);
+                    clearFocus();
+                    return;
+                  }
+                  // If a different node was active, emit unfocus for it first
+                  if (active && (active.layerIndex !== i || active.nodeIndex !== j)) {
+                    emitNodeFocusChange(active.layerIndex, active.nodeIndex, false);
+                  }
+                  setIsLocked(true);
                   setActive({ layerIndex: i, nodeIndex: j });
                   emitNodeFocusChange(i, j, true);
                 }}
