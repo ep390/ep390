@@ -30,6 +30,7 @@ export type MlpOptions = {
   inputFontSize?: number;
   activations?: number[][];
   responsive?: boolean; // when true, svg scales down with container but not above svgWidth
+  edgeStrokeWidth?: number; // thickness of lines between nodes
   onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
 };
 
@@ -51,6 +52,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     inputFontSize = 16,
     activations,
     responsive = true,
+    edgeStrokeWidth = 2,
     onNodeFocusChange,
   } = options;
 
@@ -279,7 +281,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                   x2={p2.x}
                   y2={p2.y}
                   stroke="#7b8290"
-                  strokeWidth={2}
+                  strokeWidth={edgeStrokeWidth}
                   strokeLinecap="round"
                   style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
                 />

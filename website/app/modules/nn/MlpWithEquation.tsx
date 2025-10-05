@@ -3,7 +3,7 @@
 import MultilayerPerceptronSvg, { type MlpOptions } from "./MlpSvg";
 import { useState } from "react";
 
-type MlpOptionsWithData = MlpOptions & {
+export type MlpOptionsWithData = MlpOptions & {
   weights: number[][][];
   activations: number[][];
 };
