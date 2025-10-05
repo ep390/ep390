@@ -14,6 +14,7 @@ export default function Page(): ReactElement {
           <div className="flex justify-center">
             <DenseNetworkSvg
               neuronCounts={[4, 5, 2]}
+              weights={weights}
             />
           </div>
         </div>
@@ -21,3 +22,20 @@ export default function Page(): ReactElement {
     </div>
   );
 }
+
+const weights = [
+    // W1: shape (5, 4) - Matrices are specified  as (height, width)
+    [
+      [1,  2,  3,  4],
+      [5,  6,  7,  8],
+      [9, 10, 11, 12],
+      [13, 14, 15, 16],
+      [17, 18, 19, 20]
+    ],
+    // W2: shape (2, 5)
+    [
+      [21, 22, 23, 24, 25],
+      [26, 27, 28, 29, 30]
+    ]
+  ];
+  

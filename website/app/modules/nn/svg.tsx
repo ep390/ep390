@@ -15,6 +15,9 @@ type GenerateOptions = {
   svgHeight?: number;
   margin?: number;
   neuronRadius?: number;
+  weights?: number[][][];
+  weightFontSize?: number;
+  weightLabelPadding?: number;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -28,6 +31,9 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     neuronCounts,
     margin = 20,
     neuronRadius = 15,
+    weights,
+    weightFontSize = 16,
+    weightLabelPadding,
   } = options;
   const outputArrowGap = 0;
   const outputArrowLength = 32;
@@ -40,6 +46,10 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     outputArrowGap + outputArrowLength + outputArrowHead;
   const leftPaddingForArrows =
     inputArrowGap + inputArrowLength + inputArrowHead;
+
+  const getWeight = (fromLayer: number, fromIndex: number, toIndex: number) => {
+    return weights?.[fromLayer]?.[toIndex]?.[fromIndex];
+  };
 
   const counts: number[] = Array.isArray(neuronCounts)
     ? neuronCounts
@@ -192,6 +202,39 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
             );
           })
         )}
+      </g>
+
+      {/* Weight labels at edge midpoints (visible only when hovering receiving node) */}
+      <g style={{ pointerEvents: "none" }}>
+        {layers.flatMap((layer, i) => {
+          const next = layers[i + 1];
+          if (!next) return [] as ReactElement[];
+          const labels: ReactElement[] = [];
+          for (let a = 0; a < layer.length; a += 1) {
+            for (let b = 0; b < next.length; b += 1) {
+              const value = getWeight(i, a, b);
+              if (typeof value !== 'number') continue;
+              const p1 = layer[a];
+              const p2 = next[b];
+              const midX = (p1.x + p2.x) / 2;
+              const midY = (p1.y + p2.y) / 2;
+              const show = !!active && active.layerIndex === i + 1 && active.nodeIndex === b;
+              const textStr = String(value.toFixed(1));
+              const fontSize = weightFontSize;
+              const rectPadding = weightLabelPadding ?? Math.max(2, Math.round(fontSize * 0.3));
+              const charWidth = fontSize * 0.6; // rough average width factor
+              const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
+              const rectHeight = fontSize + rectPadding * 2;
+              labels.push(
+                <g key={`w-${i}-${a}-${b}`} transform={`translate(${midX}, ${midY})`} style={{ opacity: show ? 1 : 0, transition: "opacity 120ms ease" }}>
+                  <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={3} ry={3} fill="#ffffff" stroke="#1e293b" strokeWidth={1} />
+                  <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#0f172a">{textStr}</text>
+                </g>
+              );
+            }
+          }
+          return labels;
+        })}
       </g>
 
       {/* Output arrows to the right of the final layer */}
