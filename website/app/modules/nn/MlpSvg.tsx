@@ -29,6 +29,7 @@ export type MlpOptions = {
   inputNeuronRadius?: number;
   inputFontSize?: number;
   activations?: number[][];
+  responsive?: boolean; // when true, svg scales down with container but not above svgWidth
   onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
 };
 
@@ -49,6 +50,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     inputNeuronRadius = 4,
     inputFontSize = 16,
     activations,
+    responsive = true,
     onNodeFocusChange,
   } = options;
 
@@ -77,13 +79,13 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   const inputValues = Array.isArray(activations) && activations.length > 0
     ? activations[0]
     : undefined;
-  const inputLabelMaxWidth = Array.isArray(inputValues)
-    ? inputValues.reduce((max, v) => {
-        if (typeof v !== "number") return max;
-        const w = measureLabelWidth(String(v), inputFontSize ?? 16, inputRectPadding);
-        return Math.max(max, w);
-      }, 0)
-    : 0;
+  // Reserve a fixed width for ~6 digits so layout doesn't shift with value length
+  const reservedInputDigits = 6;
+  const inputLabelMaxWidth = measureLabelWidth(
+    "0".repeat(reservedInputDigits),
+    inputFontSize ?? 16,
+    inputRectPadding
+  );
 
   // Output activation labels (purple boxes on the right)
   const outputFontSize = weightFontSize ?? 16;
@@ -232,8 +234,19 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   return (
     <svg
       viewBox={`0 0 ${imageWidth} ${imageHeight}`}
-      width={imageWidth}
-      height={imageHeight}
+      style={
+        responsive
+          ? {
+              maxWidth: imageWidth,
+              width: "100%",
+              height: "auto",
+              aspectRatio: `${imageWidth} / ${imageHeight}`,
+            }
+          : undefined
+      }
+      width={responsive ? undefined : imageWidth}
+      height={responsive ? undefined : imageHeight}
+      preserveAspectRatio="xMidYMid meet"
       role="img"
       aria-label={`${resolvedLayerCount}-layer dense neural network with layer sizes ${counts.join(
         ","
@@ -396,8 +409,6 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
         )}
       </g>
 
-      {/* (Removed) Extra input value labels; we only show the existing input boxes */}
-
       {/* Weight labels at edge midpoints (visible only when hovering receiving node) */}
       <g style={{ pointerEvents: "none" }}>
         {layers.flatMap((layer, i) => {
@@ -504,8 +515,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 const textStr = String(value);
                 const fontSize = inputFontSize;
                 const rectPadding = Math.max(2, Math.round(fontSize * 0.3));
-                const charWidth = fontSize * 0.6; // rough width factor
-                const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
+                const rectWidth = Math.max(fontSize + 4, inputLabelMaxWidth);
                 const rectHeight = fontSize + rectPadding * 2;
                 const rightEdgeX = shaftStartX; // flush with arrow shaft start
                 const centerX = rightEdgeX - rectWidth / 2;

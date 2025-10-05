@@ -10,13 +10,11 @@ export default function Page(): ReactElement {
         <div>
           <h1>Neural Network</h1>
 
-          <div className="flex justify-center">
-            <MlpWithEquation
-              neuronCounts={[4, 5, 3, 2]}
-              weights={weights}
-              activations={activations}
-            />
-          </div>
+          <MlpWithEquation
+            neuronCounts={[4, 5, 3, 2]}
+            weights={weights}
+            activations={activations}
+          />
         </div>
       </div>
     </div>

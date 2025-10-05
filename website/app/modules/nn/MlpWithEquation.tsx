@@ -39,10 +39,10 @@ export default function MlpWithEquation(options: MlpOptionsWithData) {
       </div>
       <div>
         <h2>Equation</h2>
-        <div>
+        <div className="text-xl">
           {layerInputs &&
             layerInputs?.map((input, index) => (
-              <span key={index} className="text-lg">
+              <span key={index} className="">
                 (<span className="text-purple-500">{input}</span>
                 &nbsp;✖️&nbsp;
                 <span>{nodeWeights?.[index]}</span>)
