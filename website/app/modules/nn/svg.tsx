@@ -18,6 +18,7 @@ type GenerateOptions = {
   weights?: number[][][];
   weightFontSize?: number;
   weightLabelPadding?: number;
+  inputNeuronRadius?: number;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -34,7 +35,9 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     weights,
     weightFontSize = 16,
     weightLabelPadding,
+    inputNeuronRadius = 4,
   } = options;
+
   const outputArrowGap = 0;
   const outputArrowLength = 32;
   const outputArrowHead = 10;
@@ -50,6 +53,9 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
   const getWeight = (fromLayer: number, fromIndex: number, toIndex: number) => {
     return weights?.[fromLayer]?.[toIndex]?.[fromIndex];
   };
+
+  const getNodeRadius = (layerIndex: number): number =>
+    layerIndex === 0 ? inputNeuronRadius : neuronRadius;
 
   const counts: number[] = Array.isArray(neuronCounts)
     ? neuronCounts
@@ -180,14 +186,16 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
         {layers.flatMap((layer, i) =>
           layer.map((p, j) => {
             const highlighted = isNodeHighlighted(i, j);
+            const r = getNodeRadius(i);
+            const isFirstLayer = i === 0;
             return (
               <circle
                 key={`node-${i}-${j}`}
                 cx={p.x}
                 cy={p.y}
-                r={neuronRadius}
-                fill="#bfdbfe"
-                stroke="#1e40af"
+                r={r}
+                fill={isFirstLayer ? "#7b8290" : "#bfdbfe"}
+                stroke={"#1e40af"}
                 strokeWidth={2}
                 style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
                 onMouseEnter={() => setActive({ layerIndex: i, nodeIndex: j })}
@@ -275,7 +283,8 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
         const firstLayer = layers[0] ?? [];
         return firstLayer.map((p, idx) => {
           const y = p.y;
-          const tipAtCircle = p.x - neuronRadius;
+          const r = getNodeRadius(0);
+          const tipAtCircle = p.x - r;
           const baseX = tipAtCircle - inputArrowHead;
           const shaftEndX = baseX;
           const shaftStartX = shaftEndX - inputArrowLength;
