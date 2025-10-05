@@ -1,10 +1,18 @@
 "use client";
 
-import React, { useEffect, useState, type ReactElement } from "react";
+import React, { useEffect, useState, useCallback, type ReactElement } from "react";
 
 type Point = {
   x: number;
   y: number;
+};
+
+export type NodeFocusChange = {
+  layerNumber: number;
+  nodeNumber: number;
+  layerInputs?: number[];
+  layerWeights?: number[];
+  nodeActivation?: number;
 };
 
 type GenerateOptions = {
@@ -22,11 +30,12 @@ type GenerateOptions = {
   inputData?: number[];
   inputFontSize?: number;
   activations?: number[][];
+  onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
 
-export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
+export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactElement {
   const imageWidth = options.svgWidth ?? 800;
   const imageHeight = options.svgHeight ?? 380;
   const {
@@ -42,6 +51,7 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     inputData,
     inputFontSize = 16,
     activations,
+    onNodeFocusChange,
   } = options;
 
   const outputArrowGap = 0;
@@ -99,9 +109,9 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
   const getNodeRadius = (layerIndex: number): number =>
     layerIndex === 0 ? inputNeuronRadius : neuronRadius;
 
-  const getActivation = (layerIndex: number, nodeIndex: number) => {
+  const getActivation = useCallback((layerIndex: number, nodeIndex: number) => {
     return activations?.[layerIndex]?.[nodeIndex];
-  };
+  }, [activations]);
 
   const counts: number[] = Array.isArray(neuronCounts)
     ? neuronCounts
@@ -142,17 +152,41 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
   const [active, setActive] = useState<ActiveNode>(null);
   const [isPointerDown, setIsPointerDown] = useState(false);
 
+  const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
+    if (layerIndex === 0) return Array.isArray(inputData) ? inputData : undefined;
+    return activations?.[layerIndex - 1];
+  }, [inputData, activations]);
+
+  const getLayerWeightsForNode = useCallback((layerIndex: number, nodeIndex: number): number[] | undefined => {
+    if (layerIndex === 0) return undefined;
+    return weights?.[layerIndex - 1]?.[nodeIndex];
+  }, [weights]);
+
+  const emitNodeFocusChange = useCallback((layerIndex: number, nodeIndex: number, focused: boolean) => {
+    if (!onNodeFocusChange) return;
+    onNodeFocusChange({
+      layerNumber: layerIndex,
+      nodeNumber: nodeIndex,
+      layerInputs: getLayerInputs(layerIndex),
+      layerWeights: getLayerWeightsForNode(layerIndex, nodeIndex),
+      nodeActivation: getActivation(layerIndex, nodeIndex),
+    }, focused);
+  }, [onNodeFocusChange, getLayerInputs, getLayerWeightsForNode, getActivation]);
+
   useEffect(() => {
     if (!isPointerDown) return;
     const handleUp = () => {
       setIsPointerDown(false);
+      if (active) {
+        emitNodeFocusChange(active.layerIndex, active.nodeIndex, false);
+      }
       setActive(null);
     };
     window.addEventListener("pointerup", handleUp, { once: true });
     return () => {
       window.removeEventListener("pointerup", handleUp);
     };
-  }, [isPointerDown]);
+  }, [isPointerDown, active, emitNodeFocusChange]);
 
   const isNodeHighlighted = (layerIndex: number, nodeIndex: number): boolean => {
     if (!active) return true;
@@ -258,13 +292,20 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
                 stroke={"#1e40af"}
                 strokeWidth={2}
                 style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
-                onMouseEnter={() => setActive({ layerIndex: i, nodeIndex: j })}
+                onMouseEnter={() => {
+                  setActive({ layerIndex: i, nodeIndex: j });
+                  emitNodeFocusChange(i, j, true);
+                }}
                 onMouseLeave={() => {
-                  if (!isPointerDown) setActive(null);
+                  if (!isPointerDown) {
+                    emitNodeFocusChange(i, j, false);
+                    setActive(null);
+                  }
                 }}
                 onPointerDown={() => {
                   setIsPointerDown(true);
                   setActive({ layerIndex: i, nodeIndex: j });
+                  emitNodeFocusChange(i, j, true);
                 }}
               />
             );
