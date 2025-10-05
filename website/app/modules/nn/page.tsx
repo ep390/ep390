@@ -3,6 +3,7 @@ import { MultilayerPerceptronSvg, type NodeFocusChange } from "./svg";
 import styles from "@/app/[...markdown]/markdown.module.css";
 import PrettyJsObject from "@/components/PrettyJsObject";
 import { calculateActivations } from "./calculate-activations";
+import MlpWithEquation from "./MlpWithEquation";
 
 export default function Page(): ReactElement {
   return (
@@ -12,16 +13,11 @@ export default function Page(): ReactElement {
           <h1>Neural Network</h1>
 
           <div className="flex justify-center">
-            <MultilayerPerceptronSvg
+            <MlpWithEquation
               neuronCounts={[4, 5, 3, 2]}
               weights={weights}
-              inputData={inputData}
               activations={activations}
             />
-          </div>
-          <div>
-            <h2>Activations</h2>
-            <PrettyJsObject object={activations} />
           </div>
         </div>
       </div>

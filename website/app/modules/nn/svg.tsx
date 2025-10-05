@@ -11,11 +11,11 @@ export type NodeFocusChange = {
   layerNumber: number;
   nodeNumber: number;
   layerInputs?: number[];
-  layerWeights?: number[];
+  nodeWeights?: number[];
   nodeActivation?: number;
 };
 
-type GenerateOptions = {
+export type MlpOptions = {
   layerCount?: number;
   neuronsPerLayer?: number;
   neuronCounts?: number[];
@@ -27,7 +27,6 @@ type GenerateOptions = {
   weightFontSize?: number;
   weightLabelPadding?: number;
   inputNeuronRadius?: number;
-  inputData?: number[];
   inputFontSize?: number;
   activations?: number[][];
   onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
@@ -35,7 +34,7 @@ type GenerateOptions = {
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
 
-export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactElement {
+export function MultilayerPerceptronSvg(options: MlpOptions = {}): ReactElement {
   const imageWidth = options.svgWidth ?? 800;
   const imageHeight = options.svgHeight ?? 380;
   const {
@@ -48,7 +47,6 @@ export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactEle
     weightFontSize = 16,
     weightLabelPadding,
     inputNeuronRadius = 4,
-    inputData,
     inputFontSize = 16,
     activations,
     onNodeFocusChange,
@@ -76,8 +74,11 @@ export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactEle
 
   // Input labels (purple boxes on the left)
   const inputRectPadding = Math.max(2, Math.round((inputFontSize ?? 16) * 0.3));
-  const inputLabelMaxWidth = Array.isArray(inputData)
-    ? inputData.reduce((max, v) => {
+  const inputValues = Array.isArray(activations) && activations.length > 0
+    ? activations[0]
+    : undefined;
+  const inputLabelMaxWidth = Array.isArray(inputValues)
+    ? inputValues.reduce((max, v) => {
         if (typeof v !== "number") return max;
         const w = measureLabelWidth(String(v), inputFontSize ?? 16, inputRectPadding);
         return Math.max(max, w);
@@ -153,9 +154,9 @@ export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactEle
   const [isPointerDown, setIsPointerDown] = useState(false);
 
   const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
-    if (layerIndex === 0) return Array.isArray(inputData) ? inputData : undefined;
+    if (layerIndex === 0) return activations?.[0];
     return activations?.[layerIndex - 1];
-  }, [inputData, activations]);
+  }, [activations]);
 
   const getLayerWeightsForNode = useCallback((layerIndex: number, nodeIndex: number): number[] | undefined => {
     if (layerIndex === 0) return undefined;
@@ -168,7 +169,7 @@ export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactEle
       layerNumber: layerIndex,
       nodeNumber: nodeIndex,
       layerInputs: getLayerInputs(layerIndex),
-      layerWeights: getLayerWeightsForNode(layerIndex, nodeIndex),
+      nodeWeights: getLayerWeightsForNode(layerIndex, nodeIndex),
       nodeActivation: getActivation(layerIndex, nodeIndex),
     }, focused);
   }, [onNodeFocusChange, getLayerInputs, getLayerWeightsForNode, getActivation]);
@@ -487,8 +488,8 @@ export function MultilayerPerceptronSvg(options: GenerateOptions = {}): ReactEle
           const highlighted = isInputArrowHighlighted(idx);
           return (
             <g key={`in-${idx}`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
-              {typeof inputData?.[idx] === 'number' && (() => {
-                const value = inputData[idx] as number;
+              {typeof inputValues?.[idx] === 'number' && (() => {
+                const value = inputValues[idx] as number;
                 const textStr = String(value);
                 const fontSize = inputFontSize;
                 const rectPadding = Math.max(2, Math.round(fontSize * 0.3));
