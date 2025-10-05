@@ -21,12 +21,13 @@ type GenerateOptions = {
   inputNeuronRadius?: number;
   inputData?: number[];
   inputFontSize?: number;
+  activations?: number[][];
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
 
 export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
-  const imageWidth = options.svgWidth ?? 600;
+  const imageWidth = options.svgWidth ?? 800;
   const imageHeight = options.svgHeight ?? 380;
   const {
     layerCount = 3,
@@ -40,19 +41,56 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     inputNeuronRadius = 4,
     inputData,
     inputFontSize = 16,
+    activations,
   } = options;
 
   const outputArrowGap = 0;
-  const outputArrowLength = 32;
+  const outputArrowLength = 12;
   const outputArrowHead = 10;
   const inputArrowGap = 0;
   const inputArrowLength = 12;
   const inputArrowHead = 10;
   const arrowHalfHeight = 6;
-  const rightPaddingForArrows =
+  // Base arrow padding (without labels)
+  const baseRightPaddingForArrows =
     outputArrowGap + outputArrowLength + outputArrowHead;
-  const leftPaddingForArrows =
+  const baseLeftPaddingForArrows =
     inputArrowGap + inputArrowLength + inputArrowHead;
+
+  // Measure label widths so the diagram never overflows the viewBox
+  const approxCharWidth = (fontSize: number) => fontSize * 0.6;
+  const measureLabelWidth = (text: string, fontSize: number, padding: number) => {
+    const charWidth = approxCharWidth(fontSize);
+    return Math.max(fontSize + 4, text.length * charWidth + padding * 2);
+  };
+
+  // Input labels (purple boxes on the left)
+  const inputRectPadding = Math.max(2, Math.round((inputFontSize ?? 16) * 0.3));
+  const inputLabelMaxWidth = Array.isArray(inputData)
+    ? inputData.reduce((max, v) => {
+        if (typeof v !== "number") return max;
+        const w = measureLabelWidth(String(v), inputFontSize ?? 16, inputRectPadding);
+        return Math.max(max, w);
+      }, 0)
+    : 0;
+
+  // Output activation labels (purple boxes on the right)
+  const outputFontSize = weightFontSize ?? 16;
+  const outputRectPadding = weightLabelPadding ?? Math.max(2, Math.round(outputFontSize * 0.3));
+  const lastActivations = Array.isArray(activations) && activations.length > 0
+    ? activations[activations.length - 1]
+    : undefined;
+  const formatOutputValue = (v: number) => (Number.isInteger(v) ? String(v) : String(v.toFixed(2)));
+  const outputLabelMaxWidth = Array.isArray(lastActivations)
+    ? lastActivations.reduce((max, v) => {
+        if (typeof v !== "number") return max;
+        const w = measureLabelWidth(formatOutputValue(v), outputFontSize, outputRectPadding);
+        return Math.max(max, w);
+      }, 0)
+    : 0;
+
+  const rightPaddingForArrows = baseRightPaddingForArrows + outputLabelMaxWidth;
+  const leftPaddingForArrows = baseLeftPaddingForArrows + inputLabelMaxWidth;
 
   const getWeight = (fromLayer: number, fromIndex: number, toIndex: number) => {
     return weights?.[fromLayer]?.[toIndex]?.[fromIndex];
@@ -60,6 +98,10 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
 
   const getNodeRadius = (layerIndex: number): number =>
     layerIndex === 0 ? inputNeuronRadius : neuronRadius;
+
+  const getActivation = (layerIndex: number, nodeIndex: number) => {
+    return activations?.[layerIndex]?.[nodeIndex];
+  };
 
   const counts: number[] = Array.isArray(neuronCounts)
     ? neuronCounts
@@ -140,6 +182,20 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     if (active.layerIndex === 0) {
       return firstLayerIndex === active.nodeIndex;
     }
+    // If focusing the first hidden layer, all network inputs feed into it
+    if (active.layerIndex === 1) {
+      return true;
+    }
+    // For deeper layers, network inputs are not direct inputs -> dim them
+    return false;
+  };
+
+  const isOutputArrowHighlighted = (lastLayerIndex: number): boolean => {
+    if (!active) return true;
+    // If active is in the last layer, only its corresponding output arrow/label is highlighted
+    if (active.layerIndex === resolvedLayerCount - 1) {
+      return lastLayerIndex === active.nodeIndex;
+    }
     return false;
   };
 
@@ -216,6 +272,79 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
         )}
       </g>
 
+      {/* Activation labels for inputs to the focused layer (show all nodes in previous layer) */}
+      <g style={{ pointerEvents: "none" }}>
+        {layers.flatMap((layer, i) => {
+          const isHiddenLayer = i > 0 && i < resolvedLayerCount - 1;
+          if (!isHiddenLayer) return [] as ReactElement[];
+          const showLayer = !!active && active.layerIndex === i + 1; // previous layer of the active node's layer
+          const targetPoint = showLayer ? layers[i + 1]?.[active!.nodeIndex] : undefined;
+          return layer.map((p, j) => {
+            const show = showLayer;
+            const value = getActivation(i, j);
+            if (typeof value !== 'number') return null as unknown as ReactElement;
+            const textStr = String(Number.isInteger(value) ? value : value.toFixed(2));
+            const fontSize = weightFontSize;
+            const rectPadding = weightLabelPadding ?? Math.max(2, Math.round(fontSize * 0.3));
+            const charWidth = fontSize * 0.6;
+            const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
+            const rectHeight = fontSize + rectPadding * 2;
+            const r = getNodeRadius(i);
+            // Align left edges at a fixed x for this layer; intersect the edge with the vertical line x = xLeft
+            const leftEdgeGap = 0; // gap from node circle to label left edge
+            const xLeft = p.x + r + leftEdgeGap; // same for all nodes in this layer
+            const centerX = xLeft + rectWidth / 2;
+            let centerY = p.y;
+            if (targetPoint) {
+              const dx = targetPoint.x - p.x;
+              const dy = targetPoint.y - p.y;
+              // Avoid division by zero; for layered layout dx should be > 0
+              if (Math.abs(dx) > 1e-6) {
+                const t = (xLeft - p.x) / dx; // param where the edge hits the vertical line
+                centerY = p.y + dy * t;
+              }
+            }
+            return (
+              <g key={`act-${i}-${j}`} transform={`translate(${centerX}, ${centerY})`} style={{ opacity: show ? 1 : 0, transition: "opacity 120ms ease" }}>
+                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
+                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+              </g>
+            );
+          });
+        })}
+      </g>
+
+      {/* Activation label for the focused hidden-layer node itself */}
+      <g style={{ pointerEvents: "none" }}>
+        {layers.flatMap((layer, i) =>
+          layer.map((p, j) => {
+            const isHiddenLayer = i > 0 && i < resolvedLayerCount - 1;
+            const show = isHiddenLayer && !!active && active.layerIndex === i && active.nodeIndex === j;
+            if (!show) return null as unknown as ReactElement;
+            const value = getActivation(i, j);
+            if (typeof value !== 'number') return null as unknown as ReactElement;
+            const textStr = String(Number.isInteger(value) ? value : value.toFixed(2));
+            const fontSize = weightFontSize;
+            const rectPadding = weightLabelPadding ?? Math.max(2, Math.round(fontSize * 0.3));
+            const charWidth = fontSize * 0.6;
+            const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
+            const rectHeight = fontSize + rectPadding * 2;
+            const r = getNodeRadius(i);
+            const gap = 1;
+            const x = p.x + (r + gap) + rectWidth / 2; // to the right of the node
+            const y = p.y; // vertically centered with the node
+            return (
+              <g key={`act-self-${i}-${j}`} transform={`translate(${x}, ${y})`} style={{ opacity: 1, transition: "opacity 120ms ease" }}>
+                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
+                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+              </g>
+            );
+          })
+        )}
+      </g>
+
+      {/* (Removed) Extra input value labels; we only show the existing input boxes */}
+
       {/* Weight labels at edge midpoints (visible only when hovering receiving node) */}
       <g style={{ pointerEvents: "none" }}>
         {layers.flatMap((layer, i) => {
@@ -261,23 +390,41 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
           const headBaseYTop = y - Math.min(arrowHalfHeight, neuronRadius - 1);
           const headBaseYBottom =
             y + Math.min(arrowHalfHeight, neuronRadius - 1);
-          // Outputs are never inputs to the active node; dim when any node is active
-          const highlighted = !active; 
+          const highlighted = isOutputArrowHighlighted(idx);
+          const actValue = getActivation(resolvedLayerCount - 1, idx);
+          const activationText = typeof actValue === 'number' ? String(Number.isInteger(actValue) ? actValue : actValue.toFixed(2)) : null;
+          const fontSize = weightFontSize;
+          const rectPadding = weightLabelPadding ?? Math.max(2, Math.round(fontSize * 0.3));
+          const charWidth = fontSize * 0.6;
+          const rectWidth = activationText ? Math.max(fontSize + 4, activationText.length * charWidth + rectPadding * 2) : 0;
+          const rectHeight = fontSize + rectPadding * 2;
+          const actX = shaftEndX + outputArrowHead + rectWidth / 2; // flush with arrow tip
+          const actY = y;
           return (
-            <g key={`out-${idx}`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
-              <line
-                x1={shaftStartX}
-                y1={y}
-                x2={shaftEndX}
-                y2={y}
-                stroke="#7b8290"
-                strokeWidth={2}
-              />
-              <polygon
-                points={`${headTipX},${y} ${shaftEndX},${headBaseYTop} ${shaftEndX},${headBaseYBottom}`}
-                fill="#7b8290"
-              />
-            </g>
+            <React.Fragment key={`out-${idx}`}>
+              <g style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
+                <line
+                  x1={shaftStartX}
+                  y1={y}
+                  x2={shaftEndX}
+                  y2={y}
+                  stroke="#7b8290"
+                  strokeWidth={2}
+                />
+                <polygon
+                  points={`${headTipX},${y} ${shaftEndX},${headBaseYTop} ${shaftEndX},${headBaseYBottom}`}
+                  fill="#7b8290"
+                />
+              </g>
+              {activationText && (
+                <g>
+                  <g transform={`translate(${actX}, ${actY})`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
+                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
+                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{activationText}</text>
+                  </g>
+                </g>
+              )}
+            </React.Fragment>
           );
         });
       })()}
@@ -307,7 +454,7 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
                 const charWidth = fontSize * 0.6; // rough width factor
                 const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
                 const rectHeight = fontSize + rectPadding * 2;
-                const rightEdgeX = shaftStartX - 6; // small gap from arrow
+                const rightEdgeX = shaftStartX; // flush with arrow shaft start
                 const centerX = rightEdgeX - rectWidth / 2;
                 return (
                   <g transform={`translate(${centerX}, ${y})`}>
