@@ -19,6 +19,8 @@ type GenerateOptions = {
   weightFontSize?: number;
   weightLabelPadding?: number;
   inputNeuronRadius?: number;
+  inputData?: number[];
+  inputFontSize?: number;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -30,19 +32,21 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
     layerCount = 3,
     neuronsPerLayer = 5,
     neuronCounts,
-    margin = 20,
+    margin = 40,
     neuronRadius = 15,
     weights,
     weightFontSize = 16,
     weightLabelPadding,
     inputNeuronRadius = 4,
+    inputData,
+    inputFontSize = 16,
   } = options;
 
   const outputArrowGap = 0;
   const outputArrowLength = 32;
   const outputArrowHead = 10;
   const inputArrowGap = 0;
-  const inputArrowLength = 32;
+  const inputArrowLength = 12;
   const inputArrowHead = 10;
   const arrowHalfHeight = 6;
   const rightPaddingForArrows =
@@ -295,6 +299,23 @@ export function DenseNetworkSvg(options: GenerateOptions = {}): ReactElement {
           const highlighted = isInputArrowHighlighted(idx);
           return (
             <g key={`in-${idx}`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
+              {typeof inputData?.[idx] === 'number' && (() => {
+                const value = inputData[idx] as number;
+                const textStr = String(value);
+                const fontSize = inputFontSize;
+                const rectPadding = Math.max(2, Math.round(fontSize * 0.3));
+                const charWidth = fontSize * 0.6; // rough width factor
+                const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
+                const rectHeight = fontSize + rectPadding * 2;
+                const rightEdgeX = shaftStartX - 6; // small gap from arrow
+                const centerX = rightEdgeX - rectWidth / 2;
+                return (
+                  <g transform={`translate(${centerX}, ${y})`}>
+                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
+                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+                  </g>
+                );
+              })()}
               <line
                 x1={shaftStartX}
                 y1={y}
