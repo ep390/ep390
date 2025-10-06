@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, type ReactElement } from "react";
+import React, { useMemo, useRef, useState, type ReactElement } from "react";
 import MultilayerPerceptronSvg, { type MlpOptions } from "./MlpSvg";
 import { calculateActivations } from "./calculate-activations";
 import Toggle from "@/components/Toggle";
@@ -27,6 +27,9 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   const [inputs, setInputs] = useState<number[]>(
     () => (Array.isArray(initialActivations?.[0]) ? [...initialActivations[0]] : [])
   );
+
+  // Capture the initial inputs once so we can compare and reset
+  const initialInputsRef = useRef<number[]>(Array.isArray(initialActivations?.[0]) ? [...initialActivations[0]] : []);
 
   const computedActivations = useMemo(() => {
     return calculateActivations(inputs, weights);
@@ -68,9 +71,22 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     return computedActivations?.[focused.layerIndex]?.[focused.nodeIndex];
   }, [focused, computedActivations]);
 
+  const handleReset = () => {
+    setInputs(() => [...initialInputsRef.current]);
+  };
+
+  const isDirty = useMemo(() => {
+    const init = initialInputsRef.current;
+    if (inputs.length !== init.length) return true;
+    for (let i = 0; i < inputs.length; i += 1) {
+      if (inputs[i] !== init[i]) return true;
+    }
+    return false;
+  }, [inputs]);
+
   return (
     <div>
-      <div className="mx-auto">
+      <div className="mx-auto relative">
         <MultilayerPerceptronSvg
           {...(rest as MlpOptions)}
           weights={weights}
@@ -78,6 +94,16 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
           onInputBoxDrag={onInputBoxDrag}
           onNodeFocusChange={handleNodeFocusChange}
         />
+        {isDirty && (
+          <button
+            type="button"
+            className="absolute bottom-2 right-2 px-2 py-1 text-xs rounded border border-slate-300 bg-white text-slate-800 shadow-sm hover:bg-slate-50"
+            onClick={handleReset}
+            aria-label="Reset inputs"
+          >
+            Reset
+          </button>
+        )}
       </div>
       {showEquation && (
         <div>

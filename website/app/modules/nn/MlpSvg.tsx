@@ -100,13 +100,15 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     ? activations[activations.length - 1]
     : undefined;
   const formatOutputValue = (v: number) => (Number.isInteger(v) ? String(v) : String(v.toFixed(2)));
-  const outputLabelMaxWidth = Array.isArray(lastActivations)
+  // Compute auto width based on current outputs, but enforce a minimum equal to the input box width
+  const outputAutoWidth = Array.isArray(lastActivations)
     ? lastActivations.reduce((max, v) => {
         if (typeof v !== "number") return max;
         const w = measureLabelWidth(formatOutputValue(v), outputFontSize, outputRectPadding);
         return Math.max(max, w);
       }, 0)
     : 0;
+  const outputLabelMaxWidth = Math.max(inputLabelMaxWidth, outputAutoWidth);
 
   const rightPaddingForArrows = baseRightPaddingForArrows + outputLabelMaxWidth;
   const leftPaddingForArrows = baseLeftPaddingForArrows + inputLabelMaxWidth;
@@ -485,7 +487,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
           const fontSize = weightFontSize;
           const rectPadding = weightLabelPadding ?? Math.max(2, Math.round(fontSize * 0.3));
           const charWidth = fontSize * 0.6;
-          const rectWidth = activationText ? Math.max(fontSize + 4, activationText.length * charWidth + rectPadding * 2) : 0;
+          const rectWidth = activationText
+            ? Math.max(inputLabelMaxWidth, Math.max(fontSize + 4, activationText.length * charWidth + rectPadding * 2))
+            : inputLabelMaxWidth;
           const rectHeight = fontSize + rectPadding * 2;
           const actX = shaftEndX + outputArrowHead + rectWidth / 2; // flush with arrow tip
           const actY = y;

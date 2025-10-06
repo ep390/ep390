@@ -82,22 +82,18 @@ export default function Page() {
             <li className="font-bold">What are some others?</li>
           </ul>
 
-          <MlpSvg
-            activations={[
-              examples.ex4.activations[0],
-              [] as number[],
-              examples.ex4.activations[2],
-            ]}
-            weights={undefined}
-            neuronCounts={examples.ex4.neuronCounts}
-          />
+          <MlpSvg {...examples.ex4} />
 
           <p className="mt-4 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
-            Think of <span className="text-blue-800 font-bold">each blue dot</span> as a function that takes multiple inputs and
-            produces a <span className="text-orange-700 font-bold">single output</span>.
+            Think of{" "}
+            <span className="text-blue-800 font-bold">each blue dot</span> as a
+            function that takes multiple inputs and produces a{" "}
+            <span className="text-orange-700 font-bold">single output</span>.
             <br /> <br />
-            Think of the <span className="text-blue-800 font-bold">entire network</span> as a function that makes multiple inputs
-            and produces <span className="text-purple-700 font-bold">multiple outputs</span>.
+            Think of the{" "}
+            <span className="text-blue-800 font-bold">entire network</span> as a
+            function that makes multiple inputs and produces{" "}
+            <span className="text-purple-700 font-bold">multiple outputs</span>.
           </p>
 
           <h2>Weights</h2>
