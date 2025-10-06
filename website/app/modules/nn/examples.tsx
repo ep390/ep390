@@ -28,5 +28,5 @@ const ex4Activations = calculateActivations([1, 4, 5], trivialWeights);
 export const ex4: MlpOptionsWithData = {
   neuronCounts: [3, 5, 3],
   weights: trivialWeights,
-  activations: [ex4Activations[0], [], ex4Activations[2]],
+  activations: ex4Activations,
 };

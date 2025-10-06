@@ -112,15 +112,15 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
               {layerInputs &&
                 layerInputs.map((input, index) => (
                   <span key={index}>
-                    (<span className="text-purple-500">{toFixed(input)}</span>
+                    (<span className="text-blue-600">{toFixed(input)}</span>
                     &nbsp;✖️&nbsp;
-                    <span>{toFixed(nodeWeights?.[index])}</span>)
+                    <span className="text-orange-700">{toFixed(nodeWeights?.[index])}</span>)
                     {index < layerInputs.length - 1 && <span> ➕ </span>}
                   </span>
                 ))}
               {layerInputs && (
                 <>
-                  🟰 <span className="text-purple-500">{toFixed(nodeActivation)}</span>
+                  🟰 <span className="text-blue-600">{toFixed(nodeActivation)}</span>
                 </>
               )}
             </div>

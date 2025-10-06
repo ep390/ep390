@@ -67,6 +67,13 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   const inputArrowLength = 12;
   const inputArrowHead = 10;
   const arrowHalfHeight = 6;
+
+  // Centralized color constants (not exported)
+  const COLOR_EDGE = "#7b8290"; // lines and arrows
+  const COLOR_NODE_FILL = "#bfdbfe"; // hidden/output nodes fill
+  const COLOR_NODE_STROKE = "#1e40af"; // nodes stroke
+  const COLOR_DATA = "#1d4ed8"; // data (inputs/outputs/activations) - blue 700
+  const COLOR_WEIGHTS = "#c2410c"; // weights - orange 700
   // Base arrow padding (without labels)
   const baseRightPaddingForArrows =
     outputArrowGap + outputArrowLength + outputArrowHead;
@@ -303,7 +310,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                   y1={p1.y}
                   x2={p2.x}
                   y2={p2.y}
-                  stroke="#7b8290"
+                  stroke={COLOR_EDGE}
                   strokeWidth={edgeStrokeWidth}
                   strokeLinecap="round"
                   style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
@@ -328,8 +335,8 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 cx={p.x}
                 cy={p.y}
                 r={r}
-                fill={isFirstLayer ? "#7b8290" : "#bfdbfe"}
-                stroke={"#1e40af"}
+                fill={isFirstLayer ? COLOR_EDGE : COLOR_NODE_FILL}
+                stroke={COLOR_NODE_STROKE}
                 strokeWidth={2}
                 style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
                 onMouseEnter={() => {
@@ -399,8 +406,8 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
             }
             return (
               <g key={`act-${i}-${j}`} transform={`translate(${centerX}, ${centerY})`} style={{ opacity: show ? 1 : 0, transition: "opacity 120ms ease" }}>
-                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
-                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
+                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{textStr}</text>
               </g>
             );
           });
@@ -428,8 +435,8 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
             const y = p.y; // vertically centered with the node
             return (
               <g key={`act-self-${i}-${j}`} transform={`translate(${x}, ${y})`} style={{ opacity: 1, transition: "opacity 120ms ease" }}>
-                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
-                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+                <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
+                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{textStr}</text>
               </g>
             );
           })
@@ -459,8 +466,8 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
               const rectHeight = fontSize + rectPadding * 2;
               labels.push(
                 <g key={`w-${i}-${a}-${b}`} transform={`translate(${midX}, ${midY})`} style={{ opacity: show ? 1 : 0, transition: "opacity 120ms ease" }}>
-                  <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={3} ry={3} fill="#ffffff" stroke="#1e293b" strokeWidth={1} />
-                  <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#0f172a">{textStr}</text>
+                  <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={3} ry={3} fill="#ffffff" stroke={COLOR_WEIGHTS} strokeWidth={1} />
+                  <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_WEIGHTS}>{textStr}</text>
                 </g>
               );
             }
@@ -501,19 +508,19 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                   y1={y}
                   x2={shaftEndX}
                   y2={y}
-                  stroke="#7b8290"
+                  stroke={COLOR_EDGE}
                   strokeWidth={2}
                 />
                 <polygon
                   points={`${headTipX},${y} ${shaftEndX},${headBaseYTop} ${shaftEndX},${headBaseYBottom}`}
-                  fill="#7b8290"
+                  fill={COLOR_EDGE}
                 />
               </g>
               {activationText && (
                 <g>
                   <g transform={`translate(${actX}, ${actY})`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
-                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
-                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{activationText}</text>
+                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
+                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{activationText}</text>
                   </g>
                 </g>
               )}
@@ -561,8 +568,8 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                       setDragState({ inputIndex: idx, lastX: e.clientX, lastY: e.clientY });
                     }}
                   >
-                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
-                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
+                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
+                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{textStr}</text>
                   </g>
                 );
               })()}
@@ -571,12 +578,12 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 y1={y}
                 x2={shaftEndX}
                 y2={y}
-                stroke="#7b8290"
+                stroke={COLOR_EDGE}
                 strokeWidth={2}
               />
               <polygon
                 points={`${headTipX},${y} ${baseX},${headBaseYTop} ${baseX},${headBaseYBottom}`}
-                fill="#7b8290"
+                fill={COLOR_EDGE}
               />
             </g>
           );
