@@ -44,15 +44,15 @@ export default function MlpWithEquation(options: MlpOptionsWithData) {
             {layerInputs &&
               layerInputs?.map((input, index) => (
                 <span key={index} className="">
-                  (<span className="text-purple-500">{input}</span>
+                  (<span className="text-purple-500">{toFixed(input)}</span>
                   &nbsp;✖️&nbsp;
-                  <span>{nodeWeights?.[index]}</span>)
+                  <span>{toFixed(nodeWeights?.[index])}</span>)
                   {index < layerInputs.length - 1 && <span> ➕ </span>}
                 </span>
               ))}
             {layerInputs && (
               <>
-                🟰 <span className="text-purple-500">{nodeActivation}</span>
+                🟰 <span className="text-purple-500">{toFixed(nodeActivation)}</span>
               </>
             )}
           </div>
@@ -60,4 +60,10 @@ export default function MlpWithEquation(options: MlpOptionsWithData) {
       </div>
     </div>
   );
+}
+
+function toFixed(value: number | undefined, precision: number = 2) {
+  if (typeof value !== 'number') return undefined;
+  if (Number.isInteger(value)) return value.toString();
+  return value.toFixed(precision);
 }

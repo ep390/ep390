@@ -1,7 +1,7 @@
 import { MlpOptions } from "./MlpSvg";
 import { MlpOptionsWithData } from "./MlpWithEquation";
 import { calculateActivations } from "./calculate-activations";
-import { weights } from "./weights";
+import { weights4537, trivialWeights } from "./weights";
 
 export const ex1: MlpOptions = {
   neuronCounts: [4, 6, 6, 6, 2],
@@ -18,22 +18,15 @@ export const ex3: MlpOptions = {
   svgHeight: 450,
 };
 
-const neuronCounts = [4, 5, 3, 7];
-const inputData = [1, 4, 5, 1];
-
-export const exampleWithWeights: MlpOptionsWithData = {
-  neuronCounts,
-  weights,
-  activations: calculateActivations(inputData, weights),
+export const initWeights: MlpOptionsWithData = {
+  neuronCounts: [4, 5, 3, 7],
+  weights: weights4537,
+  activations: calculateActivations([1, 4, 5, 1], weights4537),
 };
 
-export const ex4: MlpOptions = {
-  neuronCounts: exampleWithWeights.neuronCounts,
-  activations: [
-    exampleWithWeights.activations[0],
-    [],
-    [],
-    exampleWithWeights.activations[3],
-  ],
+const ex4Activations = calculateActivations([1, 4, 5], trivialWeights);
+export const ex4: MlpOptionsWithData = {
+  neuronCounts: [3, 5, 3],
+  weights: trivialWeights,
+  activations: [ex4Activations[0], [], ex4Activations[2]],
 };
-

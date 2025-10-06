@@ -42,7 +42,7 @@ export default function Page() {
           <MlpSvg {...examples.ex2} />
           <MlpSvg {...examples.ex3} />
 
-          <p>In practice, networks can have millions or billions of nodes.</p>
+          <p>In practice, networks can have many millions of nodes.</p>
           <h2>&quot;Feed Forward&quot; and &quot;Fully Connected&quot;</h2>
 
           <p>
@@ -51,14 +51,60 @@ export default function Page() {
             <strong>feed forward</strong>?
           </p>
 
-          <MlpSvg {...examples.ex4} />
+          <MlpSvg neuronCounts={examples.ex4.neuronCounts} />
+
+          <h2>Inputs and Outputs</h2>
 
           <p>
             In machine learning, we need to represent our input and output data
-            with numbers. There are lots of different ways to do that.
+            with numbers. There are lots of different ways to do that. Any of
+            methods below are valid targets for the inputs and outputs of a
+            neural network.
           </p>
 
-          <MlpWithEquation {...examples.exampleWithWeights} />
+          <ul>
+            <li>MIDI Note Number</li>
+            <li>Frequency (Hz)</li>
+            <li>Spectrograms</li>
+            <li>
+              Audio waveforms (
+              <a
+                href="https://deepmind.google/discover/blog/wavenet-a-generative-model-for-raw-audio/"
+                target="_blank"
+              >
+                Wavenet
+              </a>{" "}
+              did this, but there are now better ways to generate waveforms)
+            </li>
+            <li className="font-bold text-orange-700">
+              Not all formats work equally well for all tasks!
+            </li>
+            <li className="font-bold">What are some others?</li>
+          </ul>
+
+          <MlpSvg
+            activations={[
+              examples.ex4.activations[0],
+              [] as number[],
+              examples.ex4.activations[2],
+            ]}
+            weights={undefined}
+            neuronCounts={examples.ex4.neuronCounts}
+          />
+
+          <p className="mt-4 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
+            Think of <span className="text-blue-800 font-bold">each blue dot</span> as a function that takes multiple inputs and
+            produces a <span className="text-orange-700 font-bold">single output</span>.
+            <br /> <br />
+            Think of the <span className="text-blue-800 font-bold">entire network</span> as a function that makes multiple inputs
+            and produces <span className="text-purple-700 font-bold">multiple outputs</span>.
+          </p>
+
+          <h2>Weights</h2>
+
+          <MlpWithEquation {...examples.ex4} />
+
+          <MlpWithEquation {...examples.initWeights} />
         </div>
         <ModuleFooter />
       </div>
