@@ -100,9 +100,28 @@ export default function Page() {
           </p>
 
           <h2>Weights</h2>
+          <p>
+            How did we calculate the{" "}
+            <code className="text-blue-700 font-bold">
+              {examples.ex4.activations[1][0]}
+            </code>{" "}
+            in the first hidden layer?
+          </p>
+          <p>Where do these <span className="text-orange-700 font-bold">orange</span> values come from?</p>
 
-          <MlpEditable {...examples.ex4} showEquation/>
+          <MlpEditable {...examples.ex4} showEquation />
 
+          <p className="mt-8 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
+            <span className="text-red-700 font-bold">⚠️ Some steps where omitted! ⚠️</span>
+            <br />
+            The functions in the hidden layer do a little more than this... but we will get to that later.
+          </p>
+
+          <h2>A more practical example</h2>
+          <p>
+            Let&apos;s discuss how we could create a neural network that
+            generates chord sequences.
+          </p>
           <MlpEditable {...examples.initWeights} showEquation />
         </div>
         <ModuleFooter />
