@@ -8,10 +8,10 @@ export default function AiTaxonomySmall() {
             Machine Learning (ML)
             <ul>
               <li>
-                Deep Learning
+                Neural Networks
                 <ul>
                   <li>
-                    Neural Networks
+                    Deep Learning
                     <ul>
                       <li>
                         <strong>Feedforward Neural Networks</strong> (Multilayer

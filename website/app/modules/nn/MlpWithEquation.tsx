@@ -2,6 +2,7 @@
 
 import MultilayerPerceptronSvg, { type MlpOptions } from "./MlpSvg";
 import { useState } from "react";
+import Toggle from "@/components/Toggle";
 
 export type MlpOptionsWithData = MlpOptions & {
   weights: number[][][];
@@ -38,23 +39,24 @@ export default function MlpWithEquation(options: MlpOptionsWithData) {
         />
       </div>
       <div>
-        <h2>Equation</h2>
-        <div className="text-xl">
-          {layerInputs &&
-            layerInputs?.map((input, index) => (
-              <span key={index} className="">
-                (<span className="text-purple-500">{input}</span>
-                &nbsp;✖️&nbsp;
-                <span>{nodeWeights?.[index]}</span>)
-                {index < layerInputs.length - 1 && <span> ➕ </span>}
-              </span>
-            ))}
+        <Toggle title="Show equation">
+          <div className="text-xl">
+            {layerInputs &&
+              layerInputs?.map((input, index) => (
+                <span key={index} className="">
+                  (<span className="text-purple-500">{input}</span>
+                  &nbsp;✖️&nbsp;
+                  <span>{nodeWeights?.[index]}</span>)
+                  {index < layerInputs.length - 1 && <span> ➕ </span>}
+                </span>
+              ))}
             {layerInputs && (
               <>
                 🟰 <span className="text-purple-500">{nodeActivation}</span>
               </>
             )}
-        </div>
+          </div>
+        </Toggle>
       </div>
     </div>
   );
