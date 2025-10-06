@@ -1,5 +1,5 @@
 import styles from "@/app/[...markdown]/markdown.module.css";
-import MlpWithEquation from "./MlpWithEquation";
+import MlpEditable from "./MlpEditable";
 import MlpSvg from "./MlpSvg";
 import * as examples from "./examples";
 import ModuleFooter from "@/components/ModuleFooter";
@@ -102,9 +102,9 @@ export default function Page() {
 
           <h2>Weights</h2>
 
-          <MlpWithEquation {...examples.ex4} />
+          <MlpEditable {...examples.ex4} />
 
-          <MlpWithEquation {...examples.initWeights} />
+          <MlpEditable {...examples.initWeights} showEquation />
         </div>
         <ModuleFooter />
       </div>

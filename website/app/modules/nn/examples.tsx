@@ -1,5 +1,5 @@
 import { MlpOptions } from "./MlpSvg";
-import { MlpOptionsWithData } from "./MlpWithEquation";
+import { MlpEditableOptions, MlpOptionsWithData } from "./MlpEditable";
 import { calculateActivations } from "./calculate-activations";
 import { weights4537, trivialWeights } from "./weights";
 
@@ -18,7 +18,7 @@ export const ex3: MlpOptions = {
   svgHeight: 450,
 };
 
-export const initWeights: MlpOptionsWithData = {
+export const initWeights: MlpEditableOptions = {
   neuronCounts: [4, 5, 3, 7],
   weights: weights4537,
   activations: calculateActivations([1, 4, 5, 1], weights4537),

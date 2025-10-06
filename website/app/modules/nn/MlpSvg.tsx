@@ -32,6 +32,9 @@ export type MlpOptions = {
   responsive?: boolean; // when true, svg scales down with container but not above svgWidth
   edgeStrokeWidth?: number; // thickness of lines between nodes
   onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
+  // Called during drag gestures that start on an input (purple) data box
+  // Arguments: (inputNumber, dx, dy)
+  onInputBoxDrag?: (inputNumber: number, dx: number, dy: number) => void;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -54,6 +57,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     responsive = true,
     edgeStrokeWidth = 2,
     onNodeFocusChange,
+    onInputBoxDrag,
   } = options;
 
   const outputArrowGap = 0;
@@ -156,6 +160,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
 
   const [active, setActive] = useState<ActiveNode>(null);
   const [isLocked, setIsLocked] = useState(false); // true when focus comes from click/touch
+  const [dragState, setDragState] = useState<{ inputIndex: number; lastX: number; lastY: number } | null>(null);
 
   const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
     if (layerIndex === 0) return activations?.[0];
@@ -253,7 +258,23 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
       aria-label={`${resolvedLayerCount}-layer dense neural network with layer sizes ${counts.join(
         ","
       )}`}
+      onPointerMove={(e) => {
+        if (!dragState) return;
+        const dx = e.clientX - dragState.lastX;
+        const dy = e.clientY - dragState.lastY;
+        if (onInputBoxDrag) {
+          onInputBoxDrag(dragState.inputIndex, dx, dy);
+        }
+        setDragState({ inputIndex: dragState.inputIndex, lastX: e.clientX, lastY: e.clientY });
+      }}
+      onPointerUp={() => {
+        if (dragState) {
+          setDragState(null);
+        }
+      }}
       onPointerDown={(e) => {
+        // Do not change focus if an input drag is in progress
+        if (dragState) return;
         const target = e.target as Element | null;
         // If the target is a node (circle), do not clear focus here
         if (target && target.closest('circle')) return;
@@ -310,11 +331,13 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 strokeWidth={2}
                 style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}
                 onMouseEnter={() => {
+                  if (dragState) return; // do not change focus while dragging input value
                   if (isLocked) return; // hover should not change focus when locked by click/touch
                   setActive({ layerIndex: i, nodeIndex: j });
                   emitNodeFocusChange(i, j, true);
                 }}
                 onMouseLeave={() => {
+                  if (dragState) return; // preserve current focus while dragging input value
                   if (isLocked) return; // keep focus while locked
                   emitNodeFocusChange(i, j, false);
                   setActive(null);
@@ -514,7 +537,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
             <g key={`in-${idx}`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
               {typeof inputValues?.[idx] === 'number' && (() => {
                 const value = inputValues[idx] as number;
-                const textStr = String(value);
+                const textStr = Number.isFinite(value) ? String(value.toFixed(2)) : String(value);
                 const fontSize = inputFontSize;
                 const rectPadding = Math.max(2, Math.round(fontSize * 0.3));
                 const rectWidth = Math.max(fontSize + 4, inputLabelMaxWidth);
@@ -522,7 +545,18 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 const rightEdgeX = shaftStartX; // flush with arrow shaft start
                 const centerX = rightEdgeX - rectWidth / 2;
                 return (
-                  <g transform={`translate(${centerX}, ${y})`}>
+                  <g
+                    transform={`translate(${centerX}, ${y})`}
+                    style={onInputBoxDrag ? { cursor: 'ns-resize' } : undefined}
+                    onPointerDown={(e) => {
+                      if (!onInputBoxDrag) return;
+                      e.stopPropagation();
+                      e.preventDefault();
+                      // Capture pointer so move/up events keep firing even if we leave the box
+                      try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+                      setDragState({ inputIndex: idx, lastX: e.clientX, lastY: e.clientY });
+                    }}
+                  >
                     <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke="#9333ea" strokeWidth={1} />
                     <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill="#9333ea">{textStr}</text>
                   </g>
