@@ -548,7 +548,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
             <g key={`in-${idx}`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
               {typeof inputValues?.[idx] === 'number' && (() => {
                 const value = inputValues[idx] as number;
-                const textStr = Number.isFinite(value) ? String(value.toFixed(2)) : String(value);
+                const textStr = Number.isFinite(value)
+                  ? (Number.isInteger(value) ? String(value) : String(value.toFixed(2)))
+                  : String(value);
                 const fontSize = inputFontSize;
                 const rectPadding = Math.max(2, Math.round(fontSize * 0.3));
                 const rectWidth = Math.max(fontSize + 4, inputLabelMaxWidth);

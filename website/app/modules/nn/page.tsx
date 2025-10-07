@@ -6,6 +6,7 @@ import ModuleFooter from "@/components/ModuleFooter";
 import AiTaxonomy from "./AiTaxonomy";
 import AiTaxonomySmall from "./AiTaxonomySmall";
 import Toggle from "@/components/Toggle";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -21,13 +22,6 @@ export default function Page() {
           <MlpSvg {...examples.ex1} />
 
           <p>Neural networks are a sub-category of machine learning models.</p>
-          <p>
-            The diagrams below all represent the simplest category of neural
-            networks called a <strong>Feed Forward Networks (FFNN)</strong>. You
-            will also encounter the related names{" "}
-            <strong>Fully Connected Neural Network (FCNN)</strong> and{" "}
-            <strong>Multilayer Perceptron (MLP)</strong>.
-          </p>
 
           <div className="mb-4">
             <Toggle title="Where do FFNNs fit in the AI space?">
@@ -37,6 +31,14 @@ export default function Page() {
               <AiTaxonomy />
             </Toggle>
           </div>
+
+          <p>
+            The diagrams below all represent the simplest category of neural
+            networks called a <strong>Feed Forward Networks (FFNN)</strong>. You
+            will also encounter the related names{" "}
+            <strong>Fully Connected Neural Network (FCNN)</strong> and{" "}
+            <strong>Multilayer Perceptron (MLP)</strong>.
+          </p>
 
           <p>Nerual Networks come in many shapes and sizes.</p>
           <MlpSvg {...examples.ex2} />
@@ -76,11 +78,19 @@ export default function Page() {
               </a>{" "}
               did this, but there are now better ways to generate waveforms)
             </li>
-            <li className="font-bold text-orange-700">
-              Not all formats work equally well for all tasks!
+            <li>
+              <Link href="/modules/abc/">ABC notation</Link> (via{" "}
+              <a href="https://gpt-tokenizer.dev/" target="_blank">
+                tokens
+              </a>
+              )
             </li>
             <li className="font-bold">What are some others?</li>
           </ul>
+
+          <span className="font-bold text-orange-700">
+            Some formats work better than others!
+          </span>
 
           <MlpSvg
             neuronCounts={examples.ex4.neuronCounts}
@@ -107,14 +117,21 @@ export default function Page() {
             </code>{" "}
             in the first hidden layer?
           </p>
-          <p>Where do these <span className="text-orange-700 font-bold">orange</span> values come from?</p>
+          <p>
+            Where do these{" "}
+            <span className="text-orange-700 font-bold">orange</span> values
+            come from?
+          </p>
 
-          <MlpEditable {...examples.ex4} showEquation />
+          <MlpEditable {...examples.ex4} showEquation inputNumberType="int" />
 
           <p className="mt-8 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
-            <span className="text-red-700 font-bold">⚠️ Some steps where omitted! ⚠️</span>
+            <span className="text-red-700 font-bold">
+              ⚠️ Some steps where omitted! ⚠️
+            </span>
             <br />
-            The functions in the hidden layer do a little more than this... but we will get to that later.
+            The functions in the hidden layer do a little more than this... but
+            we will get to that later.
           </p>
 
           <h2>A more practical example</h2>
@@ -123,6 +140,19 @@ export default function Page() {
             generates chord sequences.
           </p>
           <MlpEditable {...examples.initWeights} showEquation />
+          <h2>Resources</h2>
+          <ul>
+            <li>
+              <a
+                href="https://www.youtube.com/watch?v=aircAruvnKk"
+                target="_blank"
+              >
+                But what is a neural network?
+              </a>{" "}
+              A Great YouTube video by 3Blue1Brown that covers this material and
+              more.
+            </li>
+          </ul>
         </div>
         <ModuleFooter />
       </div>

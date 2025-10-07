@@ -12,6 +12,7 @@ export type MlpOptionsWithData = MlpOptions & {
 
 export type MlpEditableOptions = MlpOptionsWithData & {
   showEquation?: boolean;
+  inputNumberType?: "float" | "int";
 };
 
 export default function MlpEditable(options: MlpEditableOptions): ReactElement {
@@ -20,6 +21,7 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     activations: initialActivations,
     onNodeFocusChange: upstreamOnNodeFocusChange,
     showEquation,
+    inputNumberType = "float",
     ...rest
   } = options;
 
@@ -27,6 +29,9 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   const [inputs, setInputs] = useState<number[]>(
     () => (Array.isArray(initialActivations?.[0]) ? [...initialActivations[0]] : [])
   );
+
+  // Accumulates fractional integer steps per input during drag so slow drags still step
+  const intAccumRef = useRef<number[]>([]);
 
   // Capture the initial inputs once so we can compare and reset
   const initialInputsRef = useRef<number[]>(Array.isArray(initialActivations?.[0]) ? [...initialActivations[0]] : []);
@@ -36,11 +41,22 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   }, [inputs, weights]);
 
   const onInputBoxDrag: NonNullable<MlpOptions["onInputBoxDrag"]> = (inputNumber, _dx, dy) => {
-    const dragScale = 0.008; // change per pixel; upward drag increases value
+    const dragScale = 0.05; // change per pixel; upward drag increases value
     setInputs(prev => {
       const next = [...prev];
       if (inputNumber >= 0 && inputNumber < next.length) {
-        next[inputNumber] = next[inputNumber] + (-dy) * dragScale;
+        if (inputNumberType === "int") {
+          const increment = (-dy) * dragScale; // value delta this frame
+          const prevAccum = intAccumRef.current[inputNumber] ?? 0;
+          const accum = prevAccum + increment;
+          const deltaSteps = accum >= 0 ? Math.floor(accum) : Math.ceil(accum);
+          intAccumRef.current[inputNumber] = accum - deltaSteps; // keep fractional remainder
+          if (deltaSteps !== 0) {
+            next[inputNumber] = next[inputNumber] + deltaSteps;
+          }
+        } else {
+          next[inputNumber] = next[inputNumber] + (-dy) * dragScale;
+        }
       }
       return next;
     });
@@ -73,6 +89,7 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
 
   const handleReset = () => {
     setInputs(() => [...initialInputsRef.current]);
+    intAccumRef.current = [];
   };
 
   const isDirty = useMemo(() => {
