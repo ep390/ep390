@@ -139,7 +139,7 @@ export default function Page() {
             Let&apos;s discuss how we could create a neural network that
             generates chord sequences.
           </p>
-          <MlpEditable {...examples.initWeights} showEquation />
+          <MlpEditable {...examples.initWeights} showEquation inputNumberType="int" />
           <h2>Resources</h2>
           <ul>
             <li>

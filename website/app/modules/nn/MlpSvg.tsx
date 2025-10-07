@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, type ReactElement } from "react";
+import React, { useState, useCallback, useMemo, type ReactElement } from "react";
 
 type Point = {
   x: number;
@@ -31,6 +31,7 @@ export type MlpOptions = {
   activations?: number[][];
   responsive?: boolean; // when true, svg scales down with container but not above svgWidth
   edgeStrokeWidth?: number; // thickness of lines between nodes
+  showOutputBarChart?: boolean;
   onNodeFocusChange?: (change: NodeFocusChange, focused: boolean) => void;
   // Called during drag gestures that start on an input (purple) data box
   // Arguments: (inputNumber, dx, dy)
@@ -65,6 +66,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     activations,
     responsive = true,
     edgeStrokeWidth = 2,
+    showOutputBarChart,
     onNodeFocusChange,
     onInputBoxDrag,
     onWeightLabelDrag,
@@ -260,6 +262,25 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   };
 
   const dimOpacity = 0.2;
+
+  // Toggle for showing outputs as bars or numbers; default from prop
+  const [showOutputBars, setShowOutputBars] = useState<boolean>(!!showOutputBarChart);
+
+  // Softmax helper for output scaling
+  const outputProbs = useMemo(() => {
+    const values = Array.isArray(lastActivations)
+      ? lastActivations.filter((v): v is number => typeof v === 'number' && Number.isFinite(v))
+      : undefined;
+    if (!values || values.length === 0) return undefined;
+    // Use all lastActivations in original order; if any non-number, bail
+    if (!Array.isArray(lastActivations) || lastActivations.some(v => typeof v !== 'number' || !Number.isFinite(v as number))) return undefined;
+    const nums = lastActivations as number[];
+    const max = Math.max(...nums);
+    const exps = nums.map(v => Math.exp(v - max));
+    const sum = exps.reduce((a, b) => a + b, 0);
+    if (sum <= 0) return nums.map(() => 0);
+    return exps.map(v => v / sum);
+  }, [lastActivations]);
 
   return (
     <svg
@@ -537,6 +558,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
           const rectHeight = fontSize + rectPadding * 2;
           const actX = shaftEndX + outputArrowHead + rectWidth / 2; // flush with arrow tip
           const actY = y;
+          const prob = Array.isArray(outputProbs) ? outputProbs[idx] : undefined;
+          const barWidth = typeof prob === 'number' ? prob * rectWidth : 0;
+          const barLeftX = actX - rectWidth / 2;
           return (
             <React.Fragment key={`out-${idx}`}>
               <g style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
@@ -554,11 +578,25 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 />
               </g>
               {activationText && (
-                <g>
-                  <g transform={`translate(${actX}, ${actY})`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
-                    <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
-                    <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{activationText}</text>
-                  </g>
+                <g style={{ cursor: 'pointer' }} onPointerDown={(e) => { e.stopPropagation(); setShowOutputBars(prev => !prev); }}>
+                  {showOutputBars && typeof prob === 'number' ? (
+                    <g style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
+                      <rect
+                        x={barLeftX}
+                        y={actY - rectHeight / 2}
+                        width={barWidth}
+                        height={rectHeight}
+                        rx={4}
+                        ry={4}
+                        fill={COLOR_DATA}
+                      />
+                    </g>
+                  ) : (
+                    <g transform={`translate(${actX}, ${actY})`} style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease" }}>
+                      <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
+                      <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_DATA}>{activationText}</text>
+                    </g>
+                  )}
                 </g>
               )}
             </React.Fragment>
