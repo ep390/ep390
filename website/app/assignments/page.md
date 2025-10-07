@@ -10,6 +10,7 @@ excerpt: "Assignments for Generative AI for Music, Image, and Code"
 1. [Chord Instrument with Agentic Workflows](/assignments/3/)
 1. [Combined MIDI IO](/assignments/4/)
 1. [Symbolic Music Generation](/assignments/5/)
+1. [Midterm Project](/assignments/midterm/)
 
 ## Submission Process
 

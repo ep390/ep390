@@ -21,6 +21,8 @@ Notes For Instructor:
 
 Topics:
 
+1. Play Homework Assignments
+1. JavaScript: Object Destructuring (Brief)
 1. ABC Notation (Hands On)
 1. Symbolic Music Generation with NotaGen
 1. Introduce Homework
@@ -34,5 +36,8 @@ Notes for Instructor:
 
 Topics:
 
+- Play Symbolic Music Notation HW assignment
 - Introduce the idea behind neural networks
 - Homework: Midterm Project Proposal (proposal is due before our week off)
+
+#
