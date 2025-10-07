@@ -5,9 +5,9 @@ excerpt: "Combine MIDI IO and async functions to create an arpeggiator"
 
 Due Dates:
 
-- 5pm October 14, 2025: Proposal due (no class; submit PR)
-- In class October 21, 2025: Proposal presentation and progress update
-- 5pm October 28, 2025: Final project due; in-class presentations
+- **October 14, 2025, 6pm**: Proposal due (no class; submit PR)
+- **October 21, 2025, 6pm**: Proposal presentation and progress update
+- **October 28, 2025, 6pm**: Final project due; in-class presentations
 
 ## Overview
 
