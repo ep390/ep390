@@ -35,6 +35,15 @@ export type MlpOptions = {
   // Called during drag gestures that start on an input (purple) data box
   // Arguments: (inputNumber, dx, dy)
   onInputBoxDrag?: (inputNumber: number, dx: number, dy: number) => void;
+  // Called during drag gestures that start on a weight label box
+  // Arguments: (fromLayer, fromIndex, toIndex, dx, dy)
+  onWeightLabelDrag?: (
+    fromLayer: number,
+    fromIndex: number,
+    toIndex: number,
+    dx: number,
+    dy: number
+  ) => void;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -58,6 +67,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     edgeStrokeWidth = 2,
     onNodeFocusChange,
     onInputBoxDrag,
+    onWeightLabelDrag,
   } = options;
 
   const outputArrowGap = 0;
@@ -169,7 +179,11 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
 
   const [active, setActive] = useState<ActiveNode>(null);
   const [isLocked, setIsLocked] = useState(false); // true when focus comes from click/touch
-  const [dragState, setDragState] = useState<{ inputIndex: number; lastX: number; lastY: number } | null>(null);
+  const [dragState, setDragState] = useState<
+    | { kind: "input"; inputIndex: number; lastX: number; lastY: number }
+    | { kind: "weight"; fromLayer: number; fromIndex: number; toIndex: number; lastX: number; lastY: number }
+    | null
+  >(null);
 
   const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
     if (layerIndex === 0) return activations?.[0];
@@ -271,10 +285,17 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
         if (!dragState) return;
         const dx = e.clientX - dragState.lastX;
         const dy = e.clientY - dragState.lastY;
-        if (onInputBoxDrag) {
-          onInputBoxDrag(dragState.inputIndex, dx, dy);
+        if (dragState.kind === "input") {
+          if (onInputBoxDrag) {
+            onInputBoxDrag(dragState.inputIndex, dx, dy);
+          }
+          setDragState({ kind: "input", inputIndex: dragState.inputIndex, lastX: e.clientX, lastY: e.clientY });
+        } else if (dragState.kind === "weight") {
+          if (onWeightLabelDrag) {
+            onWeightLabelDrag(dragState.fromLayer, dragState.fromIndex, dragState.toIndex, dx, dy);
+          }
+          setDragState({ kind: "weight", fromLayer: dragState.fromLayer, fromIndex: dragState.fromIndex, toIndex: dragState.toIndex, lastX: e.clientX, lastY: e.clientY });
         }
-        setDragState({ inputIndex: dragState.inputIndex, lastX: e.clientX, lastY: e.clientY });
       }}
       onPointerUp={() => {
         if (dragState) {
@@ -444,7 +465,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
       </g>
 
       {/* Weight labels at edge midpoints (visible only when hovering receiving node) */}
-      <g style={{ pointerEvents: "none" }}>
+      <g>
         {layers.flatMap((layer, i) => {
           const next = layers[i + 1];
           if (!next) return [] as ReactElement[];
@@ -465,7 +486,23 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
               const rectWidth = Math.max(fontSize + 4, textStr.length * charWidth + rectPadding * 2);
               const rectHeight = fontSize + rectPadding * 2;
               labels.push(
-                <g key={`w-${i}-${a}-${b}`} transform={`translate(${midX}, ${midY})`} style={{ opacity: show ? 1 : 0, transition: "opacity 120ms ease" }}>
+                <g
+                  key={`w-${i}-${a}-${b}`}
+                  transform={`translate(${midX}, ${midY})`}
+                  style={{
+                    opacity: show ? 1 : 0,
+                    transition: "opacity 120ms ease",
+                    pointerEvents: show ? 'auto' : 'none',
+                    cursor: onWeightLabelDrag ? 'ns-resize' : undefined,
+                  }}
+                  onPointerDown={(e) => {
+                    if (!onWeightLabelDrag) return;
+                    e.stopPropagation();
+                    e.preventDefault();
+                    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+                    setDragState({ kind: 'weight', fromLayer: i, fromIndex: a, toIndex: b, lastX: e.clientX, lastY: e.clientY });
+                  }}
+                >
                   <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={3} ry={3} fill="#ffffff" stroke={COLOR_WEIGHTS} strokeWidth={1} />
                   <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_WEIGHTS}>{textStr}</text>
                 </g>
@@ -567,7 +604,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                       e.preventDefault();
                       // Capture pointer so move/up events keep firing even if we leave the box
                       try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
-                      setDragState({ inputIndex: idx, lastX: e.clientX, lastY: e.clientY });
+                      setDragState({ kind: 'input', inputIndex: idx, lastX: e.clientX, lastY: e.clientY });
                     }}
                   >
                     <rect x={-rectWidth / 2} y={-rectHeight / 2} width={rectWidth} height={rectHeight} rx={4} ry={4} fill="#ffffff" stroke={COLOR_DATA} strokeWidth={1} />
