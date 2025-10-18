@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, type ReactElement } from "react";
+import React, { useState, useCallback, useMemo, useId, type ReactElement } from "react";
 
 type Point = {
   x: number;
@@ -296,11 +296,12 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   }, [lastActivations]);
 
   // Mask id to clip edges under node circles (prevents edges showing through on hover opacity)
-  const edgesMaskId = useMemo(() => `edges-mask-${Math.random().toString(36).slice(2)}`, []);
+  const edgesMaskId = useId();
 
   return (
     <svg
       viewBox={`0 0 ${imageWidth} ${imageHeight}`}
+      className="select-none"
       style={
         responsive
           ? {
