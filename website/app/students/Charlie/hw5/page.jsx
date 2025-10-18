@@ -149,7 +149,7 @@ export default function JSPlaygroundPage() {
           I've added my audio file to the public directory. The composition builds upon the AI-generated nocturne theme, transforming it into a more contemporary ambient piece while preserving the romantic character of the original melody.
         </p>
         
-        <audio src="/students/Charlie/hw5.mp3" controls />
+        <audio src="/students/Charlie/hw5/MyMusic.mp3" controls />
 
         <p>
           The AI model served as an excellent starting point for my composition process. Rather than starting from a blank slate, I had a musically coherent foundation that I could build upon. The generated nocturne provided both melodic and harmonic material that felt authentic to the romantic period, which gave me confidence to experiment with modern production techniques while maintaining the piece's emotional core.
