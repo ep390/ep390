@@ -20,9 +20,7 @@ export default function Page() {
             this module is to begin to build some intuition about these models.
           </p>
           <MlpSvg {...examples.ex1} />
-
           <p>Neural networks are a sub-category of machine learning models.</p>
-
           <div className="mb-4">
             <Toggle title="Where do FFNNs fit in the AI space?">
               <AiTaxonomySmall />
@@ -31,7 +29,6 @@ export default function Page() {
               <AiTaxonomy />
             </Toggle>
           </div>
-
           <p>
             The diagrams below all represent the simplest category of neural
             networks called a <strong>Feed Forward Networks (FFNN)</strong>. You
@@ -39,31 +36,24 @@ export default function Page() {
             <strong>Fully Connected Neural Network (FCNN)</strong> and{" "}
             <strong>Multilayer Perceptron (MLP)</strong>.
           </p>
-
           <p>Nerual Networks come in many shapes and sizes.</p>
           <MlpSvg {...examples.ex2} />
           <MlpSvg {...examples.ex3} />
-
           <p>In practice, networks can have many millions of nodes.</p>
           <h2>&quot;Feed Forward&quot; and &quot;Fully Connected&quot;</h2>
-
           <p>
             Can you explain that makes these networks{" "}
             <strong>fully connected</strong>? What makes them{" "}
             <strong>feed forward</strong>?
           </p>
-
           <MlpSvg neuronCounts={examples.ex4.neuronCounts} />
-
           <h2>Inputs and Outputs</h2>
-
           <p>
             In machine learning, we need to represent our input and output data
             with numbers. There are lots of different ways to do that. Any of
             methods below are valid targets for the inputs and outputs of a
             neural network.
           </p>
-
           <ul>
             <li>MIDI Note Number</li>
             <li>Frequency (Hz)</li>
@@ -87,16 +77,13 @@ export default function Page() {
             </li>
             <li className="font-bold">What are some others?</li>
           </ul>
-
           <span className="font-bold text-orange-700">
             Some formats work better than others!
           </span>
-
           <MlpSvg
             neuronCounts={examples.ex4.neuronCounts}
             activations={examples.ex4.activations}
           />
-
           <p className="mt-4 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
             Think of{" "}
             <span className="text-blue-700 font-bold">each blue dot</span> as a
@@ -108,7 +95,6 @@ export default function Page() {
             a function that makes multiple inputs and produces{" "}
             <span className="text-purple-700 font-bold">multiple outputs</span>.
           </p>
-
           <h2>Weights</h2>
           <p>
             How did we calculate the{" "}
@@ -122,9 +108,7 @@ export default function Page() {
             <span className="text-orange-700 font-bold">orange</span> values
             come from?
           </p>
-
           <MlpEditable {...examples.ex4} showEquation inputNumberType="int" />
-
           <p className="mt-8 p-3 rounded-md bg-amber-50 border-l-4 border-amber-500 text-slate-900">
             <span className="text-red-700 font-bold">
               ⚠️ Some steps where omitted! ⚠️
@@ -133,7 +117,6 @@ export default function Page() {
             The functions in the hidden layer do a little more than this... but
             we will get to that later.
           </p>
-
           <h2>A more practical example</h2>
           <p>
             Let&apos;s discuss how we could create a neural network that
@@ -173,10 +156,26 @@ export default function Page() {
             </li>
           </ul>
           <h2>Neurons With Bias</h2>
-          <p>Remember I said that we skipped over some of the details of the neurons? Let us add it for completeness.</p>
+          <p>
+            Remember I said that we skipped over some of the details of the
+            neurons? Let us add it for completeness.
+          </p>
           <MlpEditable {...examples.ex5} showEquation inputNumberType="int" />
           <h2>Neurons With Bias and ReLU Activation</h2>
-          <MlpEditable {...examples.ex5} showEquation inputNumberType="int" activation="relu" />
+          The{" "}
+          <a
+            href="https://en.wikipedia.org/wiki/Activation_function#Table_of_activation_functions"
+            target="_blank"
+          >
+            activation function
+          </a>{" "}
+          is the final missing piece of our neuron model.
+          <MlpEditable
+            {...examples.ex5}
+            showEquation
+            inputNumberType="int"
+            activation="relu"
+          />
           <h2>Resources</h2>
           <ul>
             <li>
