@@ -453,7 +453,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 key={`bias-${i}-${j}`}
                 transform={`translate(${p.x}, ${p.y})`}
                 data-bias-for={`${i}-${j}`}
-                style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease", pointerEvents: biasPointerEnabled ? 'auto' : 'none', cursor: biasPointerEnabled ? 'ns-resize' : undefined }}
+                style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease", pointerEvents: biasPointerEnabled ? 'auto' : 'none', cursor: biasPointerEnabled ? 'ns-resize' : undefined, touchAction: biasPointerEnabled ? 'none' : undefined }}
                 onPointerDown={(e) => {
                   if (!biasPointerEnabled) return;
                   e.stopPropagation();
@@ -570,6 +570,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                     transition: "opacity 120ms ease",
                     pointerEvents: show ? 'auto' : 'none',
                     cursor: onWeightLabelDrag ? 'ns-resize' : undefined,
+                    touchAction: show && onWeightLabelDrag ? 'none' : undefined,
                   }}
                   onPointerDown={(e) => {
                     if (!onWeightLabelDrag) return;
@@ -690,7 +691,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 return (
                   <g
                     transform={`translate(${centerX}, ${y})`}
-                    style={onInputBoxDrag ? { cursor: 'ns-resize' } : undefined}
+                    style={onInputBoxDrag ? { cursor: 'ns-resize', touchAction: 'none' } : undefined}
                     onPointerDown={(e) => {
                       if (!onInputBoxDrag) return;
                       e.stopPropagation();

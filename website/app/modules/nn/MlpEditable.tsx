@@ -5,6 +5,15 @@ import MultilayerPerceptronSvg, { type MlpOptions } from "./MlpSvg";
 import { calculateActivations } from "./calculate-activations";
 import Toggle from "@/components/Toggle";
 
+const WEIGHT_DECIMALS = 1;
+const BIAS_DECIMALS = 1;
+function roundToDecimals(value: number, decimals: number): number {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+}
+const WEIGHT_STEP = Math.pow(10, -WEIGHT_DECIMALS);
+const BIAS_STEP = Math.pow(10, -BIAS_DECIMALS);
+
 export type MlpOptionsWithData = MlpOptions & {
   weights: number[][][];
   activations: number[][];
@@ -34,12 +43,17 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   );
   const [biases, setBiases] = useState<number[][] | undefined>(() =>
     Array.isArray(initialBiases)
-      ? initialBiases.map((layer) => (Array.isArray(layer) ? [...layer] : layer))
+      ? initialBiases.map((layer) =>
+          Array.isArray(layer) ? [...layer] : layer
+        )
       : undefined
   );
 
   // Accumulates fractional integer steps per input during drag so slow drags still step
   const intAccumRef = useRef<number[]>([]);
+  // Accumulate fractional drag deltas per weight/bias so updates are step-based, not event-rate-based
+  const weightAccumRef = useRef<Map<string, number>>(new Map());
+  const biasAccumRef = useRef<Map<string, number>>(new Map());
 
   // Capture the initial inputs once so we can compare and reset
   const initialInputsRef = useRef<number[]>(
@@ -52,7 +66,9 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   // Capture the initial biases once for dirty check and reset
   const initialBiasesRef = useRef<number[][] | undefined>(
     Array.isArray(initialBiases)
-      ? initialBiases.map((layer) => (Array.isArray(layer) ? [...layer] : layer))
+      ? initialBiases.map((layer) =>
+          Array.isArray(layer) ? [...layer] : layer
+        )
       : undefined
   );
 
@@ -147,12 +163,25 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     _dx,
     dy
   ) => {
-    const dragScale = 0.02; // weight change per pixel; upward drag increases weight
+    const dragScale = 0.02; // value change per pixel; upward drag increases value
+    const key = `${fromLayer}:${toIndex}:${fromIndex}`;
+    const prevAccum = weightAccumRef.current.get(key) ?? 0;
+    const accum = prevAccum + -dy * dragScale;
+    const steps =
+      accum >= 0
+        ? Math.floor(accum / WEIGHT_STEP)
+        : Math.ceil(accum / WEIGHT_STEP);
+    weightAccumRef.current.set(key, accum - steps * WEIGHT_STEP);
+    if (steps === 0) return;
     setWeights((prev) => {
       const next = prev.map((layer) => layer.map((row) => [...row]));
       const current = next?.[fromLayer]?.[toIndex]?.[fromIndex];
       if (typeof current === "number") {
-        next[fromLayer][toIndex][fromIndex] = current + -dy * dragScale;
+        const updated = current + steps * WEIGHT_STEP;
+        next[fromLayer][toIndex][fromIndex] = roundToDecimals(
+          updated,
+          WEIGHT_DECIMALS
+        );
       }
       return next;
     });
@@ -165,13 +194,24 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     dy
   ) => {
     if (!biases) return;
-    const dragScale = 0.02; // bias change per pixel; upward drag increases bias
+    const dragScale = 0.02; // value change per pixel; upward drag increases value
+    const key = `${layerIndex}:${nodeIndex}`;
+    const prevAccum = biasAccumRef.current.get(key) ?? 0;
+    const accum = prevAccum + -dy * dragScale;
+    const steps =
+      accum >= 0 ? Math.floor(accum / BIAS_STEP) : Math.ceil(accum / BIAS_STEP);
+    biasAccumRef.current.set(key, accum - steps * BIAS_STEP);
+    if (steps === 0) return;
     setBiases((prev) => {
       if (!prev) return prev;
       const next = prev.map((layer) => [...layer]);
       const current = next?.[layerIndex - 1]?.[nodeIndex];
       if (typeof current === "number") {
-        next[layerIndex - 1][nodeIndex] = current + -dy * dragScale;
+        const updated = current + steps * BIAS_STEP;
+        next[layerIndex - 1][nodeIndex] = roundToDecimals(
+          updated,
+          BIAS_DECIMALS
+        );
       }
       return next;
     });
@@ -245,32 +285,37 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
       {showEquation && (
         <div>
           <Toggle title="Show equation">
-            <div className="text-xl font-mono">
-              {layerInputs &&
-                layerInputs.map((input, index) => (
-                  <span key={index}>
-                    (<span className="text-blue-600">{toFixed(input)}</span>
-                    ✖️
-                    <span className="text-orange-700">
-                      {toFixed(nodeWeights?.[index])}
+            <div className="text-xl font-mono min-h-10 bg-gray-100 flex flex-col justify-center">
+              <div>
+                {layerInputs &&
+                  layerInputs.map((input, index) => (
+                    <span key={index}>
+                      (<span className="text-blue-600">{toFixed(input)}</span>
+                      ✖️
+                      <span className="text-orange-700">
+                        {toFixed(nodeWeights?.[index])}
+                      </span>
+                      ){index < layerInputs.length - 1 && <span> ➕ </span>}
                     </span>
-                    ){index < layerInputs.length - 1 && <span> ➕ </span>} 
-                  </span>
-                ))}
-              {layerInputs && (
-                <>
-                  {typeof nodeBias === 'number' && (
-                    <>
-                      <span> {nodeBias >= 0 ? '➕' : '➖'} </span>
-                      <span className="text-orange-700">{toFixed(Math.abs(nodeBias))}</span>
-                    </>
-                  )}
-                  🟰{" "}
-                  <span className="text-blue-600">
-                    {toFixed(nodeActivation)}
-                  </span>
-                </>
-              )}
+                  ))}
+                {layerInputs && (
+                  <>
+                    {typeof nodeBias === "number" && (
+                      <>
+                        <span> {nodeBias >= 0 ? "➕" : "➖"} </span>
+                        <span className="text-orange-700">
+                          {Math.abs(nodeBias).toFixed(1)}
+                        </span>
+                      </>
+                    )}{" "}
+                    🟰{" "}
+                    <span className="text-blue-600">
+                      {toFixed(nodeActivation)}
+                    </span>
+                  </>
+                )}
+                {layerInputs ? null : <span className="text-gray-500">Select a node to see the equation</span>}
+              </div>
             </div>
           </Toggle>
         </div>
