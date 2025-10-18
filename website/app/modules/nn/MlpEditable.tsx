@@ -22,6 +22,8 @@ export type MlpOptionsWithData = MlpOptions & {
 export type MlpEditableOptions = MlpOptionsWithData & {
   showEquation?: boolean;
   inputNumberType?: "float" | "int";
+  // Choose a built-in activation instead of passing a function across the RSC boundary
+  activation?: "sigmoid" | "relu";
 };
 
 export default function MlpEditable(options: MlpEditableOptions): ReactElement {
@@ -29,6 +31,7 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     weights: initialWeights,
     activations: initialActivations,
     biases: initialBiases,
+    activation,
     onNodeFocusChange: upstreamOnNodeFocusChange,
     showEquation,
     inputNumberType = "float",
@@ -72,9 +75,15 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
       : undefined
   );
 
+  const activationFn = useMemo<((x: number) => number) | undefined>(() => {
+    if (activation === "relu") return (x: number) => Math.max(0, x);
+    if (activation === "sigmoid") return (x: number) => 1 / (1 + Math.exp(-x));
+    return undefined;
+  }, [activation]);
+
   const computedActivations = useMemo(() => {
-    return calculateActivations(inputs, weights, biases);
-  }, [inputs, weights, biases]);
+    return calculateActivations(inputs, weights, biases, activationFn);
+  }, [inputs, weights, biases, activationFn]);
 
   const onInputBoxDrag: NonNullable<MlpOptions["onInputBoxDrag"]> = (
     inputNumber,
@@ -142,6 +151,17 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     if (focused.layerIndex === 0) return undefined;
     return biases?.[focused.layerIndex - 1]?.[focused.nodeIndex];
   }, [focused, biases]);
+
+  const nodePreActivation = useMemo(() => {
+    if (!focused) return undefined;
+    if (!layerInputs) return undefined;
+    if (!nodeWeights) return undefined;
+    const sum = layerInputs.reduce(
+      (acc, val, idx) => acc + val * (nodeWeights?.[idx] ?? 0),
+      0
+    );
+    return typeof nodeBias === "number" ? sum + nodeBias : sum;
+  }, [focused, layerInputs, nodeWeights, nodeBias]);
 
   const handleReset = () => {
     setInputs(() => [...initialInputsRef.current]);
@@ -258,6 +278,9 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     return false;
   }, [inputs, weights, biases]);
 
+  const fName =
+    activation === "relu" ? "ReLU" : activation === "sigmoid" ? "Sigmoid" : "f";
+
   return (
     <div>
       <div className="mx-auto relative">
@@ -285,37 +308,58 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
       {showEquation && (
         <div>
           <Toggle title="Show equation">
-            <div className="text-xl font-mono min-h-10 bg-gray-100 flex flex-col justify-center">
-              <div>
-                {layerInputs &&
-                  layerInputs.map((input, index) => (
-                    <span key={index}>
-                      (<span className="text-blue-600">{toFixed(input)}</span>
-                      ✖️
-                      <span className="text-orange-700">
-                        {toFixed(nodeWeights?.[index])}
-                      </span>
-                      ){index < layerInputs.length - 1 && <span> ➕ </span>}
-                    </span>
-                  ))}
-                {layerInputs && (
-                  <>
-                    {typeof nodeBias === "number" && (
-                      <>
-                        <span> {nodeBias >= 0 ? "➕" : "➖"} </span>
+            <div className="text-xl font-mono min-h-20 bg-gray-100 flex flex-col justify-center gap-2 p-2 rounded-sm">
+              {layerInputs && (
+                <>
+                  <div>
+                    {layerInputs.map((input, index) => (
+                      <span key={index}>
+                        (<span className="text-blue-600">{toFixed(input)}</span>
+                        ✖️
                         <span className="text-orange-700">
-                          {Math.abs(nodeBias).toFixed(1)}
+                          {toFixed(nodeWeights?.[index])}
+                        </span>
+                        ){index < layerInputs.length - 1 && <span> ➕ </span>}
+                      </span>
+                    ))}
+                    {
+                      <>
+                        {typeof nodeBias === "number" && (
+                          <>
+                            <span> {nodeBias >= 0 ? "➕" : "➖"} </span>
+                            <span className="text-orange-700">
+                              {Math.abs(nodeBias).toFixed(1)}
+                            </span>
+                          </>
+                        )}{" "}
+                        🟰{" "}
+                        <span className="text-blue-600">
+                          {toFixed(nodePreActivation)}
                         </span>
                       </>
-                    )}{" "}
-                    🟰{" "}
-                    <span className="text-blue-600">
-                      {toFixed(nodeActivation)}
-                    </span>
-                  </>
-                )}
-                {layerInputs ? null : <span className="text-gray-500">Select a node to see the equation</span>}
-              </div>
+                    }
+                  </div>
+                  {typeof nodePreActivation === "number" &&
+                    typeof nodeActivation === "number" &&
+                    activationFn && (
+                      <div>
+                        {fName}(
+                        <span className="text-blue-600">
+                          {nodePreActivation.toFixed(2)}
+                        </span>
+                        ) 🟰{" "}
+                        <span className="text-blue-600 font-bold">
+                          {nodeActivation.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                </>
+              )}
+              {layerInputs ? null : (
+                <span className="text-gray-500">
+                  Select a node to see the equation
+                </span>
+              )}
             </div>
           </Toggle>
         </div>

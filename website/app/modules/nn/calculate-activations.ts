@@ -1,7 +1,8 @@
 export function calculateActivations(
   inputData: number[],
   weights: number[][][],
-  biases?: number[][]
+  biases?: number[][],
+  activationFn?: (x: number) => number
 ) {
   let previousLayerOutputs = inputData;
   const activations = [inputData];
@@ -17,9 +18,11 @@ export function calculateActivations(
       if (biases && biases[layer] && typeof biases[layer][neuron] === 'number') {
         activation += biases[layer][neuron];
       }
-      layerOutputs.push(activation);
+      layerOutputs.push(activationFn ? activationFn(activation) : activation);
     }
     previousLayerOutputs = layerOutputs;
   }
   return activations;
 }
+
+// Note: applyActivation helper removed; activation can be applied inline during calculation

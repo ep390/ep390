@@ -172,9 +172,11 @@ export default function Page() {
               </ul>
             </li>
           </ul>
-          <h2>Neurons</h2>
+          <h2>Neurons With Bias</h2>
           <p>Remember I said that we skipped over some of the details of the neurons? Let us add it for completeness.</p>
           <MlpEditable {...examples.ex5} showEquation inputNumberType="int" />
+          <h2>Neurons With Bias and ReLU Activation</h2>
+          <MlpEditable {...examples.ex5} showEquation inputNumberType="int" activation="relu" />
           <h2>Resources</h2>
           <ul>
             <li>
