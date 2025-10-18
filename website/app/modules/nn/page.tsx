@@ -139,7 +139,42 @@ export default function Page() {
             Let&apos;s discuss how we could create a neural network that
             generates chord sequences.
           </p>
-          <MlpEditable {...examples.initWeights} showEquation inputNumberType="int" />
+          <MlpEditable
+            {...examples.initWeights}
+            showEquation
+            inputNumberType="int"
+          />
+          <h2>Points so far</h2>
+          <ul>
+            <li>
+              A neural network is a function that takes multiple inputs and
+              produces multiple outputs.
+            </li>
+            <li>
+              There are two kinds of values that we need to think about:{" "}
+              <span className="text-blue-700 font-bold">data</span> and{" "}
+              <span className="text-orange-700 font-bold">parameters</span>
+              <ul>
+                <li className="">
+                  <span className="text-blue-700 font-bold">Data</span> is the
+                  information flowing through the network{" "}
+                  <span className="text-blue-700">
+                    (inputs, activations, and outputs)
+                  </span>
+                  .
+                </li>
+                <li className="">
+                  <span className="text-orange-700 font-bold">Parameters</span>{" "}
+                  are the internal values of the network{" "}
+                  <span className="text-orange-700">(weights and biases)</span>{" "}
+                  that are updated during training.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h2>Neurons</h2>
+          <p>Remember I said that we skipped over some of the details of the neurons? Let us add it for completeness.</p>
+          <MlpEditable {...examples.ex5} showEquation inputNumberType="int" />
           <h2>Resources</h2>
           <ul>
             <li>

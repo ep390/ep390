@@ -30,3 +30,12 @@ export const ex4: MlpOptionsWithData = {
   weights: trivialWeights,
   activations: ex4Activations,
 };
+
+const ex5Biases = [[1, 0, 3, -0.5, 0], [4, 5, 3]];
+export const ex5: MlpOptionsWithData = {
+  neuronCounts: [3, 5, 3],
+  weights: trivialWeights,
+  activations: calculateActivations([1, 5, 3], trivialWeights, ex5Biases),
+  biases: ex5Biases,
+  neuronRadius: 25,
+};

@@ -24,6 +24,8 @@ export type MlpOptions = {
   margin?: number;
   neuronRadius?: number;
   weights?: number[][][];
+  // Biases for each non-input layer's nodes; shape: biases[layerIndex-1][nodeIndex]
+  biases?: number[][];
   weightFontSize?: number;
   weightLabelPadding?: number;
   inputNeuronRadius?: number;
@@ -45,6 +47,14 @@ export type MlpOptions = {
     dx: number,
     dy: number
   ) => void;
+  // Called during drag gestures that start on a node's bias label
+  // Arguments: (layerIndex, nodeIndex, dx, dy)
+  onBiasDrag?: (
+    layerIndex: number,
+    nodeIndex: number,
+    dx: number,
+    dy: number
+  ) => void;
 };
 
 type ActiveNode = { layerIndex: number; nodeIndex: number } | null;
@@ -59,6 +69,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     margin = 40,
     neuronRadius = 15,
     weights,
+    biases,
     weightFontSize = 16,
     weightLabelPadding,
     inputNeuronRadius = 4,
@@ -70,6 +81,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     onNodeFocusChange,
     onInputBoxDrag,
     onWeightLabelDrag,
+    onBiasDrag,
   } = options;
 
   const outputArrowGap = 0;
@@ -184,6 +196,7 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
   const [dragState, setDragState] = useState<
     | { kind: "input"; inputIndex: number; lastX: number; lastY: number }
     | { kind: "weight"; fromLayer: number; fromIndex: number; toIndex: number; lastX: number; lastY: number }
+    | { kind: "bias"; layerIndex: number; nodeIndex: number; lastX: number; lastY: number }
     | null
   >(null);
 
@@ -316,6 +329,11 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
             onWeightLabelDrag(dragState.fromLayer, dragState.fromIndex, dragState.toIndex, dx, dy);
           }
           setDragState({ kind: "weight", fromLayer: dragState.fromLayer, fromIndex: dragState.fromIndex, toIndex: dragState.toIndex, lastX: e.clientX, lastY: e.clientY });
+        } else if (dragState.kind === "bias") {
+          if (onBiasDrag) {
+            onBiasDrag(dragState.layerIndex, dragState.nodeIndex, dx, dy);
+          }
+          setDragState({ kind: "bias", layerIndex: dragState.layerIndex, nodeIndex: dragState.nodeIndex, lastX: e.clientX, lastY: e.clientY });
         }
       }}
       onPointerUp={() => {
@@ -387,9 +405,14 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                   setActive({ layerIndex: i, nodeIndex: j });
                   emitNodeFocusChange(i, j, true);
                 }}
-                onMouseLeave={() => {
+                onMouseLeave={(e) => {
                   if (dragState) return; // preserve current focus while dragging input value
                   if (isLocked) return; // keep focus while locked
+                  const rt = (e as unknown as React.MouseEvent<SVGCircleElement>).relatedTarget as Element | null;
+                  if (rt && rt.closest(`[data-bias-for='${i}-${j}']`)) {
+                    // moving into this node's bias overlay - keep focus to avoid flicker
+                    return;
+                  }
                   emitNodeFocusChange(i, j, false);
                   setActive(null);
                 }}
@@ -409,6 +432,38 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                   emitNodeFocusChange(i, j, true);
                 }}
               />
+            );
+          })
+        )}
+      </g>
+
+      {/* Bias labels centered inside non-input nodes */}
+      <g>
+        {layers.flatMap((layer, i) =>
+          layer.map((p, j) => {
+            if (i === 0) return null as unknown as ReactElement; // no biases for input layer
+            const value = biases?.[i - 1]?.[j];
+            if (typeof value !== 'number' || !Number.isFinite(value)) return null as unknown as ReactElement;
+            const highlighted = isNodeHighlighted(i, j);
+            const textStr = `${value >= 0 ? '+' : ''}${value.toFixed(1)}`;
+            const fontSize = weightFontSize;
+            const biasPointerEnabled = !!onBiasDrag && !!active && active.layerIndex === i && active.nodeIndex === j;
+            return (
+              <g
+                key={`bias-${i}-${j}`}
+                transform={`translate(${p.x}, ${p.y})`}
+                data-bias-for={`${i}-${j}`}
+                style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease", pointerEvents: biasPointerEnabled ? 'auto' : 'none', cursor: biasPointerEnabled ? 'ns-resize' : undefined }}
+                onPointerDown={(e) => {
+                  if (!biasPointerEnabled) return;
+                  e.stopPropagation();
+                  e.preventDefault();
+                  try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+                  setDragState({ kind: 'bias', layerIndex: i, nodeIndex: j, lastX: e.clientX, lastY: e.clientY });
+                }}
+              >
+                <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_WEIGHTS}>{textStr}</text>
+              </g>
             );
           })
         )}

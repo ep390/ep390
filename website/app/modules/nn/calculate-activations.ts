@@ -1,6 +1,7 @@
 export function calculateActivations(
   inputData: number[],
-  weights: number[][][]
+  weights: number[][][],
+  biases?: number[][]
 ) {
   let previousLayerOutputs = inputData;
   const activations = [inputData];
@@ -12,6 +13,9 @@ export function calculateActivations(
       for (let input = 0; input < previousLayerOutputs.length; input++) {
         activation +=
           previousLayerOutputs[input] * weights[layer][neuron][input];
+      }
+      if (biases && biases[layer] && typeof biases[layer][neuron] === 'number') {
+        activation += biases[layer][neuron];
       }
       layerOutputs.push(activation);
     }

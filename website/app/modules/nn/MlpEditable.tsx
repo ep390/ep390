@@ -19,6 +19,7 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   const {
     weights: initialWeights,
     activations: initialActivations,
+    biases: initialBiases,
     onNodeFocusChange: upstreamOnNodeFocusChange,
     showEquation,
     inputNumberType = "float",
@@ -30,6 +31,11 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   );
   const [inputs, setInputs] = useState<number[]>(() =>
     Array.isArray(initialActivations?.[0]) ? [...initialActivations[0]] : []
+  );
+  const [biases, setBiases] = useState<number[][] | undefined>(() =>
+    Array.isArray(initialBiases)
+      ? initialBiases.map((layer) => (Array.isArray(layer) ? [...layer] : layer))
+      : undefined
   );
 
   // Accumulates fractional integer steps per input during drag so slow drags still step
@@ -43,10 +49,16 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
   const initialWeightsRef = useRef<number[][][]>(
     initialWeights.map((layer) => layer.map((row) => [...row]))
   );
+  // Capture the initial biases once for dirty check and reset
+  const initialBiasesRef = useRef<number[][] | undefined>(
+    Array.isArray(initialBiases)
+      ? initialBiases.map((layer) => (Array.isArray(layer) ? [...layer] : layer))
+      : undefined
+  );
 
   const computedActivations = useMemo(() => {
-    return calculateActivations(inputs, weights);
-  }, [inputs, weights]);
+    return calculateActivations(inputs, weights, biases);
+  }, [inputs, weights, biases]);
 
   const onInputBoxDrag: NonNullable<MlpOptions["onInputBoxDrag"]> = (
     inputNumber,
@@ -108,11 +120,23 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
     return computedActivations?.[focused.layerIndex]?.[focused.nodeIndex];
   }, [focused, computedActivations]);
 
+  const nodeBias = useMemo(() => {
+    if (!focused) return undefined;
+    if (!biases) return undefined;
+    if (focused.layerIndex === 0) return undefined;
+    return biases?.[focused.layerIndex - 1]?.[focused.nodeIndex];
+  }, [focused, biases]);
+
   const handleReset = () => {
     setInputs(() => [...initialInputsRef.current]);
     intAccumRef.current = [];
     setWeights(() =>
       initialWeightsRef.current.map((layer) => layer.map((row) => [...row]))
+    );
+    setBiases(() =>
+      initialBiasesRef.current
+        ? initialBiasesRef.current.map((layer) => [...layer])
+        : undefined
     );
   };
 
@@ -129,6 +153,25 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
       const current = next?.[fromLayer]?.[toIndex]?.[fromIndex];
       if (typeof current === "number") {
         next[fromLayer][toIndex][fromIndex] = current + -dy * dragScale;
+      }
+      return next;
+    });
+  };
+
+  const onBiasDrag: NonNullable<MlpOptions["onBiasDrag"]> = (
+    layerIndex,
+    nodeIndex,
+    _dx,
+    dy
+  ) => {
+    if (!biases) return;
+    const dragScale = 0.02; // bias change per pixel; upward drag increases bias
+    setBiases((prev) => {
+      if (!prev) return prev;
+      const next = prev.map((layer) => [...layer]);
+      const current = next?.[layerIndex - 1]?.[nodeIndex];
+      if (typeof current === "number") {
+        next[layerIndex - 1][nodeIndex] = current + -dy * dragScale;
       }
       return next;
     });
@@ -157,8 +200,23 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
         }
       }
     }
+    // Biases dirty
+    const initBiases = initialBiasesRef.current;
+    if (!initBiases && biases) return true;
+    if (initBiases && !biases) return true;
+    if (initBiases && biases) {
+      if (biases.length !== initBiases.length) return true;
+      for (let l = 0; l < biases.length; l += 1) {
+        const layer = biases[l];
+        const initLayer = initBiases[l];
+        if (!initLayer || layer.length !== initLayer.length) return true;
+        for (let n = 0; n < layer.length; n += 1) {
+          if (layer[n] !== initLayer[n]) return true;
+        }
+      }
+    }
     return false;
-  }, [inputs, weights]);
+  }, [inputs, weights, biases]);
 
   return (
     <div>
@@ -166,9 +224,11 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
         <MultilayerPerceptronSvg
           {...(rest as MlpOptions)}
           weights={weights}
+          biases={biases}
           activations={computedActivations}
           onInputBoxDrag={onInputBoxDrag}
           onWeightLabelDrag={onWeightLabelDrag}
+          onBiasDrag={onBiasDrag}
           onNodeFocusChange={handleNodeFocusChange}
         />
         {isDirty && (
@@ -194,11 +254,17 @@ export default function MlpEditable(options: MlpEditableOptions): ReactElement {
                     <span className="text-orange-700">
                       {toFixed(nodeWeights?.[index])}
                     </span>
-                    ){index < layerInputs.length - 1 && <span> ➕ </span>}
+                    ){index < layerInputs.length - 1 && <span> ➕ </span>} 
                   </span>
                 ))}
               {layerInputs && (
                 <>
+                  {typeof nodeBias === 'number' && (
+                    <>
+                      <span> {nodeBias >= 0 ? '➕' : '➖'} </span>
+                      <span className="text-orange-700">{toFixed(Math.abs(nodeBias))}</span>
+                    </>
+                  )}
                   🟰{" "}
                   <span className="text-blue-600">
                     {toFixed(nodeActivation)}
