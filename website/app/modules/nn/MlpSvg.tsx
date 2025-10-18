@@ -295,6 +295,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     return exps.map(v => v / sum);
   }, [lastActivations]);
 
+  // Mask id to clip edges under node circles (prevents edges showing through on hover opacity)
+  const edgesMaskId = useMemo(() => `edges-mask-${Math.random().toString(36).slice(2)}`, []);
+
   return (
     <svg
       viewBox={`0 0 ${imageWidth} ${imageHeight}`}
@@ -352,8 +355,20 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
         clearFocus();
       }}
     >
+      <defs>
+        <mask id={edgesMaskId} maskUnits="userSpaceOnUse">
+          {/* Show everything by default */}
+          <rect x={0} y={0} width={imageWidth} height={imageHeight} fill="#ffffff" />
+          {/* Hide areas under node circles */}
+          {layers.flatMap((layer, i) =>
+            layer.map((p) => (
+              <circle key={`mask-node-${i}-${p.x}-${p.y}`} cx={p.x} cy={p.y} r={getNodeRadius(i)} fill="#000000" />
+            ))
+          )}
+        </mask>
+      </defs>
       {/* Edges between layers */}
-      <g>
+      <g mask={`url(#${edgesMaskId})`}>
         {layers.flatMap((layer, i) => {
           const next = layers[i + 1];
           if (!next) return [] as ReactElement[];
