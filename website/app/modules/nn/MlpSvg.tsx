@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo, useId, type ReactElement } from "react";
+import React, { useState, useCallback, useMemo, useId, useRef, type ReactElement } from "react";
 
 type Point = {
   x: number;
@@ -199,6 +199,12 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
     | { kind: "bias"; layerIndex: number; nodeIndex: number; lastX: number; lastY: number }
     | null
   >(null);
+  const biasDownRef = useRef<{
+    startX: number;
+    startY: number;
+    layerIndex: number;
+    nodeIndex: number;
+  } | null>(null);
 
   const getLayerInputs = useCallback((layerIndex: number): number[] | undefined => {
     if (layerIndex === 0) return activations?.[0];
@@ -345,6 +351,11 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
           setDragState(null);
         }
       }}
+      onPointerCancel={() => {
+        if (dragState) {
+          setDragState(null);
+        }
+      }}
       onPointerDown={(e) => {
         // Do not change focus if an input drag is in progress
         if (dragState) return;
@@ -469,13 +480,56 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 key={`bias-${i}-${j}`}
                 transform={`translate(${p.x}, ${p.y})`}
                 data-bias-for={`${i}-${j}`}
-                style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease", pointerEvents: biasPointerEnabled ? 'auto' : 'none', cursor: biasPointerEnabled ? 'ns-resize' : undefined, touchAction: biasPointerEnabled ? 'none' : undefined }}
+                style={{ opacity: highlighted ? 1 : dimOpacity, transition: "opacity 120ms ease", pointerEvents: 'auto', cursor: biasPointerEnabled ? 'ns-resize' : undefined, touchAction: biasPointerEnabled ? 'none' : undefined }}
                 onPointerDown={(e) => {
-                  if (!biasPointerEnabled) return;
                   e.stopPropagation();
                   e.preventDefault();
-                  try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
-                  setDragState({ kind: 'bias', layerIndex: i, nodeIndex: j, lastX: e.clientX, lastY: e.clientY });
+                  biasDownRef.current = { startX: e.clientX, startY: e.clientY, layerIndex: i, nodeIndex: j };
+                  if (biasPointerEnabled) {
+                    try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+                    setDragState({ kind: 'bias', layerIndex: i, nodeIndex: j, lastX: e.clientX, lastY: e.clientY });
+                  }
+                }}
+                onPointerUp={(e) => {
+                  const press = biasDownRef.current;
+                  biasDownRef.current = null;
+                  if (dragState && dragState.kind === 'bias') {
+                    try { (e.currentTarget as Element & { releasePointerCapture: (id: number) => void }).releasePointerCapture(e.pointerId); } catch {}
+                    setDragState(null);
+                  }
+                  if (!press) return;
+                  const dx = e.clientX - press.startX;
+                  const dy = e.clientY - press.startY;
+                  const moved = Math.hypot(dx, dy) > 2; // small threshold to distinguish click vs drag
+                  if (moved) return; // treat as drag; state already cleared above/root
+                  // Treat as a click: toggle focus like clicking the node circle
+                  if (isLocked && active && active.layerIndex === i && active.nodeIndex === j) {
+                    setIsLocked(false);
+                    clearFocus();
+                    return;
+                  }
+                  if (active && (active.layerIndex !== i || active.nodeIndex !== j)) {
+                    emitNodeFocusChange(active.layerIndex, active.nodeIndex, false);
+                  }
+                  setIsLocked(true);
+                  setActive({ layerIndex: i, nodeIndex: j });
+                  emitNodeFocusChange(i, j, true);
+                }}
+                onMouseEnter={() => {
+                  if (dragState) return;
+                  if (isLocked) return;
+                  setActive({ layerIndex: i, nodeIndex: j });
+                  emitNodeFocusChange(i, j, true);
+                }}
+                onMouseLeave={(e) => {
+                  if (dragState) return;
+                  if (isLocked) return;
+                  const rt = (e as unknown as React.MouseEvent<SVGGElement>).relatedTarget as Element | null;
+                  if (rt && (rt.closest(`[data-bias-for='${i}-${j}']`) || rt.closest('circle'))) {
+                    return;
+                  }
+                  emitNodeFocusChange(i, j, false);
+                  setActive(null);
                 }}
               >
                 <text x={0} y={0} textAnchor="middle" dominantBaseline="middle" fontSize={fontSize} fill={COLOR_WEIGHTS}>{textStr}</text>
