@@ -22,7 +22,6 @@ export type MlpOptionsWithData = MlpOptions & {
 export type MlpEditableOptions = MlpOptionsWithData & {
   showEquation?: boolean;
   inputNumberType?: "float" | "int";
-  // Choose a built-in activation instead of passing a function across the RSC boundary
   activation?: "sigmoid" | "relu";
 };
 

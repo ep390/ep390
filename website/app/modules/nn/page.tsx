@@ -1,5 +1,6 @@
 import styles from "@/app/[...markdown]/markdown.module.css";
 import MlpEditable from "./MlpEditable";
+import MlpWithActivation from "./MlpWithActivation";
 import MlpSvg from "./MlpSvg";
 import * as examples from "./examples";
 import ModuleFooter from "@/components/ModuleFooter";
@@ -155,13 +156,13 @@ export default function Page() {
               </ul>
             </li>
           </ul>
-          <h2>Neurons With Bias</h2>
+          <h2>Neurons with bias</h2>
           <p>
             Remember I said that we skipped over some of the details of the
             neurons? Let us add it for completeness.
           </p>
           <MlpEditable {...examples.ex5} showEquation inputNumberType="int" />
-          <h2>Neurons With Bias and ReLU Activation</h2>
+          <h2>Neurons with bias and &quot;activation&quot;</h2>
           The{" "}
           <a
             href="https://en.wikipedia.org/wiki/Activation_function#Table_of_activation_functions"
@@ -170,12 +171,7 @@ export default function Page() {
             activation function
           </a>{" "}
           is the final missing piece of our neuron model.
-          <MlpEditable
-            {...examples.ex5}
-            showEquation
-            inputNumberType="int"
-            activation="relu"
-          />
+          <MlpWithActivation />
           <h2>Resources</h2>
           <ul>
             <li>
@@ -195,3 +191,4 @@ export default function Page() {
     </div>
   );
 }
+
