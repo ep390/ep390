@@ -11,3 +11,4 @@ title: "EP390 Modules"
 1. [MIDI IO](/modules/midi-io/)
 1. [ABC Notation](/modules/abc/)
 1. [Neural Networks](modules/nn/)
+1. [Neural Network Hands On](modules/nn-ex/)
