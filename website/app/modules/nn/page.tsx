@@ -214,8 +214,9 @@ export default function Page() {
               {`\\hat{y}_i = \\text{softmax}(z_i) = \\frac{e^{z_i}}{\\sum_{j=1}^{K} e^{z_j}}`}
             </BlockMath>
           </div>
-          This evaluates to a <span className="font-bold">probability distribution</span>, which is a vector of
-          probabilities that sum to 1.
+          This evaluates to a{" "}
+          <span className="font-bold">probability distribution</span>, which is
+          a vector of probabilities that sum to 1.
           <div className="text-2xl">
             <BlockMath>
               {"\\hat{y} = " +
@@ -244,6 +245,51 @@ export default function Page() {
           </div>
           Notice how the softmax exaggarates the difference between the values?
           This is one of the reasons it is preferred over the naive approach.
+          <h2>Loss</h2>
+          <p>
+            Now that we have a probability distribution, there is one more
+            function we need to complete our model. The{" "}
+            <span className="font-bold">loss function</span> measures how
+            &quot;wrong&quot; our model weights are. Classifications models and
+            generative models like the Transformer often use the{" "}
+            <span className="font-bold">cross-entropy loss</span> function.
+          </p>
+          <p>
+            For a single example with a true one-hot label vector{' '}
+            <InlineMath>{"y = [y_1, \\dots, y_K]"}</InlineMath> and predicted
+            probabilities <InlineMath>{"\\hat{y} = [\\hat{y}_1, \\dots, \\hat{y}_K]"}</InlineMath>,
+            the cross-entropy loss is:
+          </p>
+          <div className="text-2xl">
+            <BlockMath>{`L(y, \\hat{y}) = - \\sum_{i=1}^{K} y_i \\log(\\hat{y}_i)`}</BlockMath>
+          </div>
+          <p>
+            With a one-hot label, only the correct class <InlineMath>{"c"}</InlineMath> has{' '}
+            <InlineMath>{"y_c = 1"}</InlineMath> (all others are 0), so this
+            reduces to the negative log-likelihood of the model’s probability for the
+            correct class:
+          </p>
+          <div className="text-xl">
+            <BlockMath>{"y = " + columnVectorLatex([1, 0, 0])}</BlockMath>
+          </div>
+          <div className="text-2xl">
+            <BlockMath>{`L(y, \\hat{y}) = - \\log(\\hat{y}_c)`}</BlockMath>
+          </div>
+          {(() => {
+            // Numeric example using the earlier z = [18, 17, 0]
+            const z = [18, 17, 0];
+            const exps = z.map((v) => Math.exp(v));
+            const sum = exps.reduce((a, b) => a + b, 0);
+            const probs = exps.map((v) => v / sum);
+            // Assume the true class corresponds to the largest logit (18) → index 0
+            const pCorrect = probs[0];
+            const loss = -Math.log(pCorrect);
+            return (
+              <div className="text-xl">
+                <BlockMath>{`\\text{Example: } L = -\\log(${toFixed(pCorrect, 2)}) \\approx ${toFixed(loss, 3)}`}</BlockMath>
+              </div>
+            );
+          })()}
           <h2>Resources</h2>
           <ul>
             <li>
