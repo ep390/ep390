@@ -1,6 +1,6 @@
 "use client";
 import "katex/dist/katex.min.css";
-import { InlineMath, BlockMath } from "react-katex";
+import { BlockMath } from "react-katex";
 
 export function Matrix({ A, x, b, result }: { A: number[][], x?: number[][], b?: number[][], result?: number[][] }) {
   let aText = `\\begin{bmatrix}

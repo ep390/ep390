@@ -114,7 +114,7 @@ export default function JSPlaygroundPage() {
         <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
           <code
             className="hljs language-javascript"
-            dangerouslySetInnerHTML={{ __html: hljs.highlight(buttonCode, { language: 'python' }).value }}
+            dangerouslySetInnerHTML={{ __html: hljs.highlight(pythonNnLayerCode, { language: 'python' }).value }}
           />
         </pre>
         <ModuleFooter />
@@ -123,17 +123,15 @@ export default function JSPlaygroundPage() {
   )
 }
 
-const buttonCode = `import numpy as np
+const pythonNnLayerCode = `import numpy as np
 W = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
 a = np.array([[0], [1], [2]])
 b = np.array([[0], [10], [100], [1000]])
-sigma = lambda x: 1 / (1 + np.exp(-x))
 
-r1 = W @ a
-r2 = r1 + b
-r3 = sigma(r2)
+def sigma(x):
+  return 1 / (1 + np.exp(-x))
 
-print(r1)
-print(r2)
-print(r3)
+print(W @ a)
+print(W @ a + b)
+print(sigma(W @ a + b))
 `

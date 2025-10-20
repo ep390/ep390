@@ -31,7 +31,7 @@ export const ex4: MlpOptionsWithData = {
   activations: ex4Activations,
 };
 
-const ex5Biases = [[1, 0, 3, -0.5, 0], [4, 5, 3]];
+const ex5Biases = [[1, 0, 3, -1, 0], [-4, 1, 3]];
 export const ex5: MlpOptionsWithData = {
   neuronCounts: [3, 5, 3],
   weights: trivialWeights,
