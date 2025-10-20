@@ -204,16 +204,18 @@ export default function Page() {
               {`\\hat{y}_i = \\frac{z_i}{\\sum_{j=1}^{K} z_j}`}
             </BlockMath>
           </div>
-          In practice, we need a slightly different approach. This is called the
-          softmax function.
-          <br /> It is defined for an input vector,
-          {" "}<InlineMath>{"\\mathbf{z}=[z_1,z_2,…,z_K]"}</InlineMath>{" "}as:
+          In practice, we use a slightly different approach called the softmax
+          function.
+          <br /> For an input vector,{" "}
+          <InlineMath>{"\\mathbf{z}=[z_1,z_2,…,z_K]"}</InlineMath>, the softmax
+          function is defined as:
           <div className="text-2xl">
             <BlockMath>
               {`\\hat{y}_i = \\text{softmax}(z_i) = \\frac{e^{z_i}}{\\sum_{j=1}^{K} e^{z_j}}`}
             </BlockMath>
           </div>
-          This evaluates to:
+          This evaluates to a <span className="font-bold">probability distribution</span>, which is a vector of
+          probabilities that sum to 1.
           <div className="text-2xl">
             <BlockMath>
               {"\\hat{y} = " +
@@ -240,6 +242,8 @@ export default function Page() {
                 )}
             </BlockMath>
           </div>
+          Notice how the softmax exaggarates the difference between the values?
+          This is one of the reasons it is preferred over the naive approach.
           <h2>Resources</h2>
           <ul>
             <li>
