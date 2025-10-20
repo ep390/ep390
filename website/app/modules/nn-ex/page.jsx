@@ -1,8 +1,8 @@
 'use client'
 
+import hljs from 'highlight.js'
 import styles from '@/app/[...markdown]/markdown.module.css'
 import ModuleFooter from '@/components/ModuleFooter'
-import PrettyJsObject from '@/components/PrettyJsObject'
 import MlpSvg from '../nn/MlpSvg'
 import { Matrix } from './latex'
 import Toggle from '@/components/Toggle'
@@ -109,8 +109,31 @@ export default function JSPlaygroundPage() {
           </div>
 
         </Toggle>
+        <h2>Python</h2>
+
+        <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
+          <code
+            className="hljs language-javascript"
+            dangerouslySetInnerHTML={{ __html: hljs.highlight(buttonCode, { language: 'python' }).value }}
+          />
+        </pre>
         <ModuleFooter />
       </div>
     </div>
   )
 }
+
+const buttonCode = `import numpy as np
+W = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+a = np.array([[0], [1], [2]])
+b = np.array([[0], [10], [100], [1000]])
+sigma = lambda x: 1 / (1 + np.exp(-x))
+
+r1 = W @ a
+r2 = r1 + b
+r3 = sigma(r2)
+
+print(r1)
+print(r2)
+print(r3)
+`
