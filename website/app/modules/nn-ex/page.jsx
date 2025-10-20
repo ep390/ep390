@@ -4,6 +4,9 @@ import styles from '@/app/[...markdown]/markdown.module.css'
 import ModuleFooter from '@/components/ModuleFooter'
 import PrettyJsObject from '@/components/PrettyJsObject'
 import MlpSvg from '../nn/MlpSvg'
+import { Matrix } from './latex'
+import Toggle from '@/components/Toggle'
+import { BlockMath, InlineMath } from 'react-katex'
 
 const inputData = [0, 1, 2];
 const layer1Weights = [
@@ -34,7 +37,11 @@ export default function JSPlaygroundPage() {
         <h1>Neural Networks Hands On</h1>
         <p>Open the source code for this page in your code editor.</p>
         <h2>Single layer fully connected FFNN</h2>
-        <p>Take a look at the code for the neural network below. The outputs data is incorrect: It only accounts for the biases, but not the weights. Can you fix it?</p>
+        <p>
+          Take a look at the code for the neural network below. The output data
+          is incorrect: It only accounts for the biases, but not the weights.
+          Can you fix it?
+        </p>
 
         <div className="flex flex-row justify-center">
           <MlpSvg
@@ -48,6 +55,60 @@ export default function JSPlaygroundPage() {
           />
         </div>
         <h2>How many weights are there per layer?</h2>
+        <Toggle title="Matrix Multiplication">
+          <Matrix
+            A={layer1Weights}
+            x={inputData.map(x => [x])}
+            b={outputData.map(x => [x])}
+            result={outputData.map(x => [x])}
+          />
+          <div>
+            The standard way to represent ann layer is with a matrix
+            multiplication. This concept comes from linear algebra. In practice
+            you would never specify the all the values in a matrix. Instead, you
+            typically just give it an upper-case letter <InlineMath>W</InlineMath> and the input vector <InlineMath>a</InlineMath> like this:
+          </div>
+          <BlockMath>
+            {`W \\times a + b`}
+          </BlockMath>
+          <div>
+            And we often omit the multiplication sign and just write:
+            <BlockMath>
+              {`Wa + b`}
+            </BlockMath>
+          </div>
+          <div>
+            So with the bias and our activation function:
+            <BlockMath>
+              {`\\sigma(Wa + b)`}
+            </BlockMath>
+          </div>
+          <div>
+            I like to think about rotating <InlineMath>x</InlineMath> around to
+            the top of the <InlineMath>A</InlineMath> matrix so that it sits
+            above it like this:
+            <BlockMath>
+              {`\\begin{array}{c}
+\\begin{bmatrix}
+0 & 1 & 2
+\\end{bmatrix}\\\\[6pt]
+\\begin{bmatrix}
+1 & 2 & 3 \\\\
+4 & 5 & 6 \\\\
+7 & 8 & 9 \\\\
+10 & 11 & 12
+\\end{bmatrix}
+\\end{array}`}
+            </BlockMath>
+          </div>
+          <div>
+            That means we can add together <InlineMath>0</InlineMath> of the
+            first column, <InlineMath>1</InlineMath> of the second column,
+            and <InlineMath>2</InlineMath> of the third column to get the full
+            result in one pass.
+          </div>
+
+        </Toggle>
         <ModuleFooter />
       </div>
     </div>
