@@ -359,9 +359,10 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
       onPointerDown={(e) => {
         // Do not change focus if an input drag is in progress
         if (dragState) return;
-        const target = e.target as Element | null;
+        const target = e.target as EventTarget | null;
+        const targetEl = target instanceof Element ? target : null;
         // If the target is a node (circle), do not clear focus here
-        if (target && target.closest('circle')) return;
+        if (targetEl && targetEl.closest('circle')) return;
         // Click/touch outside any node clears focus lock and active state
         setIsLocked(false);
         clearFocus();
@@ -435,8 +436,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 onMouseLeave={(e) => {
                   if (dragState) return; // preserve current focus while dragging input value
                   if (isLocked) return; // keep focus while locked
-                  const rt = (e as unknown as React.MouseEvent<SVGCircleElement>).relatedTarget as Element | null;
-                  if (rt && rt.closest(`[data-bias-for='${i}-${j}']`)) {
+                  const related = (e as unknown as React.MouseEvent<SVGCircleElement>).relatedTarget as EventTarget | null;
+                  const rtEl = related instanceof Element ? related : null;
+                  if (rtEl && rtEl.closest(`[data-bias-for='${i}-${j}']`)) {
                     // moving into this node's bias overlay - keep focus to avoid flicker
                     return;
                   }
@@ -524,8 +526,9 @@ export default function MultilayerPerceptronSvg(options: MlpOptions = {}): React
                 onMouseLeave={(e) => {
                   if (dragState) return;
                   if (isLocked) return;
-                  const rt = (e as unknown as React.MouseEvent<SVGGElement>).relatedTarget as Element | null;
-                  if (rt && (rt.closest(`[data-bias-for='${i}-${j}']`) || rt.closest('circle'))) {
+                  const related = (e as unknown as React.MouseEvent<SVGGElement>).relatedTarget as EventTarget | null;
+                  const rtEl = related instanceof Element ? related : null;
+                  if (rtEl && (rtEl.closest(`[data-bias-for='${i}-${j}']`) || rtEl.closest('circle'))) {
                     return;
                   }
                   emitNodeFocusChange(i, j, false);

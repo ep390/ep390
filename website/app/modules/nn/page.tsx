@@ -8,6 +8,8 @@ import AiTaxonomy from "./AiTaxonomy";
 import AiTaxonomySmall from "./AiTaxonomySmall";
 import Toggle from "@/components/Toggle";
 import Link from "next/link";
+import "katex/dist/katex.min.css";
+import { BlockMath, InlineMath } from "react-katex";
 
 export default function Page() {
   return (
@@ -172,6 +174,72 @@ export default function Page() {
           </a>{" "}
           is the final missing piece of our neuron model.
           <MlpWithActivation />
+          <h2>Softmax</h2>
+          Take a look at the output of the output of the matrix above. Data
+          flowing through a neural network is typically represented as a column
+          vector.
+          <div className="text-xl">
+            <BlockMath>{"z = " + columnVectorLatex([18, 17, 0])}</BlockMath>
+          </div>
+          What we want is a array or probabilities for each possible output.
+          That is, we want a vector that sums to <InlineMath>1</InlineMath>. A
+          naive way to do this would be to divide each value by the sum of the
+          vector.
+          <div className="text-xl">
+            <BlockMath>
+              {columnVectorLatex(
+                [18, 17, 0].map((x) => `\\frac{${x}}{18 + 17 + 0}`),
+                1.8
+              ) +
+                " \\approx " +
+                columnVectorLatex(
+                  [18, 17, 0].map((x) => toFixed(x / 35) as string),
+                  1.8
+                )}
+            </BlockMath>
+          </div>
+          Here is how this would be written in machine learning resources:
+          <div className="text-2xl">
+            <BlockMath>
+              {`\\hat{y}_i = \\frac{z_i}{\\sum_{j=1}^{K} z_j}`}
+            </BlockMath>
+          </div>
+          In practice, we need a slightly different approach. This is called the
+          softmax function.
+          <br /> It is defined for an input vector,
+          {" "}<InlineMath>{"\\mathbf{z}=[z_1,z_2,…,z_K]"}</InlineMath>{" "}as:
+          <div className="text-2xl">
+            <BlockMath>
+              {`\\hat{y}_i = \\text{softmax}(z_i) = \\frac{e^{z_i}}{\\sum_{j=1}^{K} e^{z_j}}`}
+            </BlockMath>
+          </div>
+          This evaluates to:
+          <div className="text-2xl">
+            <BlockMath>
+              {"\\hat{y} = " +
+                columnVectorLatex(
+                  [18, 17, 0].map(
+                    (x, _, all) =>
+                      ` \\frac{e^{${x}}}{${all
+                        .map((y) => `e^{${y}}`)
+                        .join(" + ")}}`
+                  ),
+                  2
+                ) +
+                " \\approx " +
+                columnVectorLatex(
+                  [18, 17, 0].map(
+                    (x, _, all) =>
+                      toFixed(
+                        Math.exp(x) /
+                          all.reduce((acc, y) => acc + Math.exp(y), 0),
+                        2
+                      ) as string
+                  ),
+                  2
+                )}
+            </BlockMath>
+          </div>
           <h2>Resources</h2>
           <ul>
             <li>
@@ -192,3 +260,20 @@ export default function Page() {
   );
 }
 
+export function columnVectorLatex(
+  x: (number | string)[],
+  arrayStretch: number = 1
+) {
+  // Make the matrix taller by increasing row height via arraystretch
+  const rows = x.map((cell) => toFixed(cell)).join(" \\\\ ");
+  return `{\\def\\arraystretch{${arrayStretch}}\\begin{bmatrix}
+${rows}
+\\end{bmatrix}}`;
+}
+
+function toFixed(value: number | string | undefined, precision: number = 2) {
+  if (typeof value === "string") return value;
+  if (typeof value !== "number") return undefined;
+  if (Number.isInteger(value)) return value.toString();
+  return value.toFixed(precision);
+}

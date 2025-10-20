@@ -4,7 +4,7 @@ import hljs from 'highlight.js'
 import styles from '@/app/[...markdown]/markdown.module.css'
 import ModuleFooter from '@/components/ModuleFooter'
 import MlpSvg from '../nn/MlpSvg'
-import { Matrix } from './latex'
+import { MatrixEquation, columnVectorLatex } from '@/components/latex'
 import Toggle from '@/components/Toggle'
 import { BlockMath, InlineMath } from 'react-katex'
 
@@ -29,7 +29,7 @@ const outputData = [
   1000
 ];
 
-export default function JSPlaygroundPage() {
+export default function NeuralNetworkExamplePage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -56,7 +56,7 @@ export default function JSPlaygroundPage() {
         </div>
         <h2>How many weights are there per layer?</h2>
         <Toggle title="Matrix Multiplication">
-          <Matrix
+          <MatrixEquation
             A={layer1Weights}
             x={inputData.map(x => [x])}
             b={outputData.map(x => [x])}
