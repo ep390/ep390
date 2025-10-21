@@ -1,7 +1,7 @@
 export default function ProgressPage() {
   return (
     <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8">Midterm Project Progress</h1>
+      <h1 className="text-4xl font-bold mb-8">Midterm Project Progress </h1>
       
       {/* Project Overview */}
       <section className="mb-8">
