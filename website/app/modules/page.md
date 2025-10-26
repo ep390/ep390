@@ -12,3 +12,4 @@ title: "EP390 Modules"
 1. [ABC Notation](/modules/abc/)
 1. [Neural Networks](modules/nn/)
 1. [Neural Network Hands On](modules/nn-ex/)
+1. [Ethics & Generative AI](modules/ethics/)

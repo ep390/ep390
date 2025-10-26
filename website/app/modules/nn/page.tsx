@@ -310,7 +310,7 @@ export default function Page() {
   );
 }
 
-export function columnVectorLatex(
+function columnVectorLatex(
   x: (number | string)[],
   arrayStretch: number = 1
 ) {
