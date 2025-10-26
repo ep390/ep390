@@ -33,31 +33,21 @@ Record: assignment name, tool(s) used, request count `N`, and evidence (brief no
 
 From the paper above:
 
-- Use Sections 5, 5.1, and 5.2 to extract the full per‑query costs for the "medium length (1k in → 1k out)" prompts. Use GPT‑4o numbers if available in those sections.
-- For quick estimation when you cannot extract directly, the module cites 0.42 Wh per short query; prefer the paper’s medium 1k/1k values when you can.
+- Use Sections 5, 5.1, and 5.2 to extract per‑query metrics for the "large (10k in → 1.5k out)" prompts. Use GPT‑4o numbers if available in those sections.
+- Prefer the paper’s per‑query values for all three: energy (Wh/query), water (ml/query), and carbon (gCO2e/query). If you cannot extract a value, state your assumption and source clearly.
 
-Use that per‑query energy and your count `N` to compute:
+Compute totals for your chosen homework (with `N` requests):
 
 ```
-energy_Wh = N * 0.42
+energy_Wh = N × perQueryEnergy_Wh
+water_ml = N × perQueryWater_ml
+carbon_gCO2e = N × perQueryCarbon_gCO2e
 ```
-
-Then compute water and carbon using ONE of these methods:
-
-Option A — direct per‑query values from Sections 5/5.1/5.2 (preferred):
-
-- water_ml = N × perQueryWater_ml
-- carbon_gCO2e = N × perQueryCarbon_gCO2e
-
-Option B — intensity‑based (if the paper only gives energy and you have water/emissions intensities):
-
-- water_ml = energy_Wh × water_intensity_ml_per_Wh
-- carbon_gCO2e = energy_Wh × emissions_intensity_gCO2e_per_Wh
 
 Notes:
 
-- Prefer values from the paper for the same model/region. If you must assume, state your source and numbers explicitly (e.g., grid mix gCO2e/Wh and water ml/Wh). Ensure your intensity units match Wh.
-- If you used a different model than GPT‑4o, either use the paper’s per‑query results for that model or normalize based on its reported energy use. Document your choice.
+- Prefer values from the paper for the same model/region. If you must assume, state your source and numbers explicitly, and keep units per‑query (Wh/query, ml/query, gCO2e/query).
+- If you used a different model than GPT‑4o, use that model’s per‑query results from the paper if available. Document your choice.
 - gCO2e means grams of CO₂ equivalent. The trailing "e" indicates non‑CO₂ greenhouse gases are converted into the amount of CO₂ that would have the same warming impact, typically using 100‑year global warming potentials.
 
 ## 4 Estimate your entire class webpage footprint
@@ -71,72 +61,91 @@ Estimate total LLM requests across all your work for this class (everything unde
 Create a page at `website/app/students/your-name/hw6/page.jsx` that summarizes your methodology, assumptions, and results. Include:
 
 - The past assignment you analyzed, tools used, and request count
-- The per‑query energy factor you used (e.g., 0.42 Wh/query for GPT‑4o) and sources
-- Any water/carbon intensity figures and sources
-- Calculations and final numbers for: energy (Wh/kWh), water (L), and carbon (kg CO2e)
+- The per‑query metrics you used from the paper’s large prompts (10k → 1.5k) — energy (Wh/query), water (ml/query), carbon (gCO2e/query) — and sources
+- Calculations and final totals for your homework: energy (Wh), water (ml), carbon (gCO2e)
 - A short paragraph reflecting on the results
 - A "Limitations and Uncertainties" section: list at least 3–5 limitations of this approach (e.g., token-length sensitivity; provider/model/version differences; data center location and cooling/water variability; grid mix variability over time; omission of embodied/supply-chain impacts; hidden background/tool calls from agents; caching/batching effects). Tie each limitation to how it could bias your numbers up or down.
 
 You may render a small results table. Here’s a minimal JSX starter you can copy into your page and then replace the placeholder values with your own:
 
 ```tsx
-export default function HW6Page() {
-  // Replace these with your real values and sources. You don't have to use this equation, but you can.
-  const N = 120; // requests for the chosen past assignment
-  const perQueryWh = 0.42; // GPT‑4o, from the paper/module
-  const waterIntensityMlPerWh = 3.2; // example assumption — ml per Wh (replace and cite)
-  const emissionsGPerWh = 0.35; // example assumption — gCO2e per Wh (replace and cite)
+import styles from "@/app/[...markdown]/markdown.module.css";
 
-  const energyWh = N * perQueryWh; // Wh
-  const waterMl = energyWh * waterIntensityMlPerWh; // ml
-  const carbonG = energyWh * emissionsGPerWh; // gCO2e
+export default function HW6Page() {
+  // Replace these with your real values and sources.
+  const N = 100; // Estimate the number of requests for the chosen past assignment
+
+  // TODO: Update modelData with values from Sections 5/5.1/5.2 for the large prompts (10k in → 1.5k out).
+  // NOTE: If the model you used is not in the paper, you may assume GPT-4o values.
+  const modelData = {
+    modelName: "GPT-4o", // Name of the model used for calculations. Update if needed.
+    perQueryEnergyWh: 1.0,// Wh/query (replace with paper’s large 10k→1.5k value)
+    perQueryWaterMl: 10.0, // ml/query (replace with paper’s large 10k→1.5k value)
+    perQueryCarbonG: 1.0, // gCO2e/query (replace with paper’s large 10k→1.5k value)
+  }
+
+  const energyWh = N * modelData.perQueryEnergyWh;
+  const waterMl = N * modelData.perQueryWaterMl;
+  const carbonG = N * modelData.perQueryCarbonG;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-4">hw6: LLM Usage Footprint</h1>
-      <p className="mb-4">Methodology, assumptions, and results estimating electricity, water, and carbon for my LLM usage.</p>
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className={styles.markdownContent}>
+        <h1 className="text-3xl font-bold mb-4">LLM Resource Usage Footprint</h1>
+        <p className="mb-4">What was the environmental cost of using LLMs for this class? Below are my calculations.</p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">Inputs</h2>
-      <ul className="list-disc list-inside space-y-1">
-        <li>Requests (N): {N}</li>
-        <li>Per‑query energy: {perQueryWh} Wh/query (Sections 5, 5.1, 5.2 — medium 1k→1k)</li>
-        <li>Water intensity: {waterIntensityMlPerWh} ml/Wh (or per‑query water from Section 5.x)</li>
-        <li>Emissions intensity: {emissionsGPerWh} gCO2e/Wh (or per‑query carbon from Section 5.x)</li>
-      </ul>
+        <h2>Inputs</h2>
+        <ul>
+          <li>Number of LLM requests to {modelData.modelName}: {N}</li>
+          <li>Per‑query energy: {modelData.perQueryEnergyWh} Wh/query</li>
+          <li>Per‑query water: {modelData.perQueryWaterMl} ml/query</li>
+          <li>Per‑query carbon: {modelData.perQueryCarbonG} gCO2e/query</li>
+        </ul>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">Results</h2>
-      <table className="table-auto border-collapse">
-        <thead>
-          <tr>
-            <th className="border px-3 py-1 text-left">Metric</th>
-            <th className="border px-3 py-1 text-right">Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border px-3 py-1">Energy</td>
-            <td className="border px-3 py-1 text-right">{energyWh.toFixed(1)} Wh</td>
-          </tr>
-          <tr>
-            <td className="border px-3 py-1">Water</td>
-            <td className="border px-3 py-1 text-right">{waterMl.toFixed(0)} ml</td>
-          </tr>
-          <tr>
-            <td className="border px-3 py-1">Carbon</td>
-            <td className="border px-3 py-1 text-right">{carbonG.toFixed(1)} g CO2e</td>
-          </tr>
-        </tbody>
-      </table>
+        <h2>Estimated Energy, Water, and Carbon for the Chosen Assignment</h2> {/* TODO: Replace the description to match your chosen assignment */}
+        <table className="table-auto border-collapse">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Energy</td>
+              <td>{energyWh.toFixed(1)} Wh</td>
+            </tr>
+            <tr>
+              <td>Water</td>
+              <td>{waterMl.toFixed(0)} ml</td>
+            </tr>
+            <tr>
+              <td>Carbon</td>
+              <td>{carbonG.toFixed(1)} gCO2e</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <p className="mt-4 text-sm italic">
-        Sources: <a href="https://arxiv.org/abs/2505.09598" target="_blank">How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference (arXiv)</a> Add any grid/water intensity data you used. Clearly state assumptions.
-      </p>
+        <h2>Estimated Totals for All Assignments</h2>
+        <p>TODO: The previous table shows the chosen assignment. Now estimate totals across all class work (your entire student webpage). Explain your methodology and assumptions.</p>
+
+        <h2>Assumptions and Limitations</h2>
+        <ul>
+          <li>TODO: List at least 3–5 limitations of this approach. Tie each limitation to how it could bias your numbers up or down.</li>
+          <li>TODO: This is a rough estimate is likely inaccurate. Describe any other factors that should be considered for a more comprehensive estimate.</li>
+        </ul>
+
+        <h2>Sources</h2>
+        <p>
+          Sources: cite the paper’s per‑query values you used for the large (10k → 1.5k) prompts — <a href="https://arxiv.org/abs/2505.09598" target="_blank">How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference (arXiv)</a> — plus any other sources for assumptions.
+        </p>
+      </div>
     </div>
   );
 }
 ```
 
-Also add a second section that estimates your entire class webpage total (repeat with your `N_total`).
+Add the second section that estimates your entire class webpage total (repeat with your `N_total`). If you can, update the calculations in the template to improve your estimates.
 
 ## 6 Submit your assignment
 
@@ -153,7 +162,6 @@ Also add a second section that estimates your entire class webpage total (repeat
 - **15** Methodology clearly documented; assumptions and sources cited
 - **10** Request counting or estimation method is reasonable and explained
 - **10** Correct calculations for the chosen past assignment
-- **10** Total estimate for entire class webpage
+- **10** Total cumulative estimate for all your assignements
 - **10** Thoughtful "Limitations and Uncertainties" section (at least 3–5 items; Will each assumption cause you to overshoot or undershoot the total resources consumed)
-
-
+- **10** No leftover template text

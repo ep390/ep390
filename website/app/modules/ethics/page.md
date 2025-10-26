@@ -66,6 +66,6 @@ title: Ethical Implications of Generative AI
 ## Finally
 - [AI isn't useless. But is it worth it?](https://www.citationneeded.news/ai-isnt-useless/)
   - "But I find one common thread among the things AI tools are particularly suited to doing: do we even want to be doing these things?"
-- [Pauline Oliveros - Quantum Improvisation: The Cybernetic Presence](https://www.hz-journal.org/n16/oliveros.html)
+- [Pauline Oliveros - Quantum Improvisation: The Cybernetic Presence (1999)](https://www.hz-journal.org/n16/oliveros.html)
   - Oliveros responds to the Ray Kurzweil's assertion in The Age of Spiritual Machines: When Computers Exceed Human Intelligence, that "In a hundred years there may be no clear distinction between humans and computers"
   - "What would I want on a musician chip if I were to receive the benefit of neural implant technology? What kind of a 21st Century musician could I be?"
