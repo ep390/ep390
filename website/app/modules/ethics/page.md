@@ -1,6 +1,10 @@
 ---
-title: Ethical Implications of Generative AI
+title: Ethical Impacts of Generative AI
 ---
+
+The boom in Generative AI technologies do not come without problems and ethical implications. Below is an incomplete list current issues and example surrounding generative AI with ethical implications. More issues are likely to emerge in the future.
+
+What is missing from this list?
 
 ## Energy and Water
 
