@@ -81,4 +81,3 @@ Below is an incomplete list of references and examples.
 - [Pauline Oliveros - Quantum Improvisation: The Cybernetic Presence (1999)](https://www.hz-journal.org/n16/oliveros.html)
   - Oliveros responds to the Ray Kurzweil's assertion in The Age of Spiritual Machines: When Computers Exceed Human Intelligence, that "In a hundred years there may be no clear distinction between humans and computers"
   - "What would I want on a musician chip if I were to receive the benefit of neural implant technology? What kind of a 21st Century musician could I be?"
-git l
