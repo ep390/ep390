@@ -16,23 +16,15 @@ Below is an incomplete list of references and examples.
 ## Energy and Water
 
 - [I Live 400 Yards From Mark Zuckerberg's Massive Data Center](https://www.google.com/search?client=firefox-b-1-d&q=more+perfect+union+data+centers#fpstate=ive&vld=cid:6c382bd3,vid:DGjj7wDYaiI,st:0)
-
 - [Optimizing Cooling Efficiency in Modern Data Centers](https://www.datacenterknowledge.com/energy-power-supply/optimizing-cooling-efficiency-in-modern-data-centers)
-
   - Cooling systems in data centers account for roughly 30% to 40% of total energy consumption.
   - Global data center energy consumption is expected to double by 2030
-
 - [AI is Draining Water from areas that need it most](https://www.bloomberg.com/graphics/2025-ai-impacts-data-centers-water-data/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJTdWJzY3JpYmVyR2lmdGVkQXJ0aWNsZSIsImlhdCI6MTc0NjczMTkwMCwiZXhwIjoxNzQ3MzM2NzAwLCJhcnRpY2xlSWQiOiJTVlhRQ1NEV0xVNjgwMCIsImJjb25uZWN0SWQiOiI2NDE5MTFBQjEzOTg0M0FGOEQ1MzEzOEEwQjkzQzdGMiJ9.q4q_84QGZUNRNig3SBDUVdsF2UGFko2J65FTWHjSRoE)
-
 - [The Environmental Impact of AI: A Case Study of Water Consumption by Chat GPT](https://www.puiij.com/index.php/research/article/view/39/23)
-
   - GPT-3 reportedly consumed approximately 700,000 liters of water during its training phase.
-
 - [Five Ways to Improve Data Center Energy Efficiency and Cut Energy Costs](https://www.danfoss.com/en/about-danfoss/insights-for-tomorrow/integrated-energy-systems/data-center-power-consumption/#:~:text=The%20International%20Energy%20Agency%20estimates,and%20need%20to%20be%20cooled.)
-
   - 1% of all global energy is consumed by data centers (2022)
   - Data centers are expected to use 1/5th of the world’s power supply by 2025.
-
 - [Holistically Evaluating the Environmental Impact of Creating Language Model (arxiv)](https://arxiv.org/abs/2503.05804)
 - [How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference (arxiv)](https://arxiv.org/abs/2505.09598)
   - A single short GPT-4o query consumes 0.42 Wh,
