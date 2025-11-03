@@ -10,7 +10,8 @@ In this assignment, you will research an existing generative music system. You w
 - Pick one of the musical systems below to research
 - Spend time working with the music system to understand its strengths and weaknesses
 - Create documentation of what you learned in a new web page
-- Present your findings to the class, including a piece of original music
+- Present the music creation process to the class, and play us some music you
+  created with this process
 
 ## 1 Prepare
 
@@ -65,7 +66,10 @@ Create a page at `website/app/students/your-name/hw7/page.jsx` that includes:
 
 ## 6 Present your findings
 
-Come to class ready to present your findings and play the music you created.
+Come to class ready to present your findings. You must show the interface you
+used (Hugging Face Space, commercial web app, or code demonstration) and briefly
+demonstrate how it works: your inputs, key settings/parameters, how you generate
+audio, and play back the result.
 
 ## Grading Rubric
 
@@ -77,5 +81,5 @@ Come to class ready to present your findings and play the music you created.
 - **10** Insightful analysis of strengths, weaknesses, and creative potential
 - **10** Original music excerpt included and playable
 - **10** Sources/links to the system and any references
-- **10** Came to class prepared to present, and presented your findings in class
+- **10** In-class interface demo: showed the interface (even if on Hugging Face) and demonstrated how it works
 - **15** Correct use of the static folder to save your audio, including a data-compressed format such as `.mp3` (do not use a `.wav` file)
