@@ -147,3 +147,7 @@ const game = {
 };
 console.log(game.player.name); // "Bob"
 ```
+
+## Resources
+
+[javascript.info](https://javascript.info/) provides a more thorough JavaScript tutorial.
