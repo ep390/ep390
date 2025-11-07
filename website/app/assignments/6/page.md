@@ -159,9 +159,7 @@ Add the second section that estimates your entire class webpage total (repeat wi
 - **10** PR changes only files in the correct directory
 - **10** Correct file/directory structure
 - **10** Single dedicated branch
-- **15** Methodology clearly documented; assumptions and sources cited
-- **10** Request counting or estimation method is reasonable and explained
-- **10** Correct calculations for the chosen past assignment
-- **10** Total cumulative estimate for all your assignements
-- **10** Thoughtful "Limitations and Uncertainties" section (at least 3–5 items; Will each assumption cause you to overshoot or undershoot the total resources consumed)
+- **15** Methodology clearly documented; assumptions and sources cited; Request counting or estimation method is reasonable and explained
+- **15** Total cumulative estimate for all your assignements
+- **15** Thoughtful "Limitations and Uncertainties" section. Includes reflection, at least 3–5 confounding factors and if those factors undershoot or overshoot
 - **10** No leftover template text
