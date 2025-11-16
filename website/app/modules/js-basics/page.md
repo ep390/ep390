@@ -150,4 +150,5 @@ console.log(game.player.name); // "Bob"
 
 ## Resources
 
-[javascript.info](https://javascript.info/) provides a more thorough JavaScript tutorial.
+- [javascript.info](https://javascript.info/) provides a more thorough JavaScript tutorial.
+- [coddy.tech](https://coddy.tech) Interactive programming tutorials for JavaScript, Python, and others
