@@ -1,4 +1,6 @@
-# ComfyUI
+---
+title: ComfyUI
+---
 
 To explore image generation, we will be using ComfyUI. 
 
