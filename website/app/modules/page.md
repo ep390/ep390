@@ -14,3 +14,4 @@ title: "EP390 Modules"
 1. [Neural Network Hands On](modules/nn-ex/)
 1. [Ethics & Generative AI](modules/ethics/)
 1. [Generative Music](modules/music/)
+1. [Image Generation](modules/comfy-ui/)
