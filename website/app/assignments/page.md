@@ -12,6 +12,7 @@ excerpt: "Assignments for Generative AI for Music, Image, and Code"
 1. [Symbolic Music Generation](/assignments/5/)
 1. [Calculating the environmental Cost of LLM usage](/assignments/6/)
 1. [Research: Music Generation](/assignments/7/)
+1. [Image Generation](/assignments/8/)
 
 ## Projects
 

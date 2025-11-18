@@ -2,6 +2,8 @@
 title: ComfyUI
 ---
 
+Start [downloading this model (2.1GB)](https://huggingface.co/Comfy-Org/stable-diffusion-v1-5-archive/blob/main/v1-5-pruned-emaonly-fp16.safetensors) before going further.
+
 To explore image generation, we will be using ComfyUI. 
 
 - Commercial services like ChatGPT or Midjourney are the easiest way to generate dramatic images
@@ -75,7 +77,8 @@ Now you can go to http://127.0.0.1:8188 in your browser.
 
 # Resources
 
-- [ComfyUI: Advanced Understanding](https://www.youtube.com/watch?v=_C7kR2TFIX0&list=PLcW1kbTO1uPhDecZWV_4TGNpys4ULv51D&index=1)
+- [But how do AI images and videos actually work? (YouTube)](https://www.youtube.com/watch?v=iv-5mZ_9CPY)
+- [ComfyUI: Advanced Understanding (YouTube)](https://www.youtube.com/watch?v=_C7kR2TFIX0&list=PLcW1kbTO1uPhDecZWV_4TGNpys4ULv51D&index=1)
 - [The Oatmeal: A cartoonist's review of AI art](https://theoatmeal.com/comics/ai_art)
 
 Two other ways to do image generation on a Mac
