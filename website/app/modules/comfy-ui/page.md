@@ -45,7 +45,7 @@ conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
 
 ```bash
 # Clone from git
-git clone git@github.com:comfyanonymous/ComfyUI.git
+git clone https://github.com/comfyanonymous/ComfyUI.git
 cd ComfyUI
 pip install -r requirements.txt
 ```
