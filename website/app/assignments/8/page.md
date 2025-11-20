@@ -5,6 +5,10 @@ excerpt: "Create an assignment using ComfyUI for image generation."
 
 ## Overview
 
+**🚨 UPDATE 🚨** This assignment is for optional extra-credit. If you complete this assignment it will replace your lowest score for an existing homework assignment ⚠️
+
+![Students learning about AI](/ai-class.png)
+
 The goal: understand the practical effects of **Classifier Free Guidance (CFG)**
 in diffusion models through hands-on experience. You will
 
