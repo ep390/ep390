@@ -5,9 +5,9 @@ excerpt: "Propose a substantial creative project using generative AI"
 
 Due Dates:
 
-- **November 25, 2025**: Proposal due
+- **November 25, 2025**: Final project proposal & proposal Presentation
 - **December 2, 2025**: Progress update
-- **Dedember 9, 2025**: Final project presentations
+- **Dedember 9, 2025**: Final project & presentation
 
 ## Overview
 
