@@ -17,7 +17,7 @@ excerpt: "Assignments for Generative AI for Music, Image, and Code"
 ## Projects
 
 - [Midterm Project](/assignments/midterm/)
-- [Final Project Proposal](/assignments/final-proposal/)
+- [Final Project Proposal, Update, and Presentation](/assignments/final-proposal/)
 
 ## Submission Process
 

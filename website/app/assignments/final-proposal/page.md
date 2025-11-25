@@ -1,5 +1,5 @@
 ---
-title: "Final Project Proposal"
+title: "Final Project: Proposal, Update, and Presentation"
 excerpt: "Propose a substantial creative project using generative AI"
 ---
 
