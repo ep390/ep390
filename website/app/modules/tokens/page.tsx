@@ -1,7 +1,7 @@
 import styles from "@/app/[...markdown]/markdown.module.css";
 import ModuleFooter from "@/components/ModuleFooter";
 import TokenizerDemo from "./tokenizer";
-import { InlineMath } from "react-katex";
+import { InlineMath, BlockMath } from "react-katex";
 import "katex/dist/katex.min.css";
 import EmbeddingLookup from "./EmbeddingLookup";
 
@@ -42,9 +42,7 @@ export default function Page() {
             <InlineMath>x</InlineMath>, a token is just an integer value that
             satisfies:
           </p>
-          <p>
-            <InlineMath>{`0 \\leq token < x`}</InlineMath>
-          </p>
+          <BlockMath>{`0 \\leq token < x`}</BlockMath>
           <p>
             Remember{" "}
             <a
