@@ -15,3 +15,4 @@ title: "EP390 Modules"
 1. [Ethics & Generative AI](modules/ethics/)
 1. [Generative Music](modules/music/)
 1. [Image Generation](modules/comfy-ui/)
+1. [Transformer Tokens & Embeddings](modules/tokens/)

@@ -12,7 +12,7 @@ export default function Page() {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className={styles.markdownContent}>
         <div>
-          <h1>Tokenization For Transformers</h1>
+          <h1>Transformer Tokens & Embeddings</h1>
           <p>
             Transformers read and write sequences of tokens. But what is a token
             sequence?
@@ -31,7 +31,7 @@ export default function Page() {
           <p>Here&apos;s is an extremely simple text tokenizer:</p>
           <TokenizerDemo vocabulary={vocabulary} />
           <p>
-            This tokenizer has limited value. It can only encode and decode the{" "}
+            This simple tokenizer has limited value. It can only encode and decode the{" "}
             <strong>{vocabulary.length}</strong> characters in its vocabulary:{" "}
           </p>
           <pre>{vocabulary}</pre>
