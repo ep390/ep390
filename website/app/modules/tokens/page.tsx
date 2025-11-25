@@ -1,9 +1,9 @@
 import styles from "@/app/[...markdown]/markdown.module.css";
 import ModuleFooter from "@/components/ModuleFooter";
 import TokenizerDemo from "./tokenizer";
-import hljs from "highlight.js";
 import { InlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
+import EmbeddingLookup from "./EmbeddingLookup";
 
 export default function Page() {
   const vocabulary = ` abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.!?"'0123456789`;
@@ -28,11 +28,12 @@ export default function Page() {
             <li>Encode input data to a sequence of tokens</li>
             <li>Decode output tokens back to the input data format</li>
           </ul>
-          <p>Here&apos;s is an extremely simple text tokenizer:</p>
+          <p>Here&apos;s an extremely simple text tokenizer:</p>
           <TokenizerDemo vocabulary={vocabulary} />
           <p>
-            This simple tokenizer has limited value. It can only encode and decode the{" "}
-            <strong>{vocabulary.length}</strong> characters in its vocabulary:{" "}
+            This simple tokenizer has limited value. It can only encode and
+            decode the <strong>{vocabulary.length}</strong> characters in its
+            vocabulary:{" "}
           </p>
           <pre>{vocabulary}</pre>
           <h2>What is a token?</h2>
@@ -78,13 +79,13 @@ export default function Page() {
           <p>
             A robust BPE text tokenizer will{" "}
             <strong>
-              help the model see common subword character sequnces
+              help the model see common subword character sequences
             </strong>
             . In English &quot;izer&quot; is a common subword, so a BPE
             tokenizer might split &quot;tokenizer&quot; into tokens like{" "}
             <strong>token</strong>, and <strong>izer</strong> (instead of e.g.{" "}
             <strong>toke</strong> and <strong>nizer</strong>). This helps models
-            generalise and &quot;understand&quot; grammar.
+            generalize and &quot;understand&quot; grammar.
           </p>
           <h2>Interactive Tokenizers</h2>
           <ul>
@@ -137,6 +138,20 @@ export default function Page() {
               (YouTube video explains how these work)
             </li>
           </ul>
+          <h2>Embeddings</h2>
+          <p>
+            Once we have tokens, the transformer will use them to look up column
+            vectors from an <strong>embedding table</strong>. Each token index
+            corresponds to a column vector that represents that token
+            numerically.
+          </p>
+          <EmbeddingLookup vocabulary={vocabulary} />
+          <p>
+            During the training process, the values in the embedding table are
+            gradually adjusted. If we train successfully, these values will
+            encode the semantic significance of the tokens in a high-dimensional
+            space.
+          </p>
           <h2>Resources</h2>
           <ul>
             <li>
