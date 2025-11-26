@@ -8,11 +8,21 @@ title: Computer Vision
 
 - Face controlled Pacman 
   - https://eieio.games/blog/paccam/ 
-- MediaPipe Object Detection
-  - https://ai.google.dev/edge/mediapipe/solutions/vision/object_detector
-  - Look at (Web - Code example - Guide)
+- Media Pipe
+  - https://ai.google.dev/edge/mediapipe/solutions/guide
+  - Gesture Recognition
+    - https://ai.google.dev/edge/mediapipe/solutions/vision/gesture_recognizer
+    - Look at: Web - Code example - Guide
+  - Object Detection
+    - https://ai.google.dev/edge/mediapipe/solutions/vision/object_detector
+    - Look at (Web - Code example - Guide)
 - Weckinator
   - https://doc.gold.ac.uk/~mas01rf/Wekinator/videos/  
+
+Playing Audio from the web
+- If you are just playing audio samples you can get away with HTML5 
+- Howler.js https://howlerjs.com/ 
+- Tone.js https://tonejs.github.io/
 
 ## Secondary Resources
 
