@@ -69,8 +69,106 @@ export default function FinalProjectPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const bestBars = useMemo(() => result?.best?.progression?.bars ?? [], [result])
+
+  const chordTypes = {
+    maj7: [0, 4, 7, 11],
+    '7': [0, 4, 7, 10],
+    m7: [0, 3, 7, 10],
+    maj: [0, 4, 7],
+    min: [0, 3, 7],
+    dim: [0, 3, 6],
+    aug: [0, 4, 8],
+    sus2: [0, 2, 7],
+    sus4: [0, 5, 7],
+    m7b5: [0, 3, 6, 10],
+  }
+
+  const pitchFromRoot = (root) => {
+    const base = {
+      C: 48,
+      'C#': 49,
+      Db: 49,
+      D: 50,
+      'D#': 51,
+      Eb: 51,
+      E: 52,
+      F: 53,
+      'F#': 54,
+      Gb: 54,
+      G: 55,
+      'G#': 56,
+      Ab: 56,
+      A: 57,
+      'A#': 58,
+      Bb: 58,
+      B: 59,
+    }
+    return base[root] ?? 48
+  }
+
+  const chordToFreqs = (symbol) => {
+    const match = symbol.match(/^([A-G][#b]?)(.*)$/)
+    if (!match) return []
+    const [, root, type] = match
+    const intervals = chordTypes[type] || chordTypes.maj
+    const rootMidi = pitchFromRoot(root)
+    return intervals.map((i) => 440 * 2 ** ((rootMidi + i - 69) / 12))
+  }
+
+  const playProgression = () => {
+    if (!bestBars.length || isPlaying) return
+    const audio = new (window.AudioContext || window.webkitAudioContext)()
+    const chordDuration = 1.1
+    const now = audio.currentTime
+    let cursor = now
+    setIsPlaying(true)
+
+    bestBars.forEach((bar) => {
+      bar.chords.forEach((chord) => {
+        const freqs = chordToFreqs(chord)
+        freqs.forEach((freq) => {
+          const osc = audio.createOscillator()
+          const gain = audio.createGain()
+          osc.type = 'sine'
+          osc.frequency.value = freq
+          gain.gain.setValueAtTime(0.0, cursor)
+          gain.gain.linearRampToValueAtTime(0.18, cursor + 0.05)
+          gain.gain.exponentialRampToValueAtTime(0.0001, cursor + chordDuration)
+          osc.connect(gain).connect(audio.destination)
+          osc.start(cursor)
+          osc.stop(cursor + chordDuration + 0.05)
+        })
+        cursor += chordDuration
+      })
+    })
+
+    setTimeout(() => setIsPlaying(false), (cursor - now) * 1000 + 200)
+  }
+
+  const exportProgression = () => {
+    if (!result?.best?.progression) return
+    const payload = {
+      meta: {
+        bars: numBars,
+        chords_per_bar: chordsPerBar,
+        temperature,
+        top_k: topK,
+        top_p: topP,
+        num_candidates: numCandidates,
+      },
+      best: result.best,
+    }
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'chord_progression.json'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
 
   const handleGenerate = async () => {
     setIsLoading(true)
@@ -292,11 +390,28 @@ export default function FinalProjectPage() {
                     DropTwo → Drop24 → DropThree when the frequency profile calls for it.
                   </div>
                 ) : (
-                  <div className="grid gap-3 md:grid-cols-2">
-                    {bestBars.map((bar) => (
-                      <BarCard key={bar.bar} bar={bar} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="mb-3 flex flex-wrap gap-3">
+                      <button
+                        onClick={playProgression}
+                        disabled={isPlaying}
+                        className="rounded-full bg-emerald-300/90 px-4 py-2 text-sm font-semibold text-emerald-900 shadow hover:bg-emerald-200 disabled:opacity-60"
+                      >
+                        {isPlaying ? 'Playing…' : 'Play preview'}
+                      </button>
+                      <button
+                        onClick={exportProgression}
+                        className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:border-amber-300 hover:text-amber-200"
+                      >
+                        Export progression (JSON)
+                      </button>
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      {bestBars.map((bar) => (
+                        <BarCard key={bar.bar} bar={bar} />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
               {result?.frequency_profile_used && (
