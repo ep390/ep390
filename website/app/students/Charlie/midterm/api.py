@@ -1,8 +1,7 @@
 import torch
 import numpy as np
 import os
-import json
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import tempfile
 import base64
@@ -10,7 +9,7 @@ import sys
 
 # Add the current directory to Python path to import generate.py
 sys.path.append(os.path.dirname(__file__))
-from generate import generate_single, mel_to_midi, evaluate_sequence_quality, get_real_seed, temperature_for_attempt
+from generate import generate_single, mel_to_midi, evaluate_sequence_quality, temperature_for_attempt
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
@@ -47,6 +46,8 @@ def generate_progression():
         data = request.get_json()
         temperature = data.get('temperature', 1.2)
         length = data.get('length', 8)
+        # Note: input_chords is received but not currently used in generation
+        # The model generates from scratch using real seed data
         input_chords = data.get('input_chords', [])
         
         if not model:
