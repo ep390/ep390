@@ -296,7 +296,7 @@ export default function JSPlaygroundPage() {
           <code>app/</code> directory with the rest of your code.
         </p>
         
-        <audio src="/students/fumiya/hw5.wav" controls />
+        <audio src="/students/fumiya/hw5.mp3" controls />
 
         <p>
           For this composition, I used the output from my Generation Experiment 1. First, I downloaded the MIDI file and imported it into my DAW. From there, I created a six-measure loop and used it as the foundation for the main chord progression and melody. After establishing this core idea, I added other musical elements, including drums, bass, and synthesizer layers, to build a fuller arrangement.

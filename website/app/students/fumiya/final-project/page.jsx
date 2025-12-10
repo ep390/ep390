@@ -35,7 +35,7 @@ export default function JSPlaygroundPage() {
 
         <h3>Original Track:</h3>
 
-        <audio src="/students/fumiya/First Demo.wav" controls />
+        <audio src="/students/fumiya/First Demo.mp3" controls />
 
         <img src="/students/fumiya/final-project1.png" alt="Moies AI Studio screenshot" className="rounded-lg shadow-lg w-220 mx-auto" />
 

@@ -144,43 +144,43 @@ export default function JSPlaygroundPage() {
 
         <img src="/students/fumiya/midterm-project1.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Modern Drum Machine.wav" controls />
+        <audio src="/students/fumiya/Modern Drum Machine.mp3" controls />
 
         <h4>2. Miss Speaker</h4>
 
         <img src="/students/fumiya/midterm-project2.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Miss Speaker.wav" controls />
+        <audio src="/students/fumiya/Miss Speaker.mp3" controls />
 
         <h4>3. Festive Latin Percussions</h4>
 
         <img src="/students/fumiya/midterm-project3.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Festive Latin Percussions.wav" controls />
+        <audio src="/students/fumiya/Festive Latin Percussions.mp3" controls />
 
         <h4>4. Classy Bach Violin</h4>
 
         <img src="/students/fumiya/midterm-project4.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Classy Bach Violin.wav" controls />
+        <audio src="/students/fumiya/Classy Bach Violin.mp3" controls />
 
         <h4>5. Oriental Mouth Organ</h4>
 
         <img src="/students/fumiya/midterm-project5.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Oriental Mouth Organ.wav" controls />
+        <audio src="/students/fumiya/Oriental Mouth Organ.mp3" controls />
 
         <h4>6. Oriental Pipa String</h4>
 
         <img src="/students/fumiya/midterm-project6.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Oriental Pipa String.wav" controls />
+        <audio src="/students/fumiya/Oriental Pipa String.mp3" controls />
 
         <h4>7. Unintelligible 911 Calls</h4>
 
         <img src="/students/fumiya/midterm-project7.png" alt="DAW screenshot showing Neutone Morpho's setting" className="rounded-lg shadow-lg w-220 mx-auto" />
 
-        <audio src="/students/fumiya/Unintelligible 911 Calls.wav" controls />
+        <audio src="/students/fumiya/Unintelligible 911 Calls.mp3" controls />
 
         <h3>1. Neutone FX</h3>
 
@@ -188,49 +188,49 @@ export default function JSPlaygroundPage() {
 
         <img src="/students/fumiya/midterm-project8.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.evoice.wav" controls />
+        <audio src="/students/fumiya/RAVE.evoice.mp3" controls />
 
         <h4>2. Rave.kara</h4>
 
         <img src="/students/fumiya/midterm-project9.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.kara.wav" controls />
+        <audio src="/students/fumiya/RAVE.kara.mp3" controls />
 
         <h4>3. Rave.MaxSalterio</h4>
 
         <img src="/students/fumiya/midterm-project10.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.MaxSalterio.wav" controls />
+        <audio src="/students/fumiya/RAVE.MaxSalterio.mp3" controls />
 
         <h4>4. Rave.llLSopranoSax</h4>
 
         <img src="/students/fumiya/midterm-project11.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.llLSopranoSax.wav" controls />
+        <audio src="/students/fumiya/RAVE.llLSopranoSax.mp3" controls />
 
         <h4>5. Rave.llLOrganBach</h4>
 
         <img src="/students/fumiya/midterm-project12.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.llLOrganBach.wav" controls />
+        <audio src="/students/fumiya/RAVE.llLOrganBach.mp3" controls />
 
         <h4>6. Rave.llLVoiceHiFiTTS</h4>
 
         <img src="/students/fumiya/midterm-project13.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.llLVoiceHiFiTTS.wav" controls />
+        <audio src="/students/fumiya/RAVE.llLVoiceHiFiTTS.mp3" controls />
 
         <h4>7. Rave.BulgarianFemaleChoir</h4>
 
         <img src="/students/fumiya/midterm-project14.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.BulgarianFemaleChoir.wav" controls />
+        <audio src="/students/fumiya/RAVE.BulgarianFemaleChoir.mp3" controls />
 
         <h4>8. Rave.violin</h4>
 
         <img src="/students/fumiya/midterm-project15.png" alt="DAW screenshot showing Neutone FX's setting" className="rounded-lg shadow-lg w-150 mx-auto" />
 
-        <audio src="/students/fumiya/Rave.violin.wav" controls />
+        <audio src="/students/fumiya/RAVE.violin.mp3" controls />
 
         <h3>3. Synplant</h3>
 
@@ -244,11 +244,11 @@ export default function JSPlaygroundPage() {
           )
         </p>
 
-        <audio src="/students/fumiya/TomLoKick-606_E_04.wav" controls />
+        <audio src="/students/fumiya/TomLoKick-606_E_04.mp3" controls />
 
         <p>Processed</p>
 
-        <audio src="/students/fumiya/kick.wav" controls />
+        <audio src="/students/fumiya/kick.mp3" controls />
 
         <h4>2. Snare</h4>
 
@@ -260,11 +260,11 @@ export default function JSPlaygroundPage() {
           )
         </p>
 
-        <audio src="/students/fumiya/SnareWTailShort19.wav" controls />
+        <audio src="/students/fumiya/SnareWTailShort19.mp3" controls />
 
         <p>Processed</p>
 
-        <audio src="/students/fumiya/snare.wav" controls />
+        <audio src="/students/fumiya/snare.mp3" controls />
 
         <h4>3. Rim</h4>
 
@@ -276,11 +276,11 @@ export default function JSPlaygroundPage() {
           )
         </p>
 
-        <audio src="/students/fumiya/SS Lindrum Orig 23.wav" controls />
+        <audio src="/students/fumiya/SS Lindrum Orig 23.mp3" controls />
 
         <p>Processed</p>
 
-        <audio src="/students/fumiya/rim.wav" controls />
+        <audio src="/students/fumiya/rim.mp3" controls />
 
         <h4>4. Hi-hat</h4>
 
@@ -292,17 +292,17 @@ export default function JSPlaygroundPage() {
           )
         </p>
 
-        <audio src="/students/fumiya/OH909Color16.wav" controls />
+        <audio src="/students/fumiya/OH909Color16.mp3" controls />
 
         <p>Processed</p>
 
-        <audio src="/students/fumiya/hi-hat.wav" controls />
+        <audio src="/students/fumiya/hi-hat.mp3" controls />
 
         <h2>Step 3: Create a track using the audio stems generated in step 2</h2>
 
         <h3>My Original Composition</h3>
 
-           <audio src="/students/fumiya/midterm-project.wav" controls />
+           <audio src="/students/fumiya/midterm-project.mp3" controls />
 
         <h2>My Observation</h2>
 
