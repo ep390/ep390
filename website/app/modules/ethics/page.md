@@ -45,6 +45,8 @@ Below is an incomplete list of references and examples.
   - [Effective Altruism Promises to Do Good Better. These Women Say It Has a Toxic Culture Of Sexual Harassment and Abuse](https://time.com/6252617/effective-altruism-sexual-harassment/)
 - [Karen Hao - Empire of AI](https://karendhao.com/)
   - 2025 book about OpenAI and the "AI Arms Race"
+- [Michael Geoffrey Asia - The Emotional Labor Behind AI Intimacy](https://data-workers.org/michael/)
+  - [Essay PDF](https://data-workers.org/wp-content/uploads/2025/12/The-Emotional-Labor-Behind-AI-Intimacy-1.pdf)
 
 ## AI Slop
 
