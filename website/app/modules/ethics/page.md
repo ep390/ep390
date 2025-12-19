@@ -57,6 +57,7 @@ Below is an incomplete list of references and examples.
   - "My avatars were cartoonishly pornified, while my male colleagues got to be astronauts, explorers, and inventors"
 - [This is how AI Image generators see the world (Washington Post)](https://www.washingtonpost.com/technology/interactive/2023/ai-generated-images-bias-racism-sexism-stereotypes/)
   - AI Image Generators inherit bias from the training process
+- [Concept Artists Say Generative AI References Only Make Their Jobs Harder](https://thisweekinvideogames.com/feature/concept-artists-in-games-say-generative-ai-references-only-make-their-jobs-harder/)
 
 ## Scams
 

@@ -12,6 +12,7 @@ title: Generative Music
 - Performing Rights Organizations collect and distribute royalties for public music performances, radio broadcast, and TV broadcast.
 - They claim: music that combines elements of AI-generated musical content with elements of human authorship can be registered for royalties
 - [BMI & AI: What Music Creators Need to Know](https://www.bmi.com/specials/bmi-and-ai) "AI companies should not be permitted to train on copyrighted works without obtaining permission and paying creators. It’s not 'fair use', it’s theft"
+- [Launch, Train, Settle: How Suno And Udio’s Licensing Deals Made Copyright Infringement Profitable](https://www.forbes.com/sites/virginieberger/2025/12/18/launch-train-settle-how-suno-and-udios-licensing-deals-made-copyright-infringement-profitable/)
 
 ![BMI Infographic](https://www.bmi.com/images/specials/BMI25_AI_Infographic.jpg)
 
