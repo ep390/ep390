@@ -2,10 +2,12 @@
 
 Artificial Intelligence (AI)
 ├─ Machine Learning (ML)
-│  ├─ Neural Networks (Deep Learning)
+│  ├─ Neural Networks & Deep Learning
 │  │  ├─ Feedforward Neural Networks (MLP / Fully Connected)
 │  │  ├─ Convolutional Neural Networks (CNNs)
 │  │  ├─ Recurrent Neural Networks (RNNs / LSTM / GRU)
+│  │  ├─ Generative Adversarial Networks (GANs)
+│  │  ├─ Variational Autoencoders (VAEs)
 │  │  ├─ Transformers
 │  │  └─ Diffusion Models (U-Net + attention or Transformer based)
 │  ├─ Reinforcement Learning (RL)
@@ -26,6 +28,7 @@ Artificial Intelligence (AI)
    ├─ Constraint Satisfaction / Logic Programming
    └─ Rule-Based / Expert Systems
 
+
 */
 export default function AiTaxonomy() {
   return (
@@ -38,11 +41,13 @@ export default function AiTaxonomy() {
               Machine Learning (ML)
               <ul>
                 <li>
-                  Neural Networks (Deep Learning)
+                  Neural Networks & Deep Learning
                   <ul>
                     <li>Feedforward Neural Networks (MLP / Fully Connected)</li>
-                    <li>Convolutional Neural Networks (CNNs)</li>
+                    <li>Convolutional Neural Networks (CNNs, U-Nets)</li>
                     <li>Recurrent Neural Networks (RNNs / LSTM / GRU)</li>
+                    <li>Generative Adversarial Networks (GANs)</li>
+                    <li>Variational Autoencoders (VAEs)</li>
                     <li>Transformers</li>
                     <li>
                       Diffusion Models (U-Net + attention or Transformer based)

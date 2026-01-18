@@ -13,6 +13,8 @@ export default function AiTaxonomySmall() {
                   <li>Feedforward Neural Networks (MLP / Fully Connected)</li>
                   <li>Convolutional Neural Networks (CNNs)</li>
                   <li>Recurrent Neural Networks (RNNs / LSTM / GRU)</li>
+                  <li>Generative Adversarial Networks (GANs)</li>
+                  <li>Variational Autoencoders (VAEs)</li>
                   <li>Transformers</li>
                   <li>Diffusion Models (U-Net + attention or Transformer based)</li>
                 </ul>
