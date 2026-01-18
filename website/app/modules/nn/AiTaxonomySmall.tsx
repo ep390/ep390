@@ -8,20 +8,13 @@ export default function AiTaxonomySmall() {
             Machine Learning (ML)
             <ul>
               <li>
-                Neural Networks
+                Neural Networks (Deep Learning)
                 <ul>
-                  <li>
-                    Deep Learning
-                    <ul>
-                      <li>
-                        <strong>Feedforward Neural Networks</strong> (Multilayer
-                        Perceptron, Fully Connected Neural Network)
-                      </li>
-                      <li>Convolutional Neural Networks (CNN)</li>
-                      <li>Transformers</li>
-                      <li>Diffusion Models</li>
-                    </ul>
-                  </li>
+                  <li>Feedforward Neural Networks (MLP / Fully Connected)</li>
+                  <li>Convolutional Neural Networks (CNNs)</li>
+                  <li>Recurrent Neural Networks (RNNs / LSTM / GRU)</li>
+                  <li>Transformers</li>
+                  <li>Diffusion Models (U-Net + attention or Transformer based)</li>
                 </ul>
               </li>
             </ul>
