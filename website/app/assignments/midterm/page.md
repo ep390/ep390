@@ -1,6 +1,5 @@
 ---
 title: "Midterm Project"
-excerpt: "Combine MIDI IO and async functions to create an arpeggiator"
 ---
 
 Due Dates:

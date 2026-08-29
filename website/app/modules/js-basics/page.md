@@ -151,4 +151,5 @@ console.log(game.player.name); // "Bob"
 ## Resources
 
 - [javascript.info](https://javascript.info/) provides a more thorough JavaScript tutorial.
+- [Eloquent JavaScript, Fourth Edition](https://eloquentjavascript.net/) Marijn Haverbeke. Free online book.
 - [coddy.tech](https://coddy.tech) Interactive programming tutorials for JavaScript, Python, and others
